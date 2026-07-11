@@ -16,12 +16,15 @@ var detected_player: Player = null
 var timer: float = randf_range(2, 10)
 var new_timer_value: float = 0
 
+
 func Enter(): 
 	ghost.ChasePlayer.connect(Chase, CONNECT_ONE_SHOT)
+
 
 func Exit():
 	if ghost.ChasePlayer.is_connected(Chase):
 		ghost.ChasePlayer.disconnect(Chase)
+
 
 func Physics_Update(delta: float):
 	var player = get_tree().get_nodes_in_group("player")
@@ -50,8 +53,9 @@ func Physics_Update(delta: float):
 			Maw.global_position = path_follow.global_position
 			distance_until_pause -= move_amount
  
-	if player.global_position.distance_to(Maw.global_position) < 200 and player.hide_state == false:
+	if player.global_position.distance_to(Maw.global_position) < 200 and player.hiding_manager.is_hiding == false:
 		Transitioned.emit(self, "MawChase")
+
 
 func snap_to_nearest_path_point():
 	if not path_follow or not Maw:
@@ -63,15 +67,18 @@ func snap_to_nearest_path_point():
 	path_follow.progress = path.curve.get_closest_offset(local_pos)
 	Maw.global_position = path_follow.global_position
 
+
 func _on_detection_range_body_entered(body):
 	if body is Player:
 		detected_player = body
-		if detected_player.hide_state == false:
+		if not detected_player.hiding_manager.is_hiding:
 			Transitioned.emit(self, "MawChase")
+
 
 func _on_detection_range_body_exited(body):
 	if body == detected_player:
 		detected_player = null
+
 
 func Chase():
 	Transitioned.emit(self, "MawChase")

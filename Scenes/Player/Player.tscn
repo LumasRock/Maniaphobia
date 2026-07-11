@@ -1,9 +1,10 @@
-[gd_scene load_steps=45 format=3 uid="uid://c6h2ry3qrldmf"]
+[gd_scene load_steps=46 format=3 uid="uid://c6h2ry3qrldmf"]
 
-[ext_resource type="Script" uid="uid://cntuc1qp8qqw7" path="res://Script/Player.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://cntuc1qp8qqw7" path="res://Scenes/Player/Player.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://dopxw0knqdcce" path="res://Assets/Sebastian1-Sheet.png" id="2_5ixxa"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="3_gntrk"]
-[ext_resource type="PackedScene" uid="uid://8jeuf0kklg7e" path="res://Scenes/breathing.tscn" id="5_5ixxa"]
+[ext_resource type="Script" uid="uid://4tf146y5oapf" path="res://Scenes/Player/hiding_manager.gd" id="4_5ixxa"]
+[ext_resource type="PackedScene" uid="uid://8jeuf0kklg7e" path="res://Scenes/Player/hiding_breathing.tscn" id="5_5ixxa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nn08x"]
 atlas = ExtResource("2_5ixxa")
@@ -314,7 +315,7 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kdubu"]
 radius = 4.0
-height = 21.3807
+height = 12.2175
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyqiw"]
 bg_color = Color(0.6, 0.6, 0.6, 0)
@@ -324,9 +325,11 @@ border_width_right = 8
 border_width_bottom = 6
 border_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="CharacterBody2D" groups=["player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "hiding_manager") groups=["player"]]
 scale = Vector2(0.812743, 0.800001)
 script = ExtResource("1_kpjcp")
+animated_sprite = NodePath("AnimatedSprite2D")
+hiding_manager = NodePath("HidingManager")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1.19209e-07, 0)
@@ -335,7 +338,7 @@ sprite_frames = SubResource("SpriteFrames_q6r6c")
 animation = &"down_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 1.25)
+position = Vector2(0, 6.24999)
 scale = Vector2(1, 0.818496)
 shape = SubResource("CapsuleShape2D_kdubu")
 
@@ -369,14 +372,6 @@ offset_bottom = 243.5
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_kyqiw")
 
-[node name="breathing" parent="." instance=ExtResource("5_5ixxa")]
-visible = false
-offset_left = -75.0545
-offset_top = 8.74999
-offset_right = -75.0545
-offset_bottom = 8.74999
-scale = Vector2(0.114873, 0.112533)
-
 [node name="Label" type="Label" parent="." groups=["player"]]
 visible = false
 offset_left = -124.271
@@ -388,3 +383,14 @@ offset_bottom = -44.2499
 wait_time = 180.0
 one_shot = true
 autostart = true
+
+[node name="HidingManager" type="Node" parent="."]
+script = ExtResource("4_5ixxa")
+
+[node name="HideBreathing" parent="HidingManager" instance=ExtResource("5_5ixxa")]
+visible = false
+offset_left = -61.0
+offset_top = 7.0
+offset_right = -61.0
+offset_bottom = 7.0
+scale = Vector2(0.114873, 0.112533)

@@ -29,6 +29,17 @@ EventBus="*res://Script/Global/Event_Bus.gd"
 Transition="*res://Scenes/Transition.tscn"
 SAVE_MANAGER="*res://addons/simple_save_tool/tool/saveManager.gd"
 
+[debug]
+
+gdscript/warnings/untyped_declaration=1
+gdscript/warnings/inferred_declaration=1
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/unsafe_cast=1
+gdscript/warnings/unsafe_call_argument=1
+gdscript/warnings/return_value_discarded=1
+gdscript/warnings/inference_on_variant=1
+
 [dialogic]
 
 directories/dch_directory={}
@@ -75,6 +86,7 @@ enabled=PackedStringArray("res://addons/simple_save_tool/plugin.cfg")
 
 shake=""
 player=""
+hide-interactable=""
 
 [gui]
 
