@@ -1,0 +1,97 @@
+[
+
+  {
+
+	"dialogue_id": "Outside",
+
+	"npc_name": "narrator",
+
+	"nodes": [
+
+	  {
+
+		"id":"1",
+
+		"speaker": " ",
+
+		"text":"You leave your apartment and ride your bicycle, still stressed from this mornings disaster.",
+
+		"emotion": "blank",
+
+		"next_node": "2"
+
+	  },
+
+	  {
+
+		"id":"2",
+
+		"speaker": " ",
+
+		"text": "It was eerie on the other side of town. And passing up a more vague sign..",
+
+		"emotion": "blank",
+
+		"next_node": "3"
+
+	  },
+
+	  {
+
+		"id": "3",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]What? What'd that sign say? God, last thing I need is for there to be road work...[/i]",
+
+		"emotion": "annoyed",
+
+		"next_node": "4"
+
+	  },
+
+	  {
+
+		"id": "4",
+
+		"speaker": " ",
+
+		"text": "suddenly, a figure of a little boy appears in front of you. Did you take your meds?",
+
+		"emotion": "blank",
+
+		"next_node": "5"
+
+	  },
+
+	  {
+
+		"id":"5",
+
+		"speaker": "Sebastian",
+
+		"text": "Wait--Move!",
+
+		"emotion": "scared",
+
+		"next_node":"6"
+
+	  },
+
+	  {
+
+		"id":"6",
+
+		"speaker": " ",
+
+		"text": "[b] CRASH [/b]",
+
+		"emotion": "blank"
+
+	  }
+
+	]
+
+  }
+
+]

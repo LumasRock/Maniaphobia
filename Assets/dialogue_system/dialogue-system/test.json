@@ -1,0 +1,51 @@
+[ 
+	{
+  "dialogue_id": "test",
+  "npc_name": "logo",
+  "nodes": [
+	{
+	  "id": "1",
+	  "speaker": "logo",
+	  "text": "[shake rate=20 level=10]Hello[/shake], I am a [wave]test made[/wave] for a [rainbow]JSON based[/rainbow] Dialogue System!",
+	  "emotion": "Happy",
+	"next_node": "2"
+	},
+	{
+	  "id": "2",
+	  "speaker": "logo",
+	  "text": "Let's see if this works shall we?",
+	"emotion": "Glee",
+	  "next_node": "3"
+	},
+	{
+	  "id": "3",
+	   "speaker": "logo",
+	"emotion": "Neutral",
+	   "text": "It even works with [wave]multiple[/wave] nodes!",
+	   "next_node": "4"
+	},
+	{
+		"id": "4",
+		"speaker": "logo",
+		"emotion": "Glee",
+		"text": "Here! It can also do... [wave]options~[/wave]",
+		"options": [
+			{ "text": "tell me a joke", "next_node": "5"},
+			{"text": "hows the weather?", "next_node": "6"}
+		]
+	},
+	{
+		"id": "5",
+		"speaker": "logo",
+		"emotion": "Happy",
+		"text": "Wanna hear a pizza joke? Nevermind it's too [rainbow] cheesy! [/rainbow]"
+	},
+	{
+		"id": "6",
+		"speaker": "logo",
+		"emotion": "Neutral",
+		"text": "how would I know? I'm just a dialogue system!"
+	}
+	]
+}
+]

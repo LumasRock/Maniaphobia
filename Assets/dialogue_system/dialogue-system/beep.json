@@ -1,0 +1,20 @@
+[ 
+{
+ "dialogue_id": "othertest",
+"npc_name": "logo",
+"nodes": [
+	{"id": "1",
+	"speaker": "logo",
+	"text": "This is to showcase that even with [shake rate=20 level=10]multiple JSONs[/shake], it works for multiple scenes!",
+	"emotion": "Happy",
+	"next_node": "2"
+	},
+	{
+	"id": "2",
+	"speaker": "logo",
+	"text": "And it even keeps all the functions!",
+	"emotion": "Neutral",
+	}
+]
+}
+]

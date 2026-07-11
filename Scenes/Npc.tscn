@@ -1,0 +1,33 @@
+[gd_scene load_steps=5 format=3 uid="uid://bpibq7gjqujn7"]
+
+[ext_resource type="Texture2D" uid="uid://bnqatx8uvcy4q" path="res://Assets/Npc_Rpg.png" id="1_b5x2e"]
+[ext_resource type="Script" uid="uid://j1c6ad3s4ajb" path="res://Script/Npc.gd" id="1_c8tqv"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c8tqv"]
+radius = 12.0
+height = 40.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_b5x2e"]
+radius = 67.082
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+script = ExtResource("1_c8tqv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_b5x2e")
+hframes = 5
+vframes = 4
+frame = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 0)
+shape = SubResource("CapsuleShape2D_c8tqv")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_b5x2e")
+debug_color = Color(0.905882, 0.6, 1, 0.419608)
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

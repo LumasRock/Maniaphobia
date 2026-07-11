@@ -1,0 +1,271 @@
+[
+
+  {
+
+	"dialogue_id": "Hide_And_Seek",
+
+	"npc_name": "everyone else",
+
+	"nodes": [
+
+	  {
+
+		"id": "1",
+
+		"speaker": "Evelyn",
+
+		"text": "Hey! Somebody is hiding in here!",
+
+		"emotion": "annoyed",
+
+		"next_node": "2"
+
+	  },
+
+	  {
+
+		"id": "2",
+
+		"speaker": "Sebastian",
+
+		"text": "Oh sorry... you really can't make any room in there?",
+
+		"emotion": "worried",
+
+		"next_node": "3"
+
+	  },
+
+	  {
+
+		"id": "3",
+
+		"speaker": "Evelyn",
+
+		"text": "HUH IS SOMEONE TALKING?",
+
+		"emotion": "happy",
+
+		"next_node": "4"
+
+	  },
+
+	  {
+
+		"id": "4",
+
+		"speaker": "Sebastian",
+
+		"text": "...Damn.",
+
+		"emotion": "doubt"
+
+	  },
+
+	  {
+
+		"id": "5",
+
+		"speaker": "Evan",
+
+		"text": "Sorry, can't fit no more.",
+
+		"emotion": "worry",
+
+		"next_node": "6"
+
+	  },
+
+	  {
+
+		"id": "6",
+
+		"speaker": "Sebastian",
+
+		"text": "C'mon--please! I won't be a bother.",
+
+		"emotion": "tired",
+
+		"next_node": "7"
+
+	  },
+
+	  {
+
+		"id": "7",
+
+		"speaker": "Evan",
+
+		"text": "That thing can hear you breath from like a mile away.",
+
+		"emotion": "point",
+
+		"next_node": "8"
+
+	  },
+
+	  {
+
+		"id": "8",
+
+		"speaker": "Evan",
+
+		"text": "No thanks.",
+
+		"emotion": "worry"
+
+	  },
+
+	  {
+
+		"id": "9",
+
+		"speaker": "Sebastian",
+
+		"text": "Care to squeeze?",
+
+		"emotion": "worry",
+
+		"next_node": "10"
+
+	  },
+
+	  {
+
+		"id": "10",
+
+		"speaker": "Connor",
+
+		"text": "Nah, sorry.",
+
+		"emotion": "neutral",
+
+		"next_node": "11"
+
+	  },
+
+	  {
+
+		"id": "11",
+
+		"speaker": "Connor",
+
+		"text": "Let me be selfish just this once?",
+
+		"emotion": "confused",
+
+		"next_node": "12"
+
+	  },
+
+	  {
+
+		"id": "12",
+
+		"speaker": "Sebastian",
+
+		"text": "Fine, fine.",
+
+		"emotion": "annoyed"
+
+	  },
+
+	  {
+
+		"id": "13",
+
+		"speaker": "Sylas",
+
+		"text": "Hell no.",
+
+		"emotion": "annoyed",
+
+		"next_node": "14"
+
+	  },
+
+	  {
+
+		"id": "14",
+
+		"speaker": "Sebstian",
+
+		"text": "OH COME ON I DIDN'T EVEN SAY ANYTHING",
+
+		"emotion": "angry",
+
+		"next_node": "15"
+
+	  },
+
+	  {
+
+		"id": "15",
+
+		"speaker": "Sylas",
+
+		"text": "Answer is still no.",
+
+		"emotion": "angry",
+
+		"next_node": "16"
+
+	  },
+
+	  {
+
+		"id": "16",
+
+		"speaker": "Sebastian",
+
+		"text": "Ugghhhh",
+
+		"emotion": "angry"
+
+	  },
+
+	  {
+
+		"id": "17",
+
+		"speaker": "Silvia",
+
+		"text": "EW NO GO AWAY",
+
+		"emotion": "grossed",
+
+		"next_node": "18"
+
+	  },
+
+	  {
+
+		"id": "18",
+
+		"speaker": "Sebastian",
+
+		"text": "Pleaassee?",
+
+		"emotion": "tired",
+
+		"next_node": "19"
+
+	  },
+
+	  {
+
+		"id": "19",
+
+		"speaker": "Silvia",
+
+		"text": "NO",
+
+		"emotion": "angry"
+
+	  }
+
+	]
+
+  }
+
+]

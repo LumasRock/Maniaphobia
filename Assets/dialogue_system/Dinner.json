@@ -1,0 +1,294 @@
+[
+  {
+	"dialogue_id": "Dinner",
+	"npc_name": "everyone else",
+	"nodes": [
+	  {
+	   "id": "1",
+		"speaker": "Cache",
+		"text": "wow wow [wave]wow[/wave]! Only 3 of you died!",
+		"emotion": "Happy",
+		"next_node": "2"
+	  },
+	  {
+		"id": "2",
+		"speaker": "Cache",
+		"text": "That's a doozzy!~",
+		"emotion": "neutral",
+		"next_node": "3"
+	  },
+	  {
+		"id": "3",
+		"speaker": " ",
+		"text": "...",
+		"emotion": "blank",
+		"next_node": "4"
+	  },
+	  {
+		"id": "4",
+		"speaker": "Cache",
+		"text": "Oh c'monnn~ don't be like that.",
+		"emotion": "neutral",
+		"next_node": "5"
+	  },
+	  {
+		"id": "5",
+		"speaker": "Cache",
+		"text": "I told you there was gonna be torture, never said about how fun it'd be!",
+		"emotion": "Happy",
+		"next_node": "6"
+	  },
+	  {
+		"id": "6",
+		"speaker": "Evelyn",
+		"text": "THAT WASN'T FUN",
+		"emotion": "angry",
+		"next_node": "7"
+	  },
+	  {
+		"id": "7",
+		"speaker": "Cache",
+		"text": "Geez, okay...okay..",
+		"emotion": "annoyed",
+		"next_node": "8"
+	  },
+	  {
+		"id": "8",
+		"speaker": "Connor",
+		"text": "Wait. W-what. How am I..",
+		"emotion": "scared",
+		"next_node": "9"
+	  },
+	  {
+		"id": "9",
+		"speaker": "Cache",
+		"text": "Ohhh, right forgot to mention. I can bring you guys back if [i]I[/i] so please.",
+		"emotion": "happy",
+		"next_node": "10"
+	  },
+	  {
+	   "id": "10",
+		"speaker": "Evelyn",
+		"text": "Then...where's my brother?",
+		"emotion": "worry",
+		"next_node": "11"
+	  },
+	  {
+		"id": "11",
+		"speaker": "Cache",
+		"text": "Oh, I'm just answering his question about, ah, what was it?",
+		"emotion": "annoyed",
+		"next_node": "12"
+	  },
+	  {
+		"id": "12",
+		"speaker": "Cache",
+		"text": "Right, if you guys were undead or not!",
+		"emotion": "neutral",
+		"next_node": "13"
+	  },
+	  {
+		"id": "13",
+		"speaker": "Evelyn",
+		"text": "...",
+		"emotion": "scared",
+		"next_node": "14"
+	  },
+	  {
+		"id": "14",
+		"speaker": "Cache",
+		"text": "Come, come! We have much to do in sooo little time!~",
+		"emotion": "neutral",
+		"next_node": "41"
+	  },
+	{
+		"id": "41",
+		"speaker": " ",
+		"text": "Suddenly, they arrive now in the dining area.",
+		"emotion": "blank",
+		"next_node": "15"
+	},
+	  {
+		"id": "15",
+		"speaker": "Cache",
+		"text": "bon appetit!",
+		"emotion": "happy",
+		"next_node": "16"
+	  },
+	  {
+		"id": "16",
+		"speaker": "Sylas",
+		"text": "YESSSS GOD IM STARVING",
+		"emotion": "happy",
+		"next_node": "17"
+	  },
+	  {
+		"id": "17",
+		"speaker": "Connor",
+		"text": "...",
+		"emotion": "scared",
+		"next_node": "18"
+	  },
+	  {
+		"id": "18",
+		"speaker": "Sebastian",
+		"text": "Hey dude. Something wrong?",
+		"emotion": "confused",
+		"next_node": "19"
+	  },
+	  {
+		"id": "19",
+		"speaker": "Connor",
+		"text": "Oh. No, nothing is...wrong.",
+		"emotion": "neutral",
+		"next_node": "20"
+	  },
+	  {
+		"id": "20",
+		"speaker": "Evelyn",
+		"text": "You sure? Seem a bit on edge over there.",
+		"emotion": "worry",
+		"next_node": "21"
+	  },
+	  {
+		"id": "21",
+		"speaker": "Cache",
+		"text": "... ;)",
+		"emotion": "neutral",
+		"next_node": "22"
+	  },
+	  {
+		"id": "22",
+		"speaker": "Connor",
+		"text": "...",
+		"emotion": "scared",
+		"next_node": "23"
+	  },
+	  {
+		"id": "23",
+		"speaker": "Connor",
+		"text": "It's--people.",
+		"emotion": "scared",
+		"next_node": "24"
+	  },
+	  {
+		"id": "24",
+		"speaker": "Sylas",
+		"text": "Huh??",
+		"emotion": "confused",
+		"next_node": "25"
+	  },
+	  {
+		"id": "25",
+		"speaker": "Connor",
+		"text": "God damn it... [shake rate=8 level=4]you're eating Evan.[/shake]",
+		"emotion": "angry",
+		"next_node": "26"
+	  },
+	  {
+		"id": "26",
+		"speaker": "Sylas",
+		"text": "[b]HUH??[/b]",
+		"emotion": "Scared",
+		"next_node": "27"
+	  },
+	  {
+		"id": "27",
+		"speaker": "Sylas",
+		"text": "pfft pfft, yuck--eugh...",
+		"emotion": "Scared",
+		"next_node": "28"
+	  },
+	  {
+		"id": "28",
+		"speaker": "Evelyn",
+		"text": "I'M GOING TO KILL YOUR--",
+		"emotion": "angry",
+		"next_node": "29"
+	  },
+	  {
+		"id": "29",
+		"speaker": " ",
+		"text": "Evelyn tries to jump and attack Cache but merely phases through him.",
+		"emotion": "blank",
+		"next_node": "30"
+	  },
+	  {
+		"id": "30",
+		"speaker": "Cache",
+		"text": "Nuh uh uh! That's no way to treat your host~",
+		"emotion": "neutral",
+		"next_node": "31"
+	  },
+	  {
+		"id": "31",
+		"speaker": "Evelyn",
+		"text": "Hah...hah..",
+		"emotion": "scared",
+		"next_node": "32"
+	  },
+	  {
+		"id": "32",
+		"speaker": "Evelyn",
+		"text": "Bring him back--you said you could--please...",
+		"emotion": "happy",
+		"next_node": "33"
+	  },
+	  {
+		"id": "33",
+		"speaker": "Cache",
+		"text": "Ohohoho~ someone is being impatient.",
+		"emotion": "neutral",
+		"next_node": "34"
+	  },
+	  {
+		"id": "34",
+		"speaker": "Cache",
+		"text": "Fine, here's your brother. In the... 'flesh'.",
+		"emotion": "happy",
+		"next_node": "35"
+	  },
+	  {
+		"id": "35",
+		"speaker": "Evan",
+		"text": "...",
+		"emotion": "Scared",
+		"next_node": "36"
+	  },
+	  {
+		"id": "36",
+		"speaker": "Evan",
+		"text": "I'm kinda wishing I was dead now.",
+		"emotion": "worried",
+		"next_node": "37"
+	  },
+	  {
+		"id": "37",
+		"speaker": "Evelyn",
+		"text": "[wave]Evan![/wave] Oh my god IM GONNA KILL YOU",
+		"emotion": "happy",
+		"next_node": "38"
+	  },
+	  {
+		"id": "38",
+		"speaker": "Evelyn",
+		"text": "NEVER DO THAT AGAIN",
+		"emotion": "worried",
+		"next_node": "39"
+	  },
+	  {
+		"id": "39",
+		"speaker": "Evan",
+		"text": "HYACKASK:ASFKASF:L",
+		"emotion": "scared",
+		"next_node": "40"
+	  },
+	  {
+		"id": "40",
+		"speaker": "Evan",
+		"text": "OKAY JUST--STOP--CHOKING ME.",
+		"emotion": "worried"
+	  }
+	]
+  }
+]
