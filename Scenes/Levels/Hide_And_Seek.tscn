@@ -277,6 +277,10 @@ Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
 [node name="CharacterBody2D" parent="." instance=ExtResource("7_x8cd0")]
 position = Vector2(79, 225)
 
+[node name="HidingBreathing" parent="CharacterBody2D/HidingManager" index="0"]
+_testing_mode = false
+max_time = 1.1
+
 [node name="Interactables" type="Node" parent="."]
 
 [node name="HideInteractable" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
