@@ -1,0 +1,89 @@
+[gd_scene load_steps=3 format=3 uid="uid://dn53br4mnqkgi"]
+
+[ext_resource type="Script" uid="uid://bnk8mjm0cxn3n" path="res://Script/GameOver.gd" id="1_k52d1"]
+[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="2_ktc4i"]
+
+[node name="GameOver" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_k52d1")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -40.0
+offset_right = 160.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 40
+text = "GAME OVER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="."]
+modulate = Color(0.854262, 0.633719, 0.116178, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -300.0
+offset_right = 101.0
+offset_bottom = -250.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Restart"
+
+[node name="Button2" type="Button" parent="."]
+modulate = Color(0.854262, 0.633719, 0.116178, 1)
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -107.0
+offset_top = -222.0
+offset_right = 98.0
+offset_bottom = -172.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Return to Main Menu"
+
+[node name="TextureRect" parent="." instance=ExtResource("2_ktc4i")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+mouse_filter = 2
+target_scene = "uid://cgwbrd16d3skx"
+
+[connection signal="pressed" from="Button" to="." method="_on_reset_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_menu_button_pressed"]

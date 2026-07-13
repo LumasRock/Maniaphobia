@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bt3hmbo5wf4jw"]
+
+[ext_resource type="Shader" uid="uid://c3peaphjck3jc" path="res://Assets/ghost.gdshader" id="1_thbej"]
+[ext_resource type="Texture2D" uid="uid://bt6sr810r5lfj" path="res://Assets/ghost.png" id="2_uta0k"]
+[ext_resource type="Script" uid="uid://cb1ntfmq3dkeq" path="res://Script/GhostWander.gd" id="3_108wt"]
+[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://Script/States/state_machine.gd" id="3_uta0k"]
+[ext_resource type="Script" uid="uid://1kxcc38fdgl1" path="res://Script/GhostChase.gd" id="4_3btnm"]
+[ext_resource type="Script" uid="uid://bqfc35hcyrktr" path="res://Script/GhostCall.gd" id="5_taxxh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_st3at"]
+shader = ExtResource("1_thbej")
+shader_parameter/speed = 2.0
+shader_parameter/amplitude = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6attn"]
+radius = 26.2847
+
+[node name="CharacterBody2D" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("ShaderMaterial_st3at")
+texture = ExtResource("2_uta0k")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(4.76837e-07, 9.53674e-07)
+scale = Vector2(0.496918, 1.17905)
+shape = SubResource("CircleShape2D_6attn")
+disabled = true
+
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("3_uta0k")
+initial_state = NodePath("GhostWander")
+
+[node name="GhostWander" type="Node" parent="State Machine" node_paths=PackedStringArray("ghost", "sprite")]
+script = ExtResource("3_108wt")
+ghost = NodePath("../..")
+sprite = NodePath("../../Sprite2D")
+metadata/_custom_type_script = "uid://cn67v7h0mdsdd"
+
+[node name="GhostChase" type="Node" parent="State Machine" node_paths=PackedStringArray("ghost")]
+script = ExtResource("4_3btnm")
+ghost = NodePath("../..")
+metadata/_custom_type_script = "uid://1kxcc38fdgl1"
+
+[node name="GhostCall" type="Node" parent="State Machine" node_paths=PackedStringArray("ghost")]
+script = ExtResource("5_taxxh")
+ghost = NodePath("../..")
+metadata/_custom_type_script = "uid://bqfc35hcyrktr"

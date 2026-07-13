@@ -1,0 +1,32 @@
+[gd_scene load_steps=3 format=3 uid="uid://bxyaqxkx8q6l5"]
+
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Dialogue.tscn" id="1_xeoaw"]
+[ext_resource type="Script" uid="uid://c68xcrbq150ec" path="res://button.gd" id="2_40n3b"]
+
+[node name="othertest" type="Node2D"]
+
+[node name="Dialogue" parent="." instance=ExtResource("1_xeoaw")]
+offset_left = 226.0
+offset_top = 356.0
+offset_right = 226.0
+offset_bottom = 356.0
+json_file = "res://beep.json"
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 633.0
+offset_top = 13.0
+offset_right = 921.0
+offset_bottom = 100.0
+
+[node name="Button" type="Button" parent="Control"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Test scene"
+script = ExtResource("2_40n3b")
+
+[connection signal="pressed" from="Control/Button" to="Control/Button" method="_on_pressed"]
+
+[editable path="Dialogue"]

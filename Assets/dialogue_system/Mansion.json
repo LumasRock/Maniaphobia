@@ -1,0 +1,1676 @@
+[
+
+  {
+
+	"dialogue_id": "Mansion",
+
+	"npc_name": "everyone else",
+
+	"nodes": [
+
+	  {
+
+		"id":"1",
+
+		"speaker": "Sebastian",
+
+		"text":"Ugh... my head..",
+
+		"emotion": "annoyed",
+
+		"next_node": "2"
+
+	  },
+
+	  {
+
+		"id":"2",
+
+		"speaker": "Sebastian",
+
+		"text": "[i] is there anyone--oh...[/i]",
+
+		"emotion": "worried",
+
+		"next_node": "3"
+
+	  },
+
+	  {
+
+		"id": "3",
+
+		"speaker": "Evelyn",
+
+		"text": "All of you are morons... why can't we just--oh I don't know--[b]walk out the door[/b] again?",
+
+		"emotion": "annoyed",
+
+		"next_node": "4"
+
+	  },
+
+	  {
+
+		"id": "4",
+
+		"speaker": "Sylas",
+
+		"text": "I told you. The things locked, blocked, jammed--something. It ain't budging.",
+
+		"emotion": "worried",
+
+		"next_node": "5"
+
+	  },
+
+	  {
+
+		"id": "5",
+
+		"speaker": "Evan",
+
+		"text": "I...don't like the sound of being trapped here.",
+
+		"emotion": "worried",
+
+		"next_node": "6"
+
+	  },
+
+	  {
+
+		"id": "6",
+
+		"speaker": "Evelyn",
+
+		"text": "We won't be stuck here, geez. [font_size=12]But, God, do you worry too much...[/font_size]",
+
+		"emotion": "angry",
+
+		"next_node": "7"
+
+	  },
+
+	  {
+
+		"id": "7",
+
+		"speaker": " ",
+
+		"text": "Suddenly, they all turned to look at you. Aware of your presence now.",
+
+		"emotion": "blank",
+
+		"next_node": "8"
+
+	  },
+
+	  {
+
+		"id": "8",
+
+		"speaker": "Sylas",
+
+		"text": "Wait...Seb? Sebastian? Is--is it you?",
+
+		"emotion": "scared",
+
+		"options": [
+
+		  {"text": "Who're you talking to?", "next_node": "9"},
+
+		  {"text": "...", "next_node": "10"},
+
+		  {"text": "Yeah? That's me.", "next_node": "11"}
+
+		]
+
+	  },
+
+	  {
+
+		"id": "9",
+
+		"speaker": "Sylas",
+
+		"text": "You? Well--uh, nevermind, I guess. Thought you were someone else..",
+
+		"emotion": "doubt",
+
+		"next_node": "13"
+
+	  },
+
+	  {
+
+		"id": "10",
+
+		"speaker": "Sylas",
+
+		"text": "Guess not. Sorry about that. That was pretty creepy of me.",
+
+		"emotion": "Worry",
+
+		"next_node": "13"
+
+	  },
+
+	  {
+
+		"id": "11",
+
+		"speaker": "Sylas",
+
+		"text": "Knew it... you always wanted to stick out..",
+
+		"emotion": "annoyed",
+
+		"next_node": "12"
+
+	  },
+
+	  {
+
+		"id": "12",
+
+		"speaker": "Sebastian",
+
+		"text": "No I-- nevermind...",
+
+		"emotion": "annoyed",
+
+		"next_node": "13"
+
+	  },
+
+	  {
+
+		"id": "13",
+
+		"speaker": "Silvia",
+
+		"text": "You two know each other?",
+
+		"emotion": "confused",
+
+		"next_node": "14"
+
+	  },
+
+	  {
+
+		"id": "14",
+
+		"speaker": "Sylas",
+
+		"text": "Thought I did...",
+
+		"emotion": "neutral",
+
+		"next_node": "15"
+
+	  },
+
+	  {
+
+		"id": "15",
+
+		"speaker": "Sebastian",
+
+		"text": "Dont say it like that...",
+
+		"emotion": "doubt",
+
+		"next_node": "16"
+
+	  },
+
+	  {
+
+		"id": "16",
+
+		"speaker": "Sylas",
+
+		"text": "I'll say it however I want [b]bastard[/b]",
+
+		"emotion":"angry",
+
+		"next_node":"17"
+
+	  },
+
+	  {
+
+		"id": "17",
+
+		"speaker": "Evan",
+
+		"text": "Guys, guys. Please don't fight.",
+
+		"emotion": "worried",
+
+		"next_node": "18"
+
+	  },
+
+	  {
+
+		"id": "18",
+
+		"speaker": "Evan",
+
+		"text": "We already agreed that cannibalism is a last resort",
+
+		"emotion": "point",
+
+		"next_node": "19"
+
+	  },
+
+	  {
+
+		"id": "19",
+
+		"speaker": "Evelyn",
+
+		"text": "Where the hell did cannibalism come from? Also [i]none[/i] of us agreed on that.",
+
+		"emotion": "worried",
+
+		"next_node": "20"
+
+	  },
+
+	  {
+
+		"id": "20",
+
+		"speaker": "Evan",
+
+		"text": "We... didn't?",
+
+		"emotion": "confused",
+
+		"next_node": "21"
+
+	  },
+
+	  {
+
+		"id": "21",
+
+		"speaker": "Evelyn",
+
+		"text": "Yeah, you talked to us about all your little geeky theories. Geek.",
+
+		"emotion": "snarky",
+
+		"next_node": "22"
+
+	  },
+
+	  {
+
+		"id": "22",
+
+		"speaker": "Evan",
+
+		"text": "Don't call me that. Also-- NO I DIDN'T??",
+
+		"emotion": "Angry",
+
+		"next_node": "23"
+
+	  },
+
+	  {
+
+		"id": "23",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]Trapped here with these lunatics...[/i]",
+
+		"emotion": "annoyed",
+
+		"next_node": "24"
+
+	  },
+
+	  {
+
+		"id": "24",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]Might as well send me to the psych ward now...[/i]",
+
+		"emotion": "worried"
+
+	  },
+
+	  {
+
+		"id": "25",
+
+		"speaker": "Sebastian",
+
+		"text": "So... watcha doing?",
+
+		"emotion": "Confused",
+
+		"next_node": "26"
+
+	  },
+
+	  {
+
+		"id": "26",
+
+		"speaker": "Evan",
+
+		"text": "Hm? Oh, just...Looking around.",
+
+		"emotion": "neutral",
+
+		"next_node": "27"
+
+	  },
+
+	  {
+
+		"id": "27",
+
+		"speaker": "Evan",
+
+		"text": "Doesn't this place kinda... creep you out?",
+
+		"emotion": "worried",
+
+		"next_node": "28"
+
+	  },
+
+	  {
+
+		"id": "28",
+
+		"speaker": "Sebastian",
+
+		"text": "Well, yeah. It's a old mansion with flickering lights and cobwebs.",
+
+		"emotion": "annoyed",
+
+		"next_node": "29"
+
+	  },
+
+	  {
+
+		"id": "29",
+
+		"speaker": "Sebastian",
+
+		"text": "Usually these houses [i]are[/i] creepy.",
+
+		"emotion": "confused",
+
+		"next_node": "30"
+
+	  },
+
+	  {
+
+		"id": "30",
+
+		"speaker": "Evan",
+
+		"text": "True. But its like--",
+
+		"emotion": "point",
+
+		"next_node": "31"
+
+	  },
+
+	  {
+
+		"id": "31",
+
+		"speaker": "Evan",
+
+		"text": "I don't know..",
+
+		"emotion": "confused",
+
+		"next_node": "32"
+
+	  },
+
+	  {
+
+		"id": "32",
+
+		"speaker": "Sebastian",
+
+		"text": "Well, you figure that out I guess.",
+
+		"emotion": "neutral",
+
+		"next_node": "33"
+
+	  },
+
+	  {
+
+		"id": "33",
+
+		"speaker": "Evan",
+
+		"text": "Oh wait--what's your name again? I didn't quite catch it.",
+
+		"emotion": "neutral",
+
+		"next_node": "34"
+
+	  },
+
+	  {
+
+		"id": "34",
+
+		"speaker": "Sebastian",
+
+		"text": "It's Sebastian.",
+
+		"emotion": "annoyed",
+
+		"next_node": "35"
+
+	  },
+
+	  {
+
+		"id": "35",
+
+		"speaker": "Evan",
+
+		"text": "Ah, okay. I'm Evan.",
+
+		"emotion": "happy",
+
+		"next_node": "36"
+
+	  },
+
+	  {
+
+		"id": "36",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]Great...another person to dissapoint..[/i]",
+
+		"emotion": "annoyed"
+
+	  },
+
+	  {
+
+		"id": "37",
+
+		"speaker": "Evelyn",
+
+		"text": "Geez. What grave you crawled out from?",
+
+		"emotion": "annoyed",
+
+		"next_node": "38"
+
+	  },
+
+	  {
+
+		"id": "38",
+
+		"speaker": "Sebastian",
+
+		"text": "Seriously? THAT's what you're worry about?",
+
+		"emotion": "angry",
+
+		"next_node": "39"
+
+	  },
+
+	  {
+
+		"id": "39",
+
+		"speaker": "Evelyn",
+
+		"text": "Well..yeah. We are all [i]technically[/i] zombies.",
+
+		"emotion": "confused",
+
+		"next_node": "40"
+
+	  },
+
+	  {
+
+		"id": "40",
+
+		"speaker": "Sebastian",
+
+		"text": "No, no, we are all clearly alive actually.",
+
+		"emotion": "confused",
+
+		"next_node": "41"
+
+	  },
+
+	  {
+
+		"id": "41",
+
+		"speaker": "Evelyn",
+
+		"text": "Well [i]actually[/i] smartass. We aren't.",
+
+		"emotion": "snarky",
+
+		"next_node": "42"
+
+	  },
+
+	  {
+
+		"id": "42",
+
+		"speaker": "Evelyn",
+
+		"text": "We all collectively DIED.",
+
+		"emotion": "angry",
+
+		"next_node": "43"
+
+	  },
+
+	  {
+
+		"id": "43",
+
+		"speaker": "Sebastian",
+
+		"text": "Oh...",
+
+		"emotion": "neutral",
+
+		"next_node": "44"
+
+	  },
+
+	  {
+
+		"id": "44",
+
+		"speaker": "Sebastian",
+
+		"text": "[font_size=12]Really thought I survived that wreck..[/font_size]",
+
+		"emotion": "annoyed",
+
+		"next_node": "45"
+
+	  },
+
+	  {
+
+		"id": "45",
+
+		"speaker": "Evelyn",
+
+		"text": "Apparently [b]not[/b].",
+
+		"emotion": "snarky"
+
+	  },
+
+	  {
+
+		"id": "46",
+
+		"speaker": "Silvia",
+
+		"text": "Huh.",
+
+		"emotion":"neutral",
+
+		"next_node": "47"
+
+	  },
+
+	  {
+
+		"id": "47",
+
+		"speaker": "Sebastian",
+
+		"text": "What? Why're you looking at me like that..",
+
+		"emotion": "confused",
+
+		"next_node": "48"
+
+	  },
+
+	  {
+
+		"id": "48",
+
+		"speaker": "Silvia",
+
+		"text": "Nothing. You seem pretty familiar, that's all.",
+
+		"emotion": "annoyed",
+
+		"next_node": "49"
+
+	  },
+
+	  {
+
+		"id": "49",
+
+		"speaker": "Sebastian",
+
+		"text": "Well, yeah. I'm pretty out there.",
+
+		"emotion": "neutral",
+
+		"next_node": "50"
+
+	  },
+
+	  {
+
+		"id": "50",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]I think...I [b]hope[/b].[/i]",
+
+		"emotion": "worried",
+
+		"next_node": "51"
+
+	  },
+
+	  {
+
+		"id": "51",
+
+		"speaker": "Silvia",
+
+		"text": "Nevermind--I'm Silvia",
+
+		"emotion": "neutral",
+
+		"next_node": "52"
+
+	  },
+
+	  {
+
+		"id": "52",
+
+		"speaker": "Sebastian",
+
+		"text": "Oh, alright. Nice to meet you for the [b]first time[/b]. I'm Sebastian.",
+
+		"emotion": "happy",
+
+		"next_node": "53"
+
+	  },
+
+	  {
+
+		"id": "53",
+
+		"speaker": "Silvia",
+
+		"text": "[shake rate=9 level=10]EW[/shake], gross don't touch me. You look like you got ran over.",
+
+		"emotion": "grossed",
+
+		"next_node": "54"
+
+	  },
+
+	  {
+
+		"id": "54",
+
+		"speaker": "Sebastian",
+
+		"text": "...",
+
+		"emotion": "neutral",
+
+		"next_node": "55"
+
+	  },
+
+	  {
+
+		"id": "55",
+
+		"speaker": "Sebastian",
+
+		"text": "[shake rate=5 level=10]I did get ran over.[/shake]",
+
+		"emotion": "doubt",
+
+		"next_node": "56"
+
+	  },
+
+	  {
+
+		"id": "56",
+
+		"speaker": "Silvia",
+
+		"text": "Should've cleaned up at LEAST.",
+
+		"emotion": "annoyed"
+
+	  },
+
+	  {
+
+		"id": "57",
+
+		"speaker": "Sebastian",
+
+		"text": "What're you doing?",
+
+		"emotion": "confused",
+
+		"next_node": "58"
+
+	  },
+
+	  {
+
+		"id": "58",
+
+		"speaker": "Connor",
+
+		"text": "...oh you're talking to me?",
+
+		"emotion": "neutral",
+
+		"next_node": "59"
+
+	  },
+
+	  {
+
+		"id": "59",
+
+		"speaker": "Sebastian",
+
+		"text": "Mhm, I sure am.",
+
+		"emotion": "neutral",
+
+		"next_node": "60"
+
+	  },
+
+	  {
+
+		"id": "60",
+
+		"speaker": "Connor",
+
+		"text": "Oh--well, I'm trying to get the TV to work...but its stuck as static.",
+
+		"emotion": "neutral",
+
+		"next_node": "61"
+
+	  },
+
+	  {
+
+		"id": "61",
+
+		"speaker": "Sebastian",
+
+		"text": "Did you...change the channel?",
+
+		"emotion": "confused",
+
+		"next_node": "62"
+
+	  },
+
+	  {
+
+		"id": "62",
+
+		"speaker": "Connor",
+
+		"text": "Yes, many times. Still nothing.",
+
+		"emotion": "confused",
+
+		"next_node": "63"
+
+	  },
+
+	  {
+
+		"id": "63",
+
+		"speaker": "Sebastian",
+
+		"text": "Why're you even worrying about a TV anyway?",
+
+		"emotion": "worried",
+
+		"next_node": "64"
+
+	  },
+
+	  {
+
+		"id": "64",
+
+		"speaker": "Sebastian",
+
+		"text": "Don't you know we just technically [b]died[/b]?",
+
+		"emotion": "annoyed",
+
+		"next_node": "65"
+
+	  },
+
+	  {
+
+		"id": "65",
+
+		"speaker": "Connor",
+
+		"text": "Yeah, I know.",
+
+		"emotion": "neutral",
+
+		"next_node": "66"
+
+	  },
+
+	  {
+
+		"id": "66",
+
+		"speaker": "Connor",
+
+		"text": "I feel like I can hear someone else though, in the static.",
+
+		"emotion": "neutral",
+
+		"next_node": "67"
+
+	  },
+
+	  {
+
+		"id": "67",
+
+		"speaker": "Connor",
+
+		"text": "It might help.",
+
+		"emotion": "annoyed",
+
+		"next_node": "68"
+
+	  },
+
+	  {
+
+		"id": "68",
+
+		"speaker": "Sebastian",
+
+		"text": "Yeah, it's called the news, man.",
+
+		"emotion": "annoyed",
+
+		"next_node": "69"
+
+	  },
+
+	  {
+
+		"id": "69",
+
+		"speaker": "Connor",
+
+		"text": "You'll see. Just wait",
+
+		"emotion": "neutral"
+
+	  },
+
+	  {
+
+		"id": "70",
+
+		"speaker": "Silvia",
+
+"text": "I still say youre crazy thinking a TV is going to help us.",
+
+"emotion": "annoyed",
+
+"next_node": "71"
+
+},
+
+{
+
+"id": "71",
+
+"speaker": "Sylas",
+
+"text": "Look, just give him a chance.",
+
+"emotion": "neutral",
+
+"next_node": "73"
+
+},
+
+{
+
+"id": "73",
+
+"speaker": "Sylas",
+
+"text": "Maybe hes actually some genius.",
+
+"emotion": "happy",
+
+"next_node": "74"
+
+},
+
+{
+
+"id": "74",
+
+"speaker": "Connor",
+
+"text": "Huh? Genius? ME?",
+
+"emotion": "confused",
+
+"next_node": "75"
+
+},
+
+{
+
+"id": "75",
+
+"speaker": "Connor",
+
+"text": " Nah, nah. Im just. going with my gut on this.",
+
+"emotion": "neutral",
+
+"next_node": "76"
+
+},
+
+{
+
+"id": "76",
+
+"speaker": "Silvia",
+
+"text": "Well. maybe your [b]gut[/b] is trying to [shake rate=8 level=10]WASTE OUR TIME.[/shake]",
+
+"emotion": "angry",
+
+"next_node": "77"
+
+},
+
+{
+
+"id": "77",
+
+"speaker": " ",
+
+"text": "Suddenly, the TV flickers and finally footage and the very audible sound ofpeople bickering replaces the static.",
+
+"emotion": "blank",
+
+"next_node":"78"
+
+},
+
+{
+
+"id":"78",
+
+"speaker":"Cache",
+
+"text":"Look, Noir, Im not gonna start giving you favoritism. Mkay?",
+
+"emotion": "neutral",
+
+"next_node": "79"
+
+},
+
+{
+
+"id":"79",
+
+"speaker":"Cache",
+
+"text":"Just keep them busy for like 5 minutes.",
+
+"emotion":"annoyed",
+
+"next_node":"80"
+
+},
+
+	  {
+
+		"id": "80",
+
+		"speaker": "Noir",
+
+		"text": "Well--",
+
+		"emotion": "sad",
+
+		"next_node": "81"
+
+	  },
+
+	  {
+
+	  "id": "81",
+
+		"speaker": "Cache",
+
+		"text": "Nope. Don't Care. Go, shoo.",
+
+		"emotion": "neutral",
+
+		"next_node": "82"
+
+	  },
+
+	  {
+
+		"id": "82",
+
+		"speaker": "Cache",
+
+		"text": "I need to make sure everything is extravagant and deadly~",
+
+		"emotion": "happy",
+
+		"next_node": "83"
+
+	  },
+
+	  {
+
+		"id": "83",
+
+		"speaker": "Sylas",
+
+		"text": "I'm sorry--what did that guy just say...",
+
+		"emotion": "worried",
+
+		"next_node": "84"
+
+	  },
+
+	  {
+
+		"id": "84",
+
+		"speaker": "Noir",
+
+		"text": "Sir, the TV's on.",
+
+		"emotion": "sad",
+
+		"next_node": "85"
+
+	  },
+
+	  {
+
+		"id":"85",
+
+		"speaker": "Cache",
+
+		"text": "They got the TV on?",
+
+		"emotion": "neutral",
+
+		"next_node": "86"
+
+	  },
+
+	  {
+
+		"id": "86",
+
+		"speaker": " ",
+
+		"text": "The television returns to static",
+
+		"emotion": "blank",
+
+		"next_node": "87"
+
+	  },
+
+	  {
+
+		"id": "87",
+
+		"speaker": "Connor",
+
+		"text": "Cmon...stupid piece of--",
+
+		"emotion": "annoyed",
+
+		"next_node": "88"
+
+	  },
+
+	  {
+
+		"id": "88",
+
+		"speaker": " ",
+
+		"text": "The television turns back on.",
+
+		"emotion": "blank",
+
+		"next_node": "89"
+
+	  },
+
+	  {
+
+		"id": "89",
+
+		"speaker": "Cache",
+
+		"text": "Hello~ Welcome my esteemed Volunteers!",
+
+		"emotion": "Happy",
+
+		"next_node": "90"
+
+	  },
+
+	  {
+
+		"id": "90",
+
+		"speaker": "Silvia",
+
+		"text": "VOLUNTEER? I DIDN'T SIGN ANYTHING.",
+
+		"emotion": "angry",
+
+		"next_node": "91"
+
+	  },
+
+	  {
+
+		"id": "91",
+
+		"speaker": "Cache",
+
+		"text": "No, you don't [i]need[/i] to sign a waiver or anything.",
+
+		"emotion": "neutral",
+
+		"next_node": "92"
+
+	  },
+
+	  {
+
+		"id": "92",
+
+		"speaker": "Cache",
+
+		"text": "Because you're already dead!",
+
+		"emotion": "happy",
+
+		"next_node": "93"
+
+	  },
+
+	  {
+
+		"id": "93",
+
+		"speaker": "Evelyn",
+
+		"text": "Called it.",
+
+		"emotion": "snarky",
+
+		"next_node": "94"
+
+	  },
+
+	  {
+
+		"id": "94",
+
+		"speaker": "Sebastian",
+
+		"text": "Dude, shut up.",
+
+		"emotion": "annoyed",
+
+		"next_node": "95"
+
+	  },
+
+	  {
+
+		"id": "95",
+
+		"speaker": "Cache",
+
+		"text": "But now that I have your attention... Why I ought to introduce myself!",
+
+		"emotion": "happy",
+
+		"next_node": "96"
+
+	  },
+
+	  {
+
+		"id": "96",
+
+		"speaker": "Cache",
+
+		"text": "My name is Cache! And I will be your host and ringmaster!",
+
+		"emotion": "neutral",
+
+		"next_node": "97"
+
+	  },
+
+	  {
+
+		"id": "97",
+
+		"speaker": "Sebastian",
+
+		"text": "[i]This guy is very off from the beginning...I don't trust him at all.[/i]",
+
+		"emotion": "doubt",
+
+		"next_node": "98"
+
+	  },
+
+	  {
+
+		"id": "98",
+
+		"speaker": "Cache",
+
+		"text": "Well, you dont [i]have[/i] to trust me.",
+
+		"emotion": "neutral",
+
+		"next_node": "99"
+
+	  },
+
+	  {
+
+		"id": "99",
+
+		"speaker": "Sebastian",
+
+		"text": "THE HELL??",
+
+		"emotion": "Angry",
+
+		"next_node": "100"
+
+	  },
+
+	  {
+
+		"id": "100",
+
+		"speaker": "Evelyn",
+
+		"text": "What? What's wrong?",
+
+		"emotion": "confused",
+
+		"next_node": "101"
+
+	  },
+
+	  {
+
+		"id": "101",
+
+		"speaker": "Cache",
+
+		"text": "That's right! I can read thoughts. Ooo~",
+
+		"emotion": "happy",
+
+		"next_node": "102"
+
+	  },
+
+	  {
+
+		"id": "102",
+
+		"speaker": "Cache",
+
+		"text": "It's pretty easy too! Given that you're all technically ghosts. And in [b]my[/b] house.",
+
+		"emotion": "neutral",
+
+		"next_node": "103"
+
+	  },
+
+	  {
+
+		"id": "103",
+
+		"speaker": "Evan",
+
+		"text": "Are we zombies or are we ghosts?",
+
+		"emotion": "confused",
+
+		"next_node": "104"
+
+	  },
+
+	  {
+
+		"id": "104",
+
+		"speaker": "Evan",
+
+		"text": "Genuinely.",
+
+		"emotion": "worry",
+
+		"next_node": "105"
+
+	  },
+
+	  {
+
+		"id": "105",
+
+		"speaker": "Cache",
+
+		"text": "Worry not, my little friend!",
+
+		"emotion": "happy",
+
+		"next_node": "106"
+
+	  },
+
+	  {
+
+		"id": "106",
+
+		"speaker": "Evan",
+
+		"text": "Oh god he's real.",
+
+		"emotion": "Scared",
+
+		"next_node": "107"
+
+	  },
+
+	  {
+
+		"id": "107",
+
+		"speaker": "Cache",
+
+		"text": "Your question will be answered...later",
+
+		"emotion": "neutral",
+
+		"next_node": "108"
+
+	  },
+
+	  {
+
+		"id": "108",
+
+		"speaker": "Cache",
+
+		"text": "For now...I wanna have some fun! Y'all like fun huh?",
+
+		"emotion": "happy",
+
+		"next_node": "109"
+
+	  },
+
+	  {
+
+		"id": "109",
+
+		"speaker": "Evelyn",
+
+		"text": "Depends...",
+
+		"emotion": "annoyed",
+
+		"next_node": "110"
+
+	  },
+
+	  {
+
+		"id": "110",
+
+		"speaker": "Cache",
+
+		"text": "How about--",
+
+		"emotion": "neutral",
+
+		"next_node": "111"
+
+	  },
+
+	  {
+
+		"id": "111",
+
+		"speaker": "Noir",
+
+		"text": "Hide and Seek!",
+
+		"emotion": "happy",
+
+		"next_node": "112"
+
+	  },
+
+	  {
+
+		"id": "112",
+
+		"speaker": "Cache",
+
+		"text": "...",
+
+		"emotion": "neutral",
+
+		"next_node": "113"
+
+	  },
+
+	  {
+
+		"id": "113",
+
+		"speaker": "Cache",
+
+		"text": "Y'know what. Fine, but don't interrupt me again.",
+
+		"emotion": "annoyed",
+
+		"next_node": "114"
+
+	  },
+
+	  {
+
+		"id": "114",
+
+		"speaker": "Noir",
+
+		"text": "Oh okay...",
+
+		"emotion": "sad",
+
+		"next_node": "115"
+
+	  },
+
+	  {
+
+		"id":"115",
+
+		"speaker": "Cache",
+
+		"text": "Go fetch Maw, she must be [shake rate=8 level=5]starving[/shake]",
+
+		"emotion": "neutral",
+
+		"next_node": "116"
+
+	  },
+
+	  {
+
+		"id": "116",
+
+		"speaker": "Sebastian",
+
+		"text": "Wait what. What does her starving have to.",
+
+		"emotion": "confused",
+
+		"next_node": "117"
+
+	  },
+
+	  {
+
+		"id": "117",
+
+		"speaker": "Cache",
+
+		"text": "shshsh. Shut up now.",
+
+		"emotion": "neutral",
+
+		"next_node": "118"
+
+	  },
+
+	  {
+
+		"id": "118",
+
+		"speaker": "Cache",
+
+		"text": "And have funnn~",
+
+		"emotion": "happy"
+
+	  },
+	{
+		"id": "119",
+		"speaker": "Sylas",
+		"text": "Hey.",
+		"emotion": "annoyed",
+		"next_node": "120"
+	},
+	{
+		"id": "120",
+		"speaker": "Sebastian",
+		"text": "Hey--look, listen I--",
+		"emotion": "doubt",
+		"next_node": "121"
+	},
+	{
+		"id": "121",
+		"speaker": "Sylas",
+		"text": "No. I don't want to hear it right now.",
+		"emotion": "angry",
+		"next_node": "122"
+	},
+	{
+		"id": "122",
+		"speaker": "Sebastian",
+		"text": "...",
+		"emotion": "worry"
+	}
+
+	]
+
+  }
+
+]
