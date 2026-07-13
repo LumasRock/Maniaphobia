@@ -135,6 +135,11 @@ Q={
 ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="Floor 1"
+2d_physics/layer_2="Floor 2"
+
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
