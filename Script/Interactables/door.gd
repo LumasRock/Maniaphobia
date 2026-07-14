@@ -1,5 +1,5 @@
 extends Area2D
-@onready var Shadows = %Shadows
+@export var Shadows: TileMapLayer
 
 enum Placement { UP, LEFT, RIGHT, BOTTOM }
 
