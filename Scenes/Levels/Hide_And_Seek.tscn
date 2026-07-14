@@ -3,10 +3,10 @@
 [ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://Script/hide_and_seek.gd" id="1_mo55v"]
 [ext_resource type="PackedScene" uid="uid://xlyw1p0loole" path="res://Scenes/Maw.tscn" id="3_pbatd"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="3_xke3r"]
-[ext_resource type="Script" uid="uid://dfo30in62rs4x" path="res://Script/Interactables/Hide.gd" id="4_xke3r"]
+[ext_resource type="Script" uid="uid://dfo30in62rs4x" path="res://Script/Interactables/hide_interactable.gd" id="4_xke3r"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="5_bojxd"]
 [ext_resource type="PackedScene" uid="uid://bt3hmbo5wf4jw" path="res://Scenes/ghost.tscn" id="6_vphy3"]
-[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player.tscn" id="7_x8cd0"]
+[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="7_x8cd0"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="8_bojxd"]
 [ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="9_pbatd"]
 
@@ -168,7 +168,7 @@ texture = ExtResource("3_xke3r")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_wy7n3")
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("player", "label", "timer")]
+[node name="HideAndSeek" type="Node2D" node_paths=PackedStringArray("player", "label", "timer")]
 script = ExtResource("1_mo55v")
 player = NodePath("CharacterBody2D")
 label = NodePath("CharacterBody2D/Label")
@@ -277,189 +277,165 @@ Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
 [node name="CharacterBody2D" parent="." instance=ExtResource("7_x8cd0")]
 position = Vector2(79, 225)
 
+[node name="HidingBreathing" parent="CharacterBody2D/HidingManager" index="0"]
+_testing_mode = false
+max_time = 1.1
+
 [node name="Interactables" type="Node" parent="."]
 
-[node name="Interactable" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-177, 199)
 scale = Vector2(0.6403, 0.320762)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable"]
 position = Vector2(0, 10.8441)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable13" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable2" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-256, 643)
 scale = Vector2(0.623607, -0.334398)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 3
 current_ID = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable13"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable2"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable15" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable3" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(556, 604)
 scale = Vector2(0.280302, 0.400752)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_ID = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable15"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable3"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable16" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable4" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-355, 454)
 scale = Vector2(0.290498, 0.728973)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 1
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable16"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable4"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable17" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable5" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-209, 371)
 scale = Vector2(0.648758, 0.563289)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_ID = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable17"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable5"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable2" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable6" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(168, -77)
 scale = Vector2(0.619154, 0.492422)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable2"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable6"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable5" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable7" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-307, -36)
 scale = Vector2(0.430218, -0.427406)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable5"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable7"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable9" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable8" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-525, 457)
 scale = Vector2(0.57103, 0.563231)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 3
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable9"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable8"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable6" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable9" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(105, 488)
 scale = Vector2(0.527008, 0.723231)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 3
 current_ID = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable6"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable9"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable7" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable10" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(268, 96)
 scale = Vector2(0.571024, 0.683229)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable7"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable10"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable4" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable11" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(576, 104)
 scale = Vector2(0.597471, 0.401593)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 current_ID = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable4"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable11"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable8" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable12" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(-460, 192)
 scale = Vector2(0.514818, 0.494852)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable8"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable12"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable11" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable13" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(967, 159)
 scale = Vector2(0.403083, 0.240054)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable11"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable13"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
-[node name="Interactable12" type="Area2D" parent="Interactables" node_paths=PackedStringArray("player_sprite", "Dialogue", "breathing") groups=["hide_nodes"]]
+[node name="HideInteractable14" type="Area2D" parent="Interactables" node_paths=PackedStringArray("Dialogue") groups=["hide-interactable", "hide_nodes"]]
 position = Vector2(782, 278)
 scale = Vector2(0.47637, 0.526416)
 script = ExtResource("4_xke3r")
-player_sprite = NodePath("../../CharacterBody2D/AnimatedSprite2D")
 Dialogue = NodePath("../../Dialogue")
-breathing = NodePath("../../CharacterBody2D/breathing")
 current_PLACEMENT = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Interactable12"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/HideInteractable14"]
 position = Vector2(0.173576, -0.415474)
 shape = SubResource("RectangleShape2D_vsiv3")
 
@@ -477,38 +453,38 @@ offset_right = -993.0
 offset_bottom = 319.0
 json_file = "res://Assets/dialogue_system/Hide_And_Seek.json"
 
-[node name="TextureRect" parent="." instance=ExtResource("9_pbatd")]
+[node name="Transition" parent="." instance=ExtResource("9_pbatd")]
 target_scene = "uid://drgimw8qtcdjh"
 
 [connection signal="timeout" from="CharacterBody2D/Timer" to="." method="_on_timer_timeout"]
-[connection signal="body_entered" from="Interactables/Interactable" to="Interactables/Interactable" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable" to="Interactables/Interactable" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable13" to="Interactables/Interactable13" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable13" to="Interactables/Interactable13" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable15" to="Interactables/Interactable15" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable15" to="Interactables/Interactable15" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable16" to="Interactables/Interactable16" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable16" to="Interactables/Interactable16" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable17" to="Interactables/Interactable17" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable17" to="Interactables/Interactable17" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable2" to="Interactables/Interactable2" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable2" to="Interactables/Interactable2" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable5" to="Interactables/Interactable5" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable5" to="Interactables/Interactable5" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable9" to="Interactables/Interactable9" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable9" to="Interactables/Interactable9" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable6" to="Interactables/Interactable6" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable6" to="Interactables/Interactable6" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable7" to="Interactables/Interactable7" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable7" to="Interactables/Interactable7" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable4" to="Interactables/Interactable4" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable4" to="Interactables/Interactable4" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable8" to="Interactables/Interactable8" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable8" to="Interactables/Interactable8" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable11" to="Interactables/Interactable11" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable11" to="Interactables/Interactable11" method="_on_body_exited"]
-[connection signal="body_entered" from="Interactables/Interactable12" to="Interactables/Interactable12" method="_on_body_entered"]
-[connection signal="body_exited" from="Interactables/Interactable12" to="Interactables/Interactable12" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable" to="Interactables/HideInteractable" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable" to="Interactables/HideInteractable" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable2" to="Interactables/HideInteractable2" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable2" to="Interactables/HideInteractable2" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable3" to="Interactables/HideInteractable3" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable3" to="Interactables/HideInteractable3" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable4" to="Interactables/HideInteractable4" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable4" to="Interactables/HideInteractable4" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable5" to="Interactables/HideInteractable5" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable5" to="Interactables/HideInteractable5" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable6" to="Interactables/HideInteractable6" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable6" to="Interactables/HideInteractable6" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable7" to="Interactables/HideInteractable7" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable7" to="Interactables/HideInteractable7" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable8" to="Interactables/HideInteractable8" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable8" to="Interactables/HideInteractable8" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable9" to="Interactables/HideInteractable9" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable9" to="Interactables/HideInteractable9" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable10" to="Interactables/HideInteractable10" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable10" to="Interactables/HideInteractable10" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable11" to="Interactables/HideInteractable11" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable11" to="Interactables/HideInteractable11" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable12" to="Interactables/HideInteractable12" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable12" to="Interactables/HideInteractable12" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable13" to="Interactables/HideInteractable13" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable13" to="Interactables/HideInteractable13" method="_on_body_exited"]
+[connection signal="body_entered" from="Interactables/HideInteractable14" to="Interactables/HideInteractable14" method="_on_body_entered"]
+[connection signal="body_exited" from="Interactables/HideInteractable14" to="Interactables/HideInteractable14" method="_on_body_exited"]
 
 [editable path="Path2D/PathFollow2D/Maw"]
 [editable path="Ghosts/Ghost"]
@@ -518,4 +494,3 @@ target_scene = "uid://drgimw8qtcdjh"
 [editable path="Ghosts/Ghost9"]
 [editable path="Ghosts/Ghost10"]
 [editable path="CharacterBody2D"]
-[editable path="CharacterBody2D/breathing"]

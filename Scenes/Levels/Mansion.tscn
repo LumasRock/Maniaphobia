@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/stairs.png" id="4_2w5vh"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="4_rgm0c"]
 [ext_resource type="Script" uid="uid://dte2kcwl6upk0" path="res://Script/Interactables/door2.gd" id="5_nda5f"]
-[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player.tscn" id="6_kqqdl"]
+[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="6_kqqdl"]
 [ext_resource type="Script" uid="uid://bdeosb14jft6k" path="res://Script/Interactables/stairs.gd" id="7_o7vnp"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="10_3li1f"]

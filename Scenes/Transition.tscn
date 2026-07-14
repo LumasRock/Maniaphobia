@@ -39,7 +39,7 @@ _data = {
 &"RESET": SubResource("Animation_1l5q3")
 }
 
-[node name="TextureRect" type="TextureRect"]
+[node name="Transition" type="TextureRect"]
 modulate = Color(1, 1, 1, 0)
 top_level = true
 z_index = 100
