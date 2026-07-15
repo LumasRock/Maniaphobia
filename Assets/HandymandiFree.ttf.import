@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://nq6jdhr2n0bp"
-path="res://.godot/imported/HandymandiFree.ttf-942d445946100e9ee08e2358f93e0e0a.fontdata"
+path="res://.godot/imported/HandymandiFree.ttf-fc7a91259370dbb3664f63e63c4593a8.fontdata"
 
 [deps]
 
-source_file="res://HandymandiFree.ttf"
-dest_files=["res://.godot/imported/HandymandiFree.ttf-942d445946100e9ee08e2358f93e0e0a.fontdata"]
+source_file="res://Assets/HandymandiFree.ttf"
+dest_files=["res://.godot/imported/HandymandiFree.ttf-fc7a91259370dbb3664f63e63c4593a8.fontdata"]
 
 [params]
 
