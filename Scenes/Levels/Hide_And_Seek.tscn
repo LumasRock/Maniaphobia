@@ -205,12 +205,11 @@ disabled = true
 debug_enabled = false
 
 [node name="MawChase" parent="Path2D/PathFollow2D/Maw/State Machine" index="0"]
-speed = 95.0
+speed = 110.0
 
 [node name="MawPatrol" parent="Path2D/PathFollow2D/Maw/State Machine" index="1" node_paths=PackedStringArray("path_follow", "ghost")]
 path_follow = NodePath("../../..")
 ghost = NodePath("../../../../../Ghosts/Ghost/State Machine/GhostCall")
-patrol_speed = 130.0
 
 [node name="MawAttack" parent="Path2D/PathFollow2D/Maw/State Machine" index="2" node_paths=PackedStringArray("player")]
 player = NodePath("../../../../../CharacterBody2D")

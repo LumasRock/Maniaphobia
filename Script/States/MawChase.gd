@@ -1,10 +1,12 @@
 extends State
 class_name MawChase
 
-@export var Maw: CharacterBody2D
-var target_to_chase: Player
+@export var maw: Maw
+@export var patrol_state: MawPatrol
 @export var speed: float = 130.0
 @export var navigation_agent: NavigationAgent2D
+
+var target_to_chase: Player
 
 
 func Enter():
@@ -19,27 +21,28 @@ func Physics_Update(_delta: float):
 	navigation_agent.target_position = target_to_chase.global_position
 
 	if navigation_agent.is_navigation_finished():
-		Maw.velocity = Vector2.ZERO
+		maw.velocity = Vector2.ZERO
 		return
-	var patrol_state:= get_parent().get_node("MawPatrol") as MawPatrol
 	
 	if target_to_chase.hiding_manager.is_hiding:
 		Transitioned.emit(self, "MawPatrol")
-		patrol_state.snap_to_nearest_path_point()
+		maw.velocity = Vector2.ZERO
+		return
 
+	# Move to next path pos
 	var next_path_pos = navigation_agent.get_next_path_position()
+	var direction = maw.global_position.direction_to(next_path_pos)
+	maw.velocity = direction * speed
 	
-
-	var direction = Maw.global_position.direction_to(next_path_pos)
-	Maw.velocity = direction * speed
+	# Change states if needed
+	var distance_to_target = maw.global_position.distance_to(target_to_chase.global_position)
+	var target_is_hiding := target_to_chase.hiding_manager.is_hiding
 	
-	var distance_to_target = Maw.global_position.distance_to(target_to_chase.global_position)
-	
-	if Maw.global_position.distance_to(target_to_chase.global_position) < 30 and not target_to_chase.hiding_manager:
+	if distance_to_target < maw.attack_range and not target_is_hiding:
 		Transitioned.emit(self, "MawAttack")
-	await get_tree().create_timer(4.0).timeout
-
-	if Maw.global_position.distance_to(target_to_chase.global_position) > 300 and not target_to_chase.hiding_manager:
+		return
+	
+	if distance_to_target > maw.stop_chase_distance and not target_is_hiding:
 		Transitioned.emit(self, "MawPatrol")
 
 

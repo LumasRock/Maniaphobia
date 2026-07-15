@@ -6,6 +6,7 @@ var current_state : State
 
 signal Transitioned(state: State, new_state_name: StringName)
 
+
 func _ready():
 	await get_tree().physics_frame
 	for child in get_children():
@@ -21,9 +22,11 @@ func _process(delta):
 	if current_state:
 		current_state.Update(delta)
 
+
 func _physics_process(delta):
 	if current_state:
 		current_state.Physics_Update(delta)
+
 
 func on_child_transition(state, new_state_name):
 	if state != current_state:
