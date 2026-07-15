@@ -32,16 +32,21 @@ debug_enabled = true
 script = ExtResource("3_wkiqq")
 initial_state = NodePath("MawChase")
 
-[node name="MawChase" type="Node" parent="State Machine" node_paths=PackedStringArray("Maw", "navigation_agent")]
+[node name="MawChase" type="Node" parent="State Machine" node_paths=PackedStringArray("maw", "patrol_state", "navigation_agent")]
 script = ExtResource("1_6cqrp")
-Maw = NodePath("../..")
+maw = NodePath("../..")
+patrol_state = NodePath("../MawPatrol")
 navigation_agent = NodePath("../../NavigationAgent2D")
 metadata/_custom_type_script = "uid://cn67v7h0mdsdd"
 
-[node name="MawPatrol" type="Node" parent="State Machine" node_paths=PackedStringArray("Maw")]
+[node name="MawPatrol" type="Node" parent="State Machine" node_paths=PackedStringArray("maw", "pause_timer")]
 script = ExtResource("5_ailqa")
-Maw = NodePath("../..")
+maw = NodePath("../..")
+pause_timer = NodePath("PauseTimer")
 metadata/_custom_type_script = "uid://btvw8t0buui14"
+
+[node name="PauseTimer" type="Timer" parent="State Machine/MawPatrol"]
+one_shot = true
 
 [node name="MawAttack" type="Node" parent="State Machine" node_paths=PackedStringArray("Maw")]
 script = ExtResource("6_adfsk")

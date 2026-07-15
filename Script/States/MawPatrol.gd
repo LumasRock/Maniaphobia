@@ -1,71 +1,69 @@
 extends State
-class_name  MawPatrol
+class_name MawPatrol
 
-@export var Maw: CharacterBody2D
+@export var maw: Maw
 @export var path_follow: PathFollow2D
 @export var ghost: GhostCall
-@export var patrol_speed: float = 90
-@export var min_pause_time: float = 1
-@export var max_pause_time: float = 3
-@export var breathing := AudioStreamPlayer2D
-var distance_until_pause: float = 0.0
+@export var speed: float = 90
+@export var pause_duration_minmax := Vector2(1.0, 2.5)
+@export var pause_cooldown_minmax := Vector2(5.0, 12.0)
+@export var pause_timer: Timer
 
-var is_paused: bool = false
-var is_moving: bool = true
 var detected_player: Player = null
-var timer: float = randf_range(2, 10)
-var new_timer_value: float = 0
+var player: Player
+
+var _is_moving := true
+var _is_paused := false
+var _is_current_state := false
 
 
 func Enter(): 
 	ghost.ChasePlayer.connect(Chase, CONNECT_ONE_SHOT)
+	player = get_tree().get_first_node_in_group(&"player")
+
+	snap_to_nearest_path_point()
+	_is_moving = true
+	_is_paused = false
+	_is_current_state = true
+	
+	pause_timer.timeout.connect(_on_pause_timer_timeout)
+	_start_pause_timer_from_minmax(pause_cooldown_minmax)
 
 
 func Exit():
 	if ghost.ChasePlayer.is_connected(Chase):
 		ghost.ChasePlayer.disconnect(Chase)
+	
+	_is_moving = false
+	_is_current_state = false
+	_is_paused = false
+	
+	pause_timer.timeout.disconnect(_on_pause_timer_timeout)
+	pause_timer.stop()
 
 
 func Physics_Update(delta: float):
-	var player = get_tree().get_nodes_in_group("player")
-	if player.size() > 0:
-		player = player[0]
-	if is_moving:
-		timer -= delta
-	if timer <= 0:
-		timer = 0
-		is_paused = true
-		is_moving = false
+	if _is_paused:
+		return
 	
-	if is_paused == true:
-		patrol_speed = 0
-		new_timer_value = randf_range(2, 10)
-		timer = new_timer_value
-		await get_tree().create_timer(randf_range(min_pause_time, max_pause_time)).timeout
-		patrol_speed = 90
-		is_moving = true
-		is_paused = false
-	
-	if path_follow and Maw:
-		if is_moving == true:
-			var move_amount = patrol_speed * delta
-			path_follow.progress += move_amount
-			Maw.global_position = path_follow.global_position
-			distance_until_pause -= move_amount
+	if path_follow and maw and _is_moving:
+		var move_amount = speed * delta
+		path_follow.progress += move_amount
+		maw.global_position = path_follow.global_position
  
-	if player.global_position.distance_to(Maw.global_position) < 200 and player.hiding_manager.is_hiding == false:
+	var distance_to_target := player.global_position.distance_to(maw.global_position)
+	if distance_to_target < maw.start_chase_distance and not player.hiding_manager.is_hiding:
 		Transitioned.emit(self, "MawChase")
 
 
 func snap_to_nearest_path_point():
-	if not path_follow or not Maw:
-		return
+	if not path_follow or not maw: return
 	var path := path_follow.get_parent() as Path2D
-	if not path or not path.curve:
-		return
-	var local_pos = path.to_local(Maw.global_position)
+	if not path or not path.curve: return
+
+	var local_pos := path.to_local(maw.global_position)
 	path_follow.progress = path.curve.get_closest_offset(local_pos)
-	Maw.global_position = path_follow.global_position
+	maw.global_position = path_follow.global_position
 
 
 func _on_detection_range_body_entered(body):
@@ -82,3 +80,17 @@ func _on_detection_range_body_exited(body):
 
 func Chase():
 	Transitioned.emit(self, "MawChase")
+
+
+func _start_pause_timer_from_minmax(minmax: Vector2) -> void:
+	var time := randf_range(minmax.x, minmax.y)
+	pause_timer.start(time)
+
+
+func _on_pause_timer_timeout() -> void:
+	if not _is_current_state: return
+	
+	var was_paused := _is_paused
+	_is_paused = not was_paused
+	var new_minmax := pause_cooldown_minmax if was_paused else pause_duration_minmax
+	_start_pause_timer_from_minmax(new_minmax)
