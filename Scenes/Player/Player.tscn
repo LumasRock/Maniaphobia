@@ -403,6 +403,7 @@ offset_bottom = 0.0
 grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.114873, 0.112533)
+_testing_mode = false
 position_randomize = Vector2(200, 100)
 max_time = 1.0
 

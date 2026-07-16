@@ -72,7 +72,6 @@ func _on_hiding_breathing_result_registered(result: HidingBreathing.TimingResult
 		stop_hiding()
 
 
-
 func stop_hiding() -> void:
 	var interactable := current_hide_interactable
 	if not is_hiding or not interactable: return

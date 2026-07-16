@@ -166,6 +166,7 @@ func _on_option_selected(option_data: Dictionary):
 	stop()
 
 func play(dialogue_id: String, node_id: String = "1"):
+	print("play dialogue")
 	if not dialogues.has(dialogue_id):
 		print("No dialogue with ID:", dialogue_id)
 		return

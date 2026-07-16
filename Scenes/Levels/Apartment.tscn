@@ -132,13 +132,15 @@ tile_set = SubResource("TileSet_hq0fg")
 [node name="Player" parent="." instance=ExtResource("5_b2xic")]
 position = Vector2(192, 55)
 
-[node name="Door" parent="." instance=ExtResource("6_2706v")]
+[node name="Door" parent="." node_paths=PackedStringArray("Shadows") instance=ExtResource("6_2706v")]
 position = Vector2(193, 36)
 scale = Vector2(0.658193, 0.891464)
+Shadows = NodePath("../Shadows")
 
-[node name="Door2" parent="." instance=ExtResource("6_2706v")]
+[node name="Door2" parent="." node_paths=PackedStringArray("Shadows") instance=ExtResource("6_2706v")]
 position = Vector2(160, 151)
 scale = Vector2(0.738194, 2.37147)
+Shadows = NodePath("../Shadows")
 my_placement = 3
 
 [node name="Door3" parent="." instance=ExtResource("6_2706v")]
