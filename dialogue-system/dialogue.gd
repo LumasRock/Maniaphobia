@@ -1,12 +1,12 @@
 extends Control
 
-@onready var icon = get_node("CanvasLayer/DialogueBox/Icon") as Sprite2D
-@onready var full_body_sprite = get_node("CanvasLayer/DialogueBox/Full Body Sprite") as Sprite2D
-@onready var character = get_node("CanvasLayer/DialogueBox/Name") as Label
-@onready var TypingTimer = get_node("CanvasLayer/TypingTimer") as Timer
-@onready var Canvas = get_node("CanvasLayer") as CanvasLayer
-@onready var content = get_node("CanvasLayer/DialogueBox/Content") as RichTextLabel
-@onready var options_container = get_node("CanvasLayer/DialogueBox/Options") as VBoxContainer
+@onready var icon : Sprite2D = $CanvasLayer/DialogueBox/Icon
+@onready var full_body_sprite : Sprite2D = $CanvasLayer/DialogueBox/FullBodySprite
+@onready var character : Label = $CanvasLayer/DialogueBox/Name
+@onready var TypingTimer : Timer = $CanvasLayer/TypingTimer
+@onready var Canvas : CanvasLayer = $CanvasLayer
+@onready var content : RichTextLabel = $CanvasLayer/DialogueBox/Content
+@onready var options_container : VBoxContainer = $CanvasLayer/DialogueBox/Options
 
 @export_file("*.json") var json_file
 @export var pause_game_during_dialogue := true
@@ -23,16 +23,16 @@ var paused_game_for_dialogue = false
 var npc_icons = {
 	"logo": {
 		"neutral": {
-			"icon": preload("res://Neutral.png"),
-			"body": preload("res://Neutral.png")
+			"icon": preload("res://dialogue-system/Neutral.png"),
+			"body": preload("res://dialogue-system/Neutral.png")
 		},
 		"happy": {
-			"icon": preload("res://Happy.png"),
-			"body": preload("res://Happy.png")
+			"icon": preload("res://dialogue-system/Happy.png"),
+			"body": preload("res://dialogue-system/Happy.png")
 		},
 		"glee": {
-			"icon": preload("res://Glee.png"),
-			"body": preload("res://Glee.png")
+			"icon": preload("res://dialogue-system/Glee.png"),
+			"body": preload("res://dialogue-system/Glee.png")
 		}
 	}
 }

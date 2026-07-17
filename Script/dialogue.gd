@@ -32,18 +32,18 @@ func _ready():
 #you can get a better definition of what a parser is here -> https://www.techtarget.com/searchapparchitecture/definition/parser
 func load_dialogues(file_path: String):
 	if not FileAccess.file_exists(file_path):
-		print("Dialogue file not found")
+		push_error("Dialogue file not found")
 		return
 
 	var json_text = FileAccess.get_file_as_string(file_path)
 	var data = JSON.parse_string(json_text)
 	if not data:
-		print("Failed to parse JSON")
+		push_error("Failed to parse JSON")
 		return
 
 	# data should be an array of dialogue sets
 	#an array in a dictionary is like a word with its list of definitions below it.
-	#like a actual dictionary would havve
+	#like a actual dictionary would have
 	for dialogue_set in data:
 		var dialogue_id = dialogue_set["dialogue_id"]
 		var tmp_node_dict = {}
@@ -59,10 +59,9 @@ func start_scene_dialogue(dialogue_id: String):
 			current_node = node_dict["1"]
 			start_typing(current_node["text"])
 		else:
-			print("No node with ID '1' in dialogue", dialogue_id)
+			push_warning("No node with ID '1' in dialogue", dialogue_id)
 	else:
-		
-		print("No dialogue with ID:", dialogue_id)
+		push_warning("No dialogue with ID:", dialogue_id)
 
 # typing animation for dialogue
 func start_typing(text):
@@ -82,7 +81,7 @@ func start_typing(text):
 		var portrait_set: Dictionary = npc_icons[speaker_name][emotion]
 		full_body_sprite.texture = portrait_set.get("body", portrait_set.get("icon"))
 	else:
-		print("Portrait not found — speaker: '%s', emotion: '%s'" % [speaker_name, emotion])
+		push_warning("Portrait not found — speaker: '%s', emotion: '%s'" % [speaker_name, emotion])
 
 	TypingTimer.start()
 #this stops the typing when it is done
@@ -168,7 +167,7 @@ func _on_option_selected(option_data: Dictionary):
 func play(dialogue_id: String, node_id: String = "1"):
 	print("play dialogue")
 	if not dialogues.has(dialogue_id):
-		print("No dialogue with ID:", dialogue_id)
+		push_error("No dialogue with ID:", dialogue_id)
 		return
 
 	if pause_game_during_dialogue and not get_tree().paused:
@@ -182,7 +181,7 @@ func play(dialogue_id: String, node_id: String = "1"):
 		current_node = node_dict[node_id]
 		start_typing(current_node["text"])
 	else:
-		print("No node with ID '1' in dialogue", dialogue_id)
+		push_warning("No node with ID '1' in dialogue", dialogue_id)
 		stop()
 
 func stop():

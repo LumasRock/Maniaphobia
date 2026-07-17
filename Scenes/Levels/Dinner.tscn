@@ -1,6 +1,6 @@
 [gd_scene load_steps=14 format=4 uid="uid://drgimw8qtcdjh"]
 
-[ext_resource type="Script" uid="uid://em0skicqjyej" path="res://Script/dinner.gd" id="1_bdv71"]
+[ext_resource type="Script" uid="uid://em0skicqjyej" path="res://Script/Levels/dinner.gd" id="1_bdv71"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_5q1b3"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="3_q61mp"]
 [ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/stairs.png" id="4_tmodf"]
@@ -285,7 +285,7 @@ offset_left = 205.0
 offset_top = -9.0
 offset_right = 205.0
 offset_bottom = -9.0
-json_file = "res://Assets/dialogue_system/Dinner.json"
+json_file = "res://Assets/dialogues/Dinner.json"
 
 [node name="Transition" type="Sprite2D" parent="."]
 modulate = Color(1, 1, 1, 0)

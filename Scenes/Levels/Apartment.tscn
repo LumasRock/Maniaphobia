@@ -1,15 +1,15 @@
 [gd_scene load_steps=21 format=4 uid="uid://b6k278ypydhc2"]
 
-[ext_resource type="Script" uid="uid://d4a4b1v8lq10d" path="res://Script/Apartment.gd" id="1_lsuph"]
+[ext_resource type="Script" uid="uid://d4a4b1v8lq10d" path="res://Script/Levels/apartment.gd" id="1_lsuph"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="2_ebixs"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="3_xox5p"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="4_0pk1v"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="5_b2xic"]
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://Scenes/door.tscn" id="6_2706v"]
-[ext_resource type="Script" uid="uid://b4c4gekga4474" path="res://Script/BrokenDoor.gd" id="7_8ecfc"]
+[ext_resource type="Script" uid="uid://b4c4gekga4474" path="res://Script/Interactables/BrokenDoor.gd" id="7_8ecfc"]
 [ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://Scenes/scenedoor.tscn" id="8_crcn5"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="9_6qiql"]
-[ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://Script/coffee_machine.gd" id="10_ebixs"]
+[ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://Script/Interactables/coffee_machine.gd" id="10_ebixs"]
 [ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="11_xox5p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l5v7"]
@@ -161,6 +161,7 @@ offset_top = 312.0
 offset_right = -3.0
 offset_bottom = 312.0
 grow_vertical = 1
+json_file = "res://Assets/dialogues/Apartment.json"
 
 [node name="CoffeeMachine" type="Area2D" parent="."]
 position = Vector2(66, 82)

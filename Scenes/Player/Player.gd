@@ -9,7 +9,7 @@ signal died
 @export var hiding_manager: PlayerHidingManager
 
 @onready var camera: Camera2D = $Camera2D
-@onready var breathing = $breathing
+#@onready var breathing = $breathing
 @onready var timer = $Timer
 @onready var label = $Label
 @export var max_health: int = 100

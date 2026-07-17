@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=4 uid="uid://bihtv5hq0wlcq"]
 
-[ext_resource type="Script" uid="uid://gumowsdasvuc" path="res://Script/outside.gd" id="1_bwaaj"]
+[ext_resource type="Script" uid="uid://gumowsdasvuc" path="res://Script/Levels/outside.gd" id="1_bwaaj"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_lu6ao"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="3_gkoks"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="4_lu6ao"]
@@ -97,7 +97,7 @@ offset_left = -3.11204
 offset_top = 17.1122
 offset_right = -3.11204
 offset_bottom = 17.1122
-json_file = "res://Assets/dialogue_system/Outside.json"
+json_file = "res://Assets/dialogues/Outside.json"
 
 [node name="TextureRect" parent="." instance=ExtResource("6_gkoks")]
 target_scene = "uid://cocskxsk6cvgf"
