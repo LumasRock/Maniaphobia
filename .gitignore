@@ -1,3 +1,9 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# dialogue system addon project file to prevent crashes ad loading
+dialogue-system/project.godot
+
+# Ignore Rider specific files
+.idea/
