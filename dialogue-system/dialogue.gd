@@ -1,4 +1,5 @@
 extends Control
+class_name Dialogue
 
 @onready var icon = get_node("CanvasLayer/DialogueBox/Icon") as Sprite2D
 @onready var full_body_sprite = get_node("CanvasLayer/DialogueBox/Full Body Sprite") as Sprite2D
@@ -23,16 +24,16 @@ var paused_game_for_dialogue = false
 var npc_icons = {
 	"logo": {
 		"neutral": {
-			"icon": preload("res://Neutral.png"),
-			"body": preload("res://Neutral.png")
+			"icon": preload("res://dialogue-system/Neutral.png"),
+			"body": preload("res://dialogue-system/Neutral.png")
 		},
 		"happy": {
-			"icon": preload("res://Happy.png"),
-			"body": preload("res://Happy.png")
+			"icon": preload("res://dialogue-system/Happy.png"),
+			"body": preload("res://dialogue-system/Happy.png")
 		},
 		"glee": {
-			"icon": preload("res://Glee.png"),
-			"body": preload("res://Glee.png")
+			"icon": preload("res://dialogue-system/Glee.png"),
+			"body": preload("res://dialogue-system/Glee.png")
 		}
 	}
 }

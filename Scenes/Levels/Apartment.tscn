@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=4 uid="uid://b6k278ypydhc2"]
+[gd_scene load_steps=22 format=4 uid="uid://b6k278ypydhc2"]
 
 [ext_resource type="Script" uid="uid://d4a4b1v8lq10d" path="res://Script/Apartment.gd" id="1_lsuph"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="2_ebixs"]
@@ -6,9 +6,9 @@
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="4_0pk1v"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="5_b2xic"]
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://Scenes/door.tscn" id="6_2706v"]
-[ext_resource type="Script" uid="uid://b4c4gekga4474" path="res://Script/BrokenDoor.gd" id="7_8ecfc"]
+[ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://Script/InteractionDialogueArea.gd" id="8_0pk1v"]
 [ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://Scenes/scenedoor.tscn" id="8_crcn5"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="9_6qiql"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://dialogue-system/Dialogue.tscn" id="9_6qiql"]
 [ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://Script/coffee_machine.gd" id="10_ebixs"]
 [ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="11_xox5p"]
 
@@ -105,6 +105,9 @@ tile_size = Vector2i(7, 7)
 physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_irbrm")
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_b2xic"]
+size = Vector2(52.4161, 11.7783)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xox5p"]
 size = Vector2(41, 29)
 
@@ -143,10 +146,17 @@ scale = Vector2(0.738194, 2.37147)
 Shadows = NodePath("../Shadows")
 my_placement = 3
 
-[node name="Door3" parent="." instance=ExtResource("6_2706v")]
-position = Vector2(211, 94)
+[node name="JacobsRoom" type="Area2D" parent="." node_paths=PackedStringArray("dialogue")]
+position = Vector2(209, 96)
 scale = Vector2(0.658195, 0.891464)
-script = ExtResource("7_8ecfc")
+script = ExtResource("8_0pk1v")
+dialogue_id = "Apartment"
+node_id = "29"
+dialogue = NodePath("../Dialogue")
+metadata/_custom_type_script = "uid://pueo6he1cir4"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="JacobsRoom"]
+shape = SubResource("RectangleShape2D_b2xic")
 
 [node name="Exit" parent="." instance=ExtResource("8_crcn5")]
 position = Vector2(301, 62)
@@ -161,10 +171,16 @@ offset_top = 312.0
 offset_right = -3.0
 offset_bottom = 312.0
 grow_vertical = 1
+json_file = "res://dialogue-system/dialogue_system/Apartment.json"
 
-[node name="CoffeeMachine" type="Area2D" parent="."]
+[node name="CoffeeMachine" type="Area2D" parent="." node_paths=PackedStringArray("dialogue")]
 position = Vector2(66, 82)
 script = ExtResource("10_ebixs")
+dialogue_id = "Apartment"
+node_id = "17"
+dialogue = NodePath("../Dialogue")
+play_once = true
+metadata/_custom_type_script = "uid://pueo6he1cir4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CoffeeMachine"]
 position = Vector2(-0.5, 12.5)
@@ -172,6 +188,3 @@ shape = SubResource("RectangleShape2D_xox5p")
 
 [node name="TextureRect" parent="." instance=ExtResource("11_xox5p")]
 target_scene = "uid://bihtv5hq0wlcq"
-
-[connection signal="body_entered" from="CoffeeMachine" to="CoffeeMachine" method="_on_body_entered"]
-[connection signal="body_exited" from="CoffeeMachine" to="CoffeeMachine" method="_on_body_exited"]
