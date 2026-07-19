@@ -1,9 +1,9 @@
 extends Area2D
 
 var Player_node: Node2D = null
-@onready var coffee_machine = $"../CoffeeMachine"
 @export_file("*.tscn", "*.scn") var target_scene: String
 @onready var Dialogue = $"../Dialogue"
+@onready var coffee_machine: Area2D = $"../CoffeeMachine"
 
 
 func _on_body_entered(body: Node2D) -> void:

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://76qyxi7lnsd8"
-path="res://.godot/imported/Glee.png-575895d95a3448153e13f59c1613d1d3.ctex"
+path="res://.godot/imported/Glee.png-2ec3da4ee4546c1532b481dd4d5afb84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Glee.png"
-dest_files=["res://.godot/imported/Glee.png-575895d95a3448153e13f59c1613d1d3.ctex"]
+source_file="res://dialogue-system/Glee.png"
+dest_files=["res://.godot/imported/Glee.png-2ec3da4ee4546c1532b481dd4d5afb84.ctex"]
 
 [params]
 
