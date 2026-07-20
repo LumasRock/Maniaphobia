@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://b6k278ypydhc2"]
+[gd_scene load_steps=21 format=4 uid="uid://b6k278ypydhc2"]
 
 [ext_resource type="Script" uid="uid://d4a4b1v8lq10d" path="res://Script/Apartment.gd" id="1_lsuph"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="2_ebixs"]
@@ -10,7 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://Scenes/scenedoor.tscn" id="8_crcn5"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="9_6qiql"]
 [ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://Script/coffee_machine.gd" id="10_ebixs"]
-[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="11_xox5p"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l5v7"]
 texture = ExtResource("2_ebixs")
@@ -182,6 +181,3 @@ metadata/_custom_type_script = "uid://pueo6he1cir4"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CoffeeMachine"]
 position = Vector2(-0.5, 12.5)
 shape = SubResource("RectangleShape2D_xox5p")
-
-[node name="TextureRect" parent="." instance=ExtResource("11_xox5p")]
-target_scene = "uid://bihtv5hq0wlcq"
