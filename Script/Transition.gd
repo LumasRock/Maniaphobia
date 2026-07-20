@@ -1,4 +1,5 @@
 extends TextureRect
+
 signal fade_out_finished(scene_path: String)
 
 @export_file("*.tscn", "*.scn") var target_scene: String

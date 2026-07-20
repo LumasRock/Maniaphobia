@@ -1,7 +1,7 @@
 extends Node
 signal Transitioned(state: State, new_state_name: StringName)
-signal hiding
-signal not_hiding
+#signal hiding
+#signal not_hiding
 
 var active_camera: Camera2D = null
 

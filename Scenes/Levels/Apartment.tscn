@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://Scenes/door.tscn" id="6_2706v"]
 [ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://Script/InteractionDialogueArea.gd" id="8_0pk1v"]
 [ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://Scenes/scenedoor.tscn" id="8_crcn5"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://dialogue-system/Dialogue.tscn" id="9_6qiql"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="9_6qiql"]
 [ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://Script/coffee_machine.gd" id="10_ebixs"]
 [ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="11_xox5p"]
 
@@ -164,13 +164,10 @@ scale = Vector2(0.360005, 3.4)
 target_scene = "uid://bihtv5hq0wlcq"
 
 [node name="Dialogue" parent="." instance=ExtResource("9_6qiql")]
-anchors_preset = 10
-anchor_bottom = 0.0
 offset_left = -3.0
 offset_top = 312.0
 offset_right = -3.0
 offset_bottom = 312.0
-grow_vertical = 1
 json_file = "res://dialogue-system/dialogue_system/Apartment.json"
 
 [node name="CoffeeMachine" type="Area2D" parent="." node_paths=PackedStringArray("dialogue")]

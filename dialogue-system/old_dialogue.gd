@@ -1,5 +1,5 @@
 extends Control
-class_name Dialogue
+class_name OldDialogue
 
 @onready var icon = get_node("CanvasLayer/DialogueBox/Icon") as Sprite2D
 @onready var full_body_sprite = get_node("CanvasLayer/DialogueBox/Full Body Sprite") as Sprite2D

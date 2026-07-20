@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dujacjq5wq07t"]
+[gd_scene load_steps=2 format=3 uid="uid://dujacjq5wq07t"]
 
 [ext_resource type="Script" uid="uid://cvl4trvdyyx7t" path="res://Script/main_menu.gd" id="1_tt5f1"]
-[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="2_853f1"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -44,7 +43,7 @@ grow_horizontal = 2
 theme_override_font_sizes/normal_font_size = 36
 text = "Warning: lots of bugs :D yayy"
 
-[node name="Button" type="Button" parent="."]
+[node name="play" type="Button" parent="."]
 modulate = Color(0.786013, 0.608674, 0.19164, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -60,7 +59,7 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Play"
 
-[node name="Button3" type="Button" parent="."]
+[node name="quit" type="Button" parent="."]
 modulate = Color(0.786013, 0.608674, 0.19164, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -76,19 +75,5 @@ grow_horizontal = 2
 grow_vertical = 2
 text = "Quit"
 
-[node name="TextureRect" parent="." instance=ExtResource("2_853f1")]
-layout_mode = 0
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
-grow_horizontal = 1
-grow_vertical = 1
-mouse_filter = 2
-target_scene = "uid://b6k278ypydhc2"
-
-[connection signal="pressed" from="Button" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="Button3" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="play" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="quit" to="." method="_on_quit_button_pressed"]

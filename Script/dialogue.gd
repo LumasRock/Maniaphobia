@@ -1,4 +1,5 @@
 extends Control
+class_name Dialogue
 
 @onready var full_body_sprite = $FullBodySprite
 @onready var character = $CharacterName

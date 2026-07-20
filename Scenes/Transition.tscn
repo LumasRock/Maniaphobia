@@ -46,14 +46,10 @@ z_index = 100
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -39040.0
-offset_top = -17536.0
-offset_right = -39040.0
-offset_bottom = -17536.0
 grow_horizontal = 2
 grow_vertical = 2
-scale = Vector2(435.858, 178.176)
 texture = ExtResource("1_ml2rw")
+expand_mode = 1
 script = ExtResource("2_rr8bd")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
