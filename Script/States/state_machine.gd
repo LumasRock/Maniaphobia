@@ -14,18 +14,18 @@ func _ready():
 			states[child.name.to_lower()] = child
 			child.Transitioned.connect(on_child_transition)
 	if initial_state:
-		initial_state.Enter()
+		initial_state.enter()
 		current_state = initial_state
 
 
 func _process(delta):
 	if current_state:
-		current_state.Update(delta)
+		current_state.update(delta)
 
 
 func _physics_process(delta):
 	if current_state:
-		current_state.Physics_Update(delta)
+		current_state.physics_update(delta)
 
 
 func on_child_transition(state, new_state_name):
@@ -37,6 +37,6 @@ func on_child_transition(state, new_state_name):
 		print("cannot find state " + new_state_name)
 		return
 	if current_state:
-		current_state.Exit()
+		current_state.exit()
 	new_state.Enter()
 	current_state = new_state

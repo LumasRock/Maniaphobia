@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=3 uid="uid://c8jqhbamoq5os"]
+
+[ext_resource type="Script" uid="uid://caqlapxvrmyvp" path="res://Script/dialogue.gd" id="1_qn0no"]
+[ext_resource type="Texture2D" uid="uid://c5otct6dmlble" path="res://Assets/sprites/dialogue_box1.png" id="1_tgtc2"]
+[ext_resource type="FontFile" uid="uid://nq6jdhr2n0bp" path="res://Assets/Fonts/HandymandiFree.ttf" id="3_cq6to"]
+
+[sub_resource type="Theme" id="Theme_vqc68"]
+default_font = ExtResource("3_cq6to")
+
+[node name="Dialogue" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = 10.0
+offset_right = -5.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.0207, 0.691489)
+script = ExtResource("1_qn0no")
+json_file = "res://Assets/dialogue_system/Apartment.json"
+
+[node name="Background" type="Sprite2D" parent="."]
+position = Vector2(1.90735e-06, 0)
+
+[node name="FullBodySprite" type="Sprite2D" parent="."]
+position = Vector2(19.5944, -10.1231)
+scale = Vector2(0.943907, 1.35758)
+
+[node name="Box" type="NinePatchRect" parent="."]
+layout_mode = 0
+offset_left = -2.0
+offset_top = 19.0
+offset_right = 239.0
+offset_bottom = 87.0
+scale = Vector2(0.882432, 1)
+texture = ExtResource("1_tgtc2")
+patch_margin_left = 11
+patch_margin_top = 8
+patch_margin_right = 9
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="Content" type="RichTextLabel" parent="."]
+texture_filter = 1
+layout_mode = 0
+offset_left = 16.0
+offset_top = 30.0
+offset_right = 238.0
+offset_bottom = 74.0
+scale = Vector2(0.655158, 0.919542)
+theme_override_fonts/normal_font = ExtResource("3_cq6to")
+bbcode_enabled = true
+fit_content = true
+
+[node name="CharacterName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 13.7161
+offset_top = 10.1231
+offset_right = 101.716
+offset_bottom = 32.1231
+scale = Vector2(0.882432, 1)
+theme = SubResource("Theme_vqc68")
+
+[node name="Options" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 33.0
+offset_right = 496.0
+offset_bottom = 200.0
+scale = Vector2(0.117481, 0.242043)
+
+[node name="TypingTimer" type="Timer" parent="."]
+wait_time = 0.06
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(103.851, 0)
+scale = Vector2(1, 0.613594)
+zoom = Vector2(6, 6)
+
+[connection signal="timeout" from="TypingTimer" to="." method="_on_typing_timer_timeout"]

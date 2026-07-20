@@ -28,6 +28,8 @@ buses/default_bus_layout=""
 EventBus="*res://Script/Global/Event_Bus.gd"
 Transition="*res://Scenes/Transition.tscn"
 SAVE_MANAGER="*res://addons/simple_save_tool/tool/saveManager.gd"
+DialogueConfig="*res://Script/Global/DialogueConfig.gd"
+DialogueManager="*res://Script/Global/DialogueManager.gd"
 
 [debug]
 

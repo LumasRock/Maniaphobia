@@ -3,14 +3,14 @@ class_name State
 
 signal Transitioned(state: State, new_state_name: StringName)
 
-func Enter():
+func enter()-> void:
 	pass
 
-func Exit():
+func exit()-> void:
 	pass
 
-func Update(_delta: float):
+func update(_delta: float)-> void:
 	pass
 
-func Physics_Update(_delta: float):
+func physics_update(_delta: float)-> void:
 	pass

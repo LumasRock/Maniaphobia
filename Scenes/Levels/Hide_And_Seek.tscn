@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=4 uid="uid://cgwbrd16d3skx"]
 
-[ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://Script/hide_and_seek.gd" id="1_mo55v"]
+[ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://Script/Levels/hide_and_seek.gd" id="1_mo55v"]
 [ext_resource type="PackedScene" uid="uid://xlyw1p0loole" path="res://Scenes/Maw.tscn" id="3_pbatd"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="3_xke3r"]
 [ext_resource type="Script" uid="uid://dfo30in62rs4x" path="res://Script/Interactables/hide_interactable.gd" id="4_xke3r"]
@@ -220,18 +220,12 @@ player = NodePath("../../../../../CharacterBody2D")
 position = Vector2(209, 85)
 scale = Vector2(0.27, 0.23)
 
-[node name="GhostCall" parent="Ghosts/Ghost/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
-
 [node name="Ghost4" parent="Ghosts" instance=ExtResource("6_vphy3")]
 position = Vector2(-263, 498)
 scale = Vector2(0.27, 0.23)
 
 [node name="CollisionShape2D" parent="Ghosts/Ghost4" index="1"]
 position = Vector2(0, 0)
-
-[node name="GhostCall" parent="Ghosts/Ghost4/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
 
 [node name="Ghost5" parent="Ghosts" instance=ExtResource("6_vphy3")]
 position = Vector2(439, 467)
@@ -240,18 +234,12 @@ scale = Vector2(0.27, 0.23)
 [node name="CollisionShape2D" parent="Ghosts/Ghost5" index="1"]
 position = Vector2(0, 0)
 
-[node name="GhostCall" parent="Ghosts/Ghost5/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
-
 [node name="Ghost8" parent="Ghosts" instance=ExtResource("6_vphy3")]
 position = Vector2(957, 288)
 scale = Vector2(0.27, 0.23)
 
 [node name="CollisionShape2D" parent="Ghosts/Ghost8" index="1"]
 position = Vector2(0, 0)
-
-[node name="GhostCall" parent="Ghosts/Ghost8/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
 
 [node name="Ghost9" parent="Ghosts" instance=ExtResource("6_vphy3")]
 position = Vector2(-241, -4.99997)
@@ -260,9 +248,6 @@ scale = Vector2(0.27, 0.23)
 [node name="CollisionShape2D" parent="Ghosts/Ghost9" index="1"]
 position = Vector2(0, 0)
 
-[node name="GhostCall" parent="Ghosts/Ghost9/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
-
 [node name="Ghost10" parent="Ghosts" instance=ExtResource("6_vphy3")]
 position = Vector2(-530, 310)
 scale = Vector2(0.27, 0.23)
@@ -270,14 +255,10 @@ scale = Vector2(0.27, 0.23)
 [node name="CollisionShape2D" parent="Ghosts/Ghost10" index="1"]
 position = Vector2(0, 0)
 
-[node name="GhostCall" parent="Ghosts/Ghost10/State Machine" index="2" node_paths=PackedStringArray("Maw")]
-Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
-
 [node name="CharacterBody2D" parent="." instance=ExtResource("7_x8cd0")]
 position = Vector2(79, 225)
 
 [node name="HidingBreathing" parent="CharacterBody2D/HidingManager" index="0"]
-_testing_mode = false
 max_time = 1.1
 
 [node name="Interactables" type="Node" parent="."]
@@ -450,7 +431,7 @@ offset_left = -993.0
 offset_top = 319.0
 offset_right = -993.0
 offset_bottom = 319.0
-json_file = "res://Assets/dialogue_system/Hide_And_Seek.json"
+json_file = "res://Assets/dialogues/Hide_And_Seek.json"
 
 [node name="Transition" parent="." instance=ExtResource("9_pbatd")]
 target_scene = "uid://drgimw8qtcdjh"
