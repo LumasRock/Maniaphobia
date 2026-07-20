@@ -7,3 +7,6 @@ dialogue-system/project.godot
 
 # Ignore Rider specific files
 .idea/
+
+#ignore zip files from external sources
+*.zip
