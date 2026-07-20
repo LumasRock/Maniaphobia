@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=4 format=3 uid="uid://dl1j0en4ypoxa"]
+
+[ext_resource type="Texture2D" uid="uid://ccfkx85wb5828" path="res://Assets/sprites/portraits/npc/J_NPC.png" id="1_2mntl"]
+[ext_resource type="Script" path="res://Script/Dialogue/CharacterDefinition.gd" id="1_sa7bs"]
+[ext_resource type="Texture2D" uid="uid://xl8qk05gk5hk" path="res://Assets/sprites/portraits/npc/n_happy.png" id="2_logq7"]
+
+[resource]
+script = ExtResource("1_sa7bs")
+character_name = "NPC"
+portraits = Dictionary[String, Texture2D]({
+"happy": ExtResource("2_logq7"),
+"neutral": ExtResource("1_2mntl")
+})
+default_portrait = ExtResource("1_2mntl")
+sounds = Dictionary[String, AudioStream]({})
+override_portraits_path = false
+portraits_path = "res://Assets/Portraits/"
+override_sounds_path = false
+sounds_path = "res://Assets/Sounds/"
+metadata/_custom_type_script = "uid://dcon83i1imcd2"

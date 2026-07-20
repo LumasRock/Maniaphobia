@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="CharacterDefinition" load_steps=12 format=3 uid="uid://c4up7fxs82n5f"]
+
+[ext_resource type="Texture2D" uid="uid://246mh0fxac25" path="res://Assets/sprites/portraits/sebastian/Seb_Neutral.png" id="1_1crm3"]
+[ext_resource type="Script" path="res://Script/Dialogue/CharacterDefinition.gd" id="1_6txj6"]
+[ext_resource type="Texture2D" uid="uid://5jiqyucy2oif" path="res://Assets/sprites/portraits/sebastian/Seb_Angry.png" id="2_tajui"]
+[ext_resource type="Texture2D" uid="uid://cxssrht2by2mv" path="res://Assets/sprites/portraits/sebastian/Seb_Annoyed.png" id="3_v17ye"]
+[ext_resource type="Texture2D" uid="uid://b7rfdceeoq6uw" path="res://Assets/sprites/portraits/sebastian/Seb_Bloody.png" id="4_kpylt"]
+[ext_resource type="Texture2D" uid="uid://ikdfc6y6l1n7" path="res://Assets/sprites/portraits/sebastian/Seb_Confused.png" id="5_f4ff0"]
+[ext_resource type="Texture2D" uid="uid://8i44ghg2x42t" path="res://Assets/sprites/portraits/sebastian/Seb_Doubt.png" id="6_p6cce"]
+[ext_resource type="Texture2D" uid="uid://d30wstoy766m2" path="res://Assets/sprites/portraits/sebastian/Seb_Happy.png" id="7_frsyx"]
+[ext_resource type="Texture2D" uid="uid://d4kpmtgferes4" path="res://Assets/sprites/portraits/sebastian/Seb_Scared.png" id="8_6wyyh"]
+[ext_resource type="Texture2D" uid="uid://cxpgwq7w6rifx" path="res://Assets/sprites/portraits/sebastian/Seb_Tired.png" id="9_b23h8"]
+[ext_resource type="Texture2D" uid="uid://db51qn20m5jrr" path="res://Assets/sprites/portraits/sebastian/Seb_Worry.png" id="10_prqk5"]
+
+[resource]
+script = ExtResource("1_6txj6")
+character_name = "Sebastian"
+portraits = Dictionary[String, Texture2D]({
+"angry": ExtResource("2_tajui"),
+"annoyed": ExtResource("3_v17ye"),
+"bloody": ExtResource("4_kpylt"),
+"confused": ExtResource("5_f4ff0"),
+"doubt": ExtResource("6_p6cce"),
+"happy": ExtResource("7_frsyx"),
+"neutral": ExtResource("1_1crm3"),
+"scared": ExtResource("8_6wyyh"),
+"tired": ExtResource("9_b23h8"),
+"worry": ExtResource("10_prqk5")
+})
+default_portrait = ExtResource("1_1crm3")
+sounds = Dictionary[String, AudioStream]({})
+override_portraits_path = false
+portraits_path = "res://Assets/Portraits/"
+override_sounds_path = false
+sounds_path = "res://Assets/Sounds/"
+metadata/_custom_type_script = "uid://dcon83i1imcd2"
