@@ -20,6 +20,7 @@ func _on_body_exited(body: Node2D) -> void:
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("interact") and player_node != null:
 		if coffee_machine.coffee_fixed == true:
+			player_node.set_interact_prompt(false)
 			if target_scene.is_empty():
 				push_warning("No target_scene set for scenedoor at %s" % get_path())
 				return

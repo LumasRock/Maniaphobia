@@ -11,10 +11,12 @@ var already_played: bool = false
 
 var player: Player
 
-func _ready():
+func _ready() -> void:
 	if not body_entered.is_connected(_on_body_entered):
+		@warning_ignore("return_value_discarded")
 		body_entered.connect(_on_body_entered)
 	if not body_exited.is_connected(_on_body_exited):
+		@warning_ignore("return_value_discarded")
 		body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D) -> void:
