@@ -3,7 +3,8 @@ extends Node2D
 @onready var dialogue: Dialogue = $Dialogue
 
 func _ready() -> void: 
-	await Transition.fade_out_finished
+	if Transition.is_transitioning:
+		await Transition.fade_out_finished
 	@warning_ignore("return_value_discarded")
 	dialogue.visibility_changed.connect(_on_dialogue_visibility_changed)
 	dialogue.play("Outside")
