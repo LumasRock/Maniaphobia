@@ -1,6 +1,7 @@
 extends Node2D
 
 @onready var dialogue: Dialogue = $Dialogue
+@export_file("*.tscn", "*.scn") var mansion: String
 
 func _ready() -> void: 
 	if Transition.is_transitioning:
@@ -13,4 +14,5 @@ func _on_dialogue_visibility_changed() -> void:
 	if dialogue.visible:
 		return
 
-	Transition.transition_to("res://Scenes/Levels/Mansion.tscn")
+	# TODO transition on dialogue.completed signal
+	Transition.transition_to(mansion)

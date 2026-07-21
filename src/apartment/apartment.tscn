@@ -5,9 +5,9 @@
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="3_li7cv"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="4_7gemg"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/Player/Player.tscn" id="5_eouh3"]
-[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/common/door.tscn" id="6_4bhhw"]
+[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/common/shadow_door.tscn" id="6_4bhhw"]
 [ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/common/interaction_dialogue_area.gd" id="7_1dxa5"]
-[ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://src/common/scene_door.tscn" id="8_1ce1c"]
+[ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://src/apartment/coffee_door.tscn" id="8_1ce1c"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="9_n7mwb"]
 [ext_resource type="Script" uid="uid://bppdbey62lcvo" path="res://src/apartment/coffee_machine.gd" id="10_iuoxb"]
 

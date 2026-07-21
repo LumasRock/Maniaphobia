@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cynkfgmreudyu" path="res://src/mansion/mansion.gd" id="1_5hv4c"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_5hv4c"]
-[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/common/door.tscn" id="3_3li1f"]
+[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/common/shadow_door.tscn" id="3_3li1f"]
 [ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/stairs.png" id="4_2w5vh"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="4_rgm0c"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/Player/Player.tscn" id="6_kqqdl"]
