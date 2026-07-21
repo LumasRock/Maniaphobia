@@ -1,14 +1,14 @@
 [gd_scene load_steps=18 format=4 uid="uid://cgwbrd16d3skx"]
 
-[ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://Script/hide_and_seek.gd" id="1_mo55v"]
-[ext_resource type="PackedScene" uid="uid://xlyw1p0loole" path="res://Scenes/Maw.tscn" id="3_pbatd"]
+[ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://src/hide_and_seek/hide_and_seek.gd" id="1_mo55v"]
+[ext_resource type="PackedScene" uid="uid://xlyw1p0loole" path="res://src/hide_and_seek/Maw.tscn" id="3_pbatd"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="3_xke3r"]
-[ext_resource type="Script" uid="uid://dfo30in62rs4x" path="res://Script/Interactables/hide_interactable.gd" id="4_xke3r"]
+[ext_resource type="Script" uid="uid://dfo30in62rs4x" path="res://src/common/Interactables/hide_interactable.gd" id="4_xke3r"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="5_bojxd"]
-[ext_resource type="PackedScene" uid="uid://bt3hmbo5wf4jw" path="res://Scenes/ghost.tscn" id="6_vphy3"]
-[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="7_x8cd0"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="8_bojxd"]
-[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="9_pbatd"]
+[ext_resource type="PackedScene" uid="uid://bt3hmbo5wf4jw" path="res://src/hide_and_seek/ghost.tscn" id="6_vphy3"]
+[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/Player/Player.tscn" id="7_x8cd0"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="8_bojxd"]
+[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://src/autoloads/transition.tscn" id="9_pbatd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_upc55"]
 vertices = PackedVector2Array(251.93, -206.703, 251.93, 79.0469, 178.977, 53.0703, 178.977, -116.297, 35.3516, -206.703, 35.3516, -174.227, 623.703, 247.898, 623.703, 273.883, 516.953, 267.383, 615.242, 247.898, 615.242, 182.438, 516.953, 104.508, 589.898, 143.992, 35.3516, -116.297, 35.3516, -142.281, -322.633, -142.281, -344.867, -174.227, -344.867, 59.5625, -322.633, 98.5313, 432.461, -37.8516, 598.344, -37.8516, 598.344, 13.5938, 488.508, 13.5938, 432.461, 79.0469, 488.508, 79.0469, 888.719, 143.992, 888.719, 20.5938, 1012.36, 20.5938, 1012.36, 182.438, 589.898, 79.0469, 508.508, 91.5234, 508.508, 104.508, 716.633, 273.883, 716.633, 338.297, -221.227, 338.297, -221.227, 267.383, -344.867, 273.883, -221.227, 436.227, 556.102, 436.227, 556.102, 468.188, -221.227, 468.188, -221.227, 500.656, -302.633, 500.656, -302.633, 403.773, -294.172, 403.773, -294.172, 370.773, -344.867, 370.773, -344.867, 312.328, -353.32, 312.328, -353.32, 273.883, -516.953, 273.883, -432.461, 273.883, -432.461, 312.328, -547.648, 312.328, -547.648, 59.5625, -516.953, 72.0313, -344.867, 72.0313, -226.578, 98.5313, -221.227, 91.5234, -226.578, 53.0703)

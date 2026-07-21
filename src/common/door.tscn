@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://c32t88l6qtr6f"]
 
-[ext_resource type="Script" uid="uid://86rqhm1njxth" path="res://Script/Interactables/door.gd" id="1_w6aom"]
+[ext_resource type="Script" uid="uid://86rqhm1njxth" path="res://src/common/door.gd" id="1_w6aom"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
 resource_local_to_scene = true

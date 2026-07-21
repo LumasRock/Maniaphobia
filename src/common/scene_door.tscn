@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://8yng7e0g6l1h"]
 
-[ext_resource type="Script" uid="uid://dg8uq2807j485" path="res://Script/scenedoor.gd" id="1_1y4mn"]
+[ext_resource type="Script" uid="uid://dg8uq2807j485" path="res://src/common/scenedoor.gd" id="1_1y4mn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0hol4"]
 resource_local_to_scene = true

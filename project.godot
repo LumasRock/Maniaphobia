@@ -25,8 +25,8 @@ buses/default_bus_layout=""
 
 [autoload]
 
-EventBus="*res://Script/Global/Event_Bus.gd"
-Transition="*res://Scenes/Transition.tscn"
+EventBus="*res://src/autoloads/Event_Bus.gd"
+Transition="*res://src/autoloads/transition.tscn"
 SAVE_MANAGER="*res://addons/simple_save_tool/tool/saveManager.gd"
 
 [debug]

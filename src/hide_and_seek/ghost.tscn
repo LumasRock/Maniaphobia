@@ -2,10 +2,10 @@
 
 [ext_resource type="Shader" uid="uid://c3peaphjck3jc" path="res://Assets/ghost.gdshader" id="1_thbej"]
 [ext_resource type="Texture2D" uid="uid://bt6sr810r5lfj" path="res://Assets/ghost.png" id="2_uta0k"]
-[ext_resource type="Script" uid="uid://cb1ntfmq3dkeq" path="res://Script/GhostWander.gd" id="3_108wt"]
-[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://Script/States/state_machine.gd" id="3_uta0k"]
-[ext_resource type="Script" uid="uid://1kxcc38fdgl1" path="res://Script/GhostChase.gd" id="4_3btnm"]
-[ext_resource type="Script" uid="uid://bqfc35hcyrktr" path="res://Script/GhostCall.gd" id="5_taxxh"]
+[ext_resource type="Script" uid="uid://cb1ntfmq3dkeq" path="res://src/hide_and_seek/GhostWander.gd" id="3_108wt"]
+[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://src/hide_and_seek/States/state_machine.gd" id="3_uta0k"]
+[ext_resource type="Script" uid="uid://1kxcc38fdgl1" path="res://src/hide_and_seek/GhostChase.gd" id="4_3btnm"]
+[ext_resource type="Script" uid="uid://bqfc35hcyrktr" path="res://src/hide_and_seek/GhostCall.gd" id="5_taxxh"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_st3at"]
 shader = ExtResource("1_thbej")

@@ -1,11 +1,11 @@
 [gd_scene load_steps=9 format=3 uid="uid://xlyw1p0loole"]
 
-[ext_resource type="Script" uid="uid://cn67v7h0mdsdd" path="res://Script/States/MawChase.gd" id="1_6cqrp"]
-[ext_resource type="Script" uid="uid://dm7d1vfh0uwjn" path="res://Script/Enemy.gd" id="1_yvkkd"]
+[ext_resource type="Script" uid="uid://cn67v7h0mdsdd" path="res://src/hide_and_seek/States/MawChase.gd" id="1_6cqrp"]
+[ext_resource type="Script" uid="uid://dm7d1vfh0uwjn" path="res://src/hide_and_seek/Enemy.gd" id="1_yvkkd"]
 [ext_resource type="Texture2D" uid="uid://cutljccanxsi4" path="res://Assets/Menu.png" id="2_ailqa"]
-[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://Script/States/state_machine.gd" id="3_wkiqq"]
-[ext_resource type="Script" uid="uid://btvw8t0buui14" path="res://Script/States/MawPatrol.gd" id="5_ailqa"]
-[ext_resource type="Script" uid="uid://dof4fisxlw5t6" path="res://Script/States/MawAttack.gd" id="6_adfsk"]
+[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://src/hide_and_seek/States/state_machine.gd" id="3_wkiqq"]
+[ext_resource type="Script" uid="uid://btvw8t0buui14" path="res://src/hide_and_seek/States/MawPatrol.gd" id="5_ailqa"]
+[ext_resource type="Script" uid="uid://dof4fisxlw5t6" path="res://src/hide_and_seek/States/MawAttack.gd" id="6_adfsk"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_jm80o"]
 radius = 12.0

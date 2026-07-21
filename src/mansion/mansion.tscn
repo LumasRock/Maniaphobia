@@ -1,16 +1,16 @@
 [gd_scene load_steps=28 format=4 uid="uid://cocskxsk6cvgf"]
 
-[ext_resource type="Script" uid="uid://cynkfgmreudyu" path="res://Script/Mansion_Script.gd" id="1_5hv4c"]
+[ext_resource type="Script" uid="uid://cynkfgmreudyu" path="res://src/mansion/mansion.gd" id="1_5hv4c"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_5hv4c"]
-[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://Scenes/door.tscn" id="3_3li1f"]
+[ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/common/door.tscn" id="3_3li1f"]
 [ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/stairs.png" id="4_2w5vh"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/dasdasda.png" id="4_rgm0c"]
-[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player.tscn" id="6_kqqdl"]
-[ext_resource type="Script" uid="uid://bdeosb14jft6k" path="res://Script/Interactables/stairs.gd" id="7_o7vnp"]
+[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/Player/Player.tscn" id="6_kqqdl"]
+[ext_resource type="Script" uid="uid://bdeosb14jft6k" path="res://src/common/Interactables/stairs.gd" id="7_o7vnp"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/Dialogue.tscn" id="10_3li1f"]
-[ext_resource type="PackedScene" uid="uid://bpibq7gjqujn7" path="res://Scenes/Npc.tscn" id="11_rgm0c"]
-[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="12_nda5f"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="10_3li1f"]
+[ext_resource type="PackedScene" uid="uid://bpibq7gjqujn7" path="res://src/common/Npc.tscn" id="11_rgm0c"]
+[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://src/autoloads/transition.tscn" id="12_nda5f"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_j77mn"]
 texture = ExtResource("2_5hv4c")

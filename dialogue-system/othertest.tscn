@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bxyaqxkx8q6l5"]
 
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Dialogue.tscn" id="1_xeoaw"]
-[ext_resource type="Script" uid="uid://c68xcrbq150ec" path="res://button.gd" id="2_40n3b"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="1_xeoaw"]
+[ext_resource type="Script" uid="uid://c68xcrbq150ec" path="res://dialogue-system/button.gd" id="2_40n3b"]
 
 [node name="othertest" type="Node2D"]
 

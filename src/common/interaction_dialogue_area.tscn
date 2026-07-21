@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b8rueagstrf4w"]
 
-[ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://Script/InteractionDialogueArea.gd" id="1_76fe5"]
+[ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/common/interaction_dialogue_area.gd" id="1_76fe5"]
 
 [node name="InteractionDialogueArea" type="Area2D"]
 scale = Vector2(0.658195, 0.891464)

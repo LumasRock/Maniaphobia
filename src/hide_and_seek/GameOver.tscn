@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dn53br4mnqkgi"]
 
-[ext_resource type="Script" uid="uid://bnk8mjm0cxn3n" path="res://Script/GameOver.gd" id="1_k52d1"]
-[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="2_ktc4i"]
+[ext_resource type="Script" uid="uid://bnk8mjm0cxn3n" path="res://src/hide_and_seek/GameOver.gd" id="1_k52d1"]
+[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://src/autoloads/transition.tscn" id="2_ktc4i"]
 
 [node name="GameOver" type="Control"]
 layout_mode = 3

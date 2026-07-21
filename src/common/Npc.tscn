@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bpibq7gjqujn7"]
 
 [ext_resource type="Texture2D" uid="uid://bnqatx8uvcy4q" path="res://Assets/Npc_Rpg.png" id="1_b5x2e"]
-[ext_resource type="Script" uid="uid://j1c6ad3s4ajb" path="res://Script/Npc.gd" id="1_c8tqv"]
+[ext_resource type="Script" uid="uid://j1c6ad3s4ajb" path="res://src/common/Npc.gd" id="1_c8tqv"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c8tqv"]
 radius = 12.0

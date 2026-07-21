@@ -1,10 +1,10 @@
 [gd_scene load_steps=46 format=3 uid="uid://c6h2ry3qrldmf"]
 
-[ext_resource type="Script" uid="uid://cntuc1qp8qqw7" path="res://Scenes/Player/Player.gd" id="1_kpjcp"]
+[ext_resource type="Script" uid="uid://cntuc1qp8qqw7" path="res://src/Player/Player.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://dopxw0knqdcce" path="res://Assets/Sebastian1-Sheet.png" id="2_5ixxa"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="3_gntrk"]
-[ext_resource type="Script" uid="uid://4tf146y5oapf" path="res://Scenes/Player/hiding_manager.gd" id="4_5ixxa"]
-[ext_resource type="PackedScene" uid="uid://8jeuf0kklg7e" path="res://Scenes/Player/hiding_breathing.tscn" id="5_5ixxa"]
+[ext_resource type="Script" uid="uid://4tf146y5oapf" path="res://src/Player/hiding_manager.gd" id="4_5ixxa"]
+[ext_resource type="PackedScene" uid="uid://8jeuf0kklg7e" path="res://src/Player/hiding_breathing.tscn" id="5_5ixxa"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_nn08x"]
 atlas = ExtResource("2_5ixxa")
