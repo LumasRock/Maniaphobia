@@ -1,0 +1,178 @@
+{
+"dialogue_id": "Apartment2",
+"nodes": [
+{
+"id": "1",
+"speaker": "Sebastian",
+"text": "...",
+"emotion": "neutral"
+},
+{
+"id": "2",
+"speaker": null,
+"text": "[i]creeaakk[/i]",
+"tags": [
+"door_creak"
+]
+},
+{
+"id": "3",
+"speaker": "Sebastian",
+"text": "Yeesh, a knock would be nice...",
+"emotion": "neutral"
+},
+{
+"id": "4",
+"speaker": "npc",
+"text": "My bad, my bad. What're you even doing in here? It's like-- 2 PM.",
+"emotion": "npc"
+},
+{
+"id": "5",
+"speaker": "Sebastian",
+"text": "Trying to write. It's not like you're being anymore productive than me.",
+"emotion": "annoyed"
+},
+{
+"id": "6",
+"speaker": "Sebastian",
+"text": "You've literally been playing Halo since 4 PM [b]yesterday[/b].",
+"emotion": "worry"
+},
+{
+"id": "7",
+"speaker": "npc",
+"text": "So? I thought you didn't care about that.",
+"emotion": "npc"
+},
+{
+"id": "8",
+"speaker": "Sebastian",
+"text": "I said I don't care what you do [i]as long[/i] as it didn't involve me... you kept me up the entire night.",
+"emotion": "annoyed"
+},
+{
+"id": "9",
+"speaker": "npc",
+"text": "well so-rry I didn't understand you.",
+"emotion": "npc"
+},
+{
+"id": "10",
+"speaker": "Sebastian",
+"text": "Whatever, I'll just go make me a cup of coffee",
+"emotion": "worry"
+},
+{
+"id": "11",
+"speaker": "Sebastian",
+"text": "That'll wake--what's with the face... [shake rate=3 level=10] npc. [/shake]",
+"emotion": "neutral"
+},
+{
+"id": "12",
+"speaker": "npc",
+"text": "Uh--funny. So about that.",
+"emotion": "npc"
+},
+{
+"id": "13",
+"speaker": "Sebastian",
+"text": "Are you kidding me?",
+"emotion": "angry"
+},
+{
+"id": "14",
+"speaker": "npc",
+"text": "No. I broke the coffee machine.",
+"emotion": "npc"
+},
+{
+"id": "15",
+"speaker": "Sebastian",
+"text": "[shake rate=5 level=10] UGHHHHH [/shake]",
+"emotion": "angry"
+},
+{
+"id": "16",
+"speaker": "npc",
+"text": "WELL DON'T SOUND SO HAPPY ABOUT IT, DAMN.",
+"emotion": "npc"
+},
+{
+"id": "17",
+"speaker": "Sebastian",
+"text": "There, please never do that again-- by the way, [i] how [/i] did you even break it?",
+"emotion": "confused"
+},
+{
+"id": "18",
+"speaker": "npc",
+"text": "I dunno, I guess if you try hard enough--",
+"emotion": "npc"
+},
+{
+"id": "19",
+"speaker": "Sebastian",
+"text": "You were [i]trying[/i] to break it?",
+"emotion": "worry"
+},
+{
+"id": "20",
+"speaker": "npc",
+"text": "No! I--ugh, whatever...",
+"emotion": "npc"
+},
+{
+"id": "21",
+"speaker": "npc",
+"text": "Aren't you supposed to be at a job interview right about now?",
+"emotion": "npc"
+},
+{
+"id": "22",
+"speaker": "Sebastian",
+"text": "Don't change the subject.",
+"emotion": "neutral"
+},
+{
+"id": "23",
+"speaker": "npc",
+"text": "[shake rate=3 level=10]IM TRYING TO HELP YOU GET A JOB.[/shake]",
+"emotion": "npc"
+},
+{
+"id": "24",
+"speaker": "Sebastian",
+"text": "Alright, alright...I'll talk to you about the coffee. [b]Later[/b].",
+"emotion": "annoyed"
+},
+{
+"id": "25",
+"speaker": "Sebastian",
+"text": "See ya.",
+"emotion": "neutral"
+},
+{
+"id": "26",
+"speaker": "npc",
+"text": "I would wish you good luck, or something, but you kinda pissed me off.",
+"emotion": "npc"
+},
+{
+"id": "27",
+"speaker": "Sebastian",
+"text": "Well, you better enjoy the thought of being homeless if i--",
+"emotion": "happy"
+},
+{
+"id": "28",
+"speaker": "npc",
+"text": "Ughhh-- good luck. [font_size=11]Bastard...[/font_size]",
+"emotion": "npc",
+"next_node": null
+}
+]
+}
+
+

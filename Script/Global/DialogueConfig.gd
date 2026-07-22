@@ -8,3 +8,6 @@ extends Node
 @export var font: String = "HandymandiFree.ttf"
 @export var font_color: Color = Color.WHITE
 @export var locale: String = "en"
+@export var auto_next_delay : float = 1.0
+
+@export var default_show_portrait: bool = true

@@ -21,7 +21,7 @@ var _index : Dictionary[String, int] = {}  # A dictionary mapping node IDs to th
 func set_order(ids_in_file_order: Array[String]) -> void:
 	_order = ids_in_file_order
 	_index.clear()
-	for i in _order.size():
+	for i : int in _order.size():
 		_index[_order[i]] = i
 
 func get_node(node_id: String) -> DialogueNode:
@@ -32,19 +32,19 @@ func get_node(node_id: String) -> DialogueNode:
 	
 func has_node(node_id: String) -> bool:
 	return nodes.has(node_id)
-	
+
 # Lazily resolves "what comes after this node" — nothing is precomputed on DialogueNode itself.
 func get_next_id(current_id: String) -> String:
 	if StringUtils.is_null_or_empty(current_id) :
 		current_id = start_node_id
 	
-	var node := get_node(current_id)
-	if node == null:
+	var dnode : DialogueNode = get_node(current_id)
+	if dnode == null:
 		return ""
-	if node.has_options():
+	if dnode.has_options():
 		return ""  # branching resolves via the chosen DialogueOption, not a linear "next"
-	if node.next_node != "":
-		return node.next_node  # explicit jump always wins
+	if dnode.next_node_id != "":
+		return dnode.next_node_id  # explicit jump always wins
 	var idx: int = _index.get(current_id, -1)
 	if idx == -1 or idx >= _order.size() - 1:
 		return ""  # last node, or an id outside this graph

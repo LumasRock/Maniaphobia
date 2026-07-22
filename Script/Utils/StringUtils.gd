@@ -1,4 +1,4 @@
-﻿# StringUtils.gd - Provides utility functions for string manipulation and validation.
+# StringUtils.gd - Provides utility functions for string manipulation and validation.
 class_name StringUtils
 
 static func is_null_or_empty(s: String) -> bool:
@@ -16,5 +16,3 @@ static func pad(s: String, length: int, pad_char: String = " ", pad_left: bool =
 		else:
 			s += pad_char
 	return s
-
-

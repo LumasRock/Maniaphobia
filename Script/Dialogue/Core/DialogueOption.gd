@@ -7,4 +7,3 @@ var next_node_id: String  # The ID of the dialogue node that this option leads t
 var condition_id: String  # Optional identifier for a condition that must be met for this option to be available. If empty, the option is always available.
 
 var condition: Callable  # Optional condition that must be met for this option to be available. If null, the option is always available.
-

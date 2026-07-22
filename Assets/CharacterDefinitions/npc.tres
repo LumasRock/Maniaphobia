@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="CharacterDefinition" load_steps=4 format=3 uid="uid://dl1j0en4ypoxa"]
 
 [ext_resource type="Texture2D" uid="uid://ccfkx85wb5828" path="res://Assets/sprites/portraits/npc/J_NPC.png" id="1_2mntl"]
-[ext_resource type="Script" path="res://Script/Dialogue/CharacterDefinition.gd" id="1_sa7bs"]
+[ext_resource type="Script" uid="uid://dcon83i1imcd2" path="res://Script/Dialogue/CharacterDefinition.gd" id="1_sa7bs"]
 [ext_resource type="Texture2D" uid="uid://xl8qk05gk5hk" path="res://Assets/sprites/portraits/npc/n_happy.png" id="2_logq7"]
 
 [resource]
