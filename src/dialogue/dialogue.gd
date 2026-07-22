@@ -19,7 +19,8 @@ var awaiting_option_selection = false
 var displayed_option_node_id = ""
 var paused_game_for_dialogue = false
 # icons
-const npc_icons = preload("res://Script/Icons.gd").npc_icons
+# "res://src/dialogue/Icons.gd"
+const npc_icons = preload("uid://d5cnies00afl").npc_icons
 func _ready():
 	connect("visibility_changed", _on_visibility_changed)
 	load_dialogues(json_file)

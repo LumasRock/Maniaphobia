@@ -1,11 +1,12 @@
 extends Area2D
-@export var Shadows: TileMapLayer
 
 enum Placement { UP, LEFT, RIGHT, BOTTOM }
 
 @export var my_placement: Placement = Placement.UP
 
 func _ready() -> void:
+	for c: Node2D in self.get_children():
+		c.visible = true
 	if not body_entered.is_connected(_on_body_entered):
 		@warning_ignore("return_value_discarded")
 		body_entered.connect(_on_body_entered)
@@ -28,12 +29,12 @@ func _is_going_same_direction(player: Player) -> bool:
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		Shadows.modulate.a = 0.5
+		self.modulate.a = 0.5
 
 
 func _on_body_exited(body: Node2D) -> void:
 	if body is Player:
-		if _is_going_same_direction(body):
-			Shadows.modulate.a = 0.0
+		if _is_going_same_direction(body as Player):
+			self.modulate.a = 0.0
 		else:
-			Shadows.modulate.a = 1.0
+			self.modulate.a = 1.0
