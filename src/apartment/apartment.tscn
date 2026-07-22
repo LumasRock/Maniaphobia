@@ -169,12 +169,18 @@ target_scene = "uid://bihtv5hq0wlcq"
 position = Vector2(-4, 0)
 shape = SubResource("RectangleShape2D_6d2k2")
 
-[node name="Dialogue" parent="." instance=ExtResource("9_n7mwb")]
+[node name="Dialogue" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("9_n7mwb")]
 offset_left = -3.0
 offset_top = 312.0
 offset_right = -3.0
 offset_bottom = 312.0
 json_file = "res://dialogue-system/dialogue_system/Apartment.json"
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="Dialogue"]
+position = Vector2(104.83, -3.05176e-05)
+scale = Vector2(0.97972, 0.887352)
+zoom = Vector2(6, 6)
 
 [node name="CoffeeMachine" type="Area2D" parent="." node_paths=PackedStringArray("dialogue")]
 position = Vector2(64, 80)

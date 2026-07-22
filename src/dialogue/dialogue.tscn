@@ -76,9 +76,4 @@ scale = Vector2(0.117481, 0.242043)
 [node name="TypingTimer" type="Timer" parent="."]
 wait_time = 0.06
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(103.851, 0)
-scale = Vector2(1, 0.613594)
-zoom = Vector2(6, 6)
-
 [connection signal="timeout" from="TypingTimer" to="." method="_on_typing_timer_timeout"]

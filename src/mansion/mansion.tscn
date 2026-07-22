@@ -775,6 +775,7 @@ position = Vector2(16, -4)
 [node name="Connor" parent="npcs" node_paths=PackedStringArray("mansion", "dialogue") groups=["npc"] instance=ExtResource("11_rgm0c")]
 position = Vector2(145.924, -118.118)
 dialogue_id = "57"
+rest_direction = 2
 mansion = NodePath("../..")
 dialogue = NodePath("../../Dialogue")
 
@@ -782,6 +783,7 @@ dialogue = NodePath("../../Dialogue")
 position = Vector2(187.878, 46.1397)
 character = 1
 dialogue_id = "37"
+rest_direction = 0
 mansion = NodePath("../..")
 dialogue = NodePath("../../Dialogue")
 
@@ -789,6 +791,7 @@ dialogue = NodePath("../../Dialogue")
 position = Vector2(977.694, 51.6764)
 character = 4
 dialogue_id = "119"
+rest_direction = 0
 mansion = NodePath("../..")
 dialogue = NodePath("../../Dialogue")
 
@@ -796,6 +799,7 @@ dialogue = NodePath("../../Dialogue")
 position = Vector2(-432.301, 343.279)
 character = 3
 dialogue_id = "25"
+rest_direction = 0
 mansion = NodePath("../..")
 dialogue = NodePath("../../Dialogue")
 
@@ -806,19 +810,26 @@ dialogue_id = "46"
 mansion = NodePath("../..")
 dialogue = NodePath("../../Dialogue")
 
-[node name="Player" parent="." instance=ExtResource("6_kqqdl")]
+[node name="Player" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("6_kqqdl")]
 scale = Vector2(1.5, 1.5)
+camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
-position = Vector2(0, 0.5)
 scale = Vector2(0.5, 0.5)
-zoom = Vector2(4, 4)
+zoom = Vector2(3, 3)
 limit_smoothed = true
 position_smoothing_speed = 2.0
 
-[node name="Dialogue" parent="." instance=ExtResource("10_3li1f")]
-offset_left = 409.0
-offset_top = 735.0
-offset_right = 409.0
-offset_bottom = 735.0
+[node name="Dialogue" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("10_3li1f")]
+offset_left = 350.0
+offset_top = 745.0
+offset_right = 350.0
+offset_bottom = 745.0
+scale = Vector2(2.0126, 1.01576)
 json_file = "res://dialogue-system/dialogue_system/Mansion.json"
+camera = NodePath("Camera2D")
+
+[node name="Camera2D" type="Camera2D" parent="Dialogue"]
+position = Vector2(104.839, -25.5966)
+scale = Vector2(0.496869, 0.984482)
+zoom = Vector2(3, 3)

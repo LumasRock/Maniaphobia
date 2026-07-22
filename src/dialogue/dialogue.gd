@@ -6,9 +6,9 @@ class_name Dialogue
 @onready var TypingTimer = $TypingTimer
 @onready var content = $Content
 @onready var options_container = $Options
-@onready var dialogue_camera = $Camera2D
 @export_file("*.json") var json_file: String
-@export var pause_game_during_dialogue := true
+@export var camera: Camera2D
+@export var pause_game_during_dialogue: bool = true
 
 var dialogues = {}	# stores all dialogue sets by dialogue_id
 var node_dict = {}	# current scene's nodes keyed by ID
@@ -198,7 +198,7 @@ func stop():
 
 func _on_visibility_changed() -> void:
 	if visible:
-		EventBus.set_camera(dialogue_camera)
+		EventBus.set_camera(camera)
 	else:
 		var player = get_tree().get_first_node_in_group("player")
 		if player:
