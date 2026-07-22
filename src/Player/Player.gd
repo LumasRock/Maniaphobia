@@ -4,14 +4,15 @@ class_name Player
 signal health_changed(current_health: int)
 signal died
 
-@export var animated_sprite: AnimatedSprite2D
 @export var move_speed := 100.0
 @export var hiding_manager: PlayerHidingManager
 
-@onready var camera: Camera2D = $Camera2D
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var breathing = $breathing
 @onready var timer = $Timer
 @onready var label = $Label
+
+@export var camera: Camera2D
 @export var max_health: int = 100
 
 var health: int = max_health
@@ -23,6 +24,7 @@ func _ready() -> void:
 	EventBus.set_camera(camera)
 	health = max_health
 	health_changed.emit(health)
+	set_interact_prompt(false)
 
 
 func _physics_process(_delta: float):
@@ -50,8 +52,7 @@ func _physics_process(_delta: float):
 
 
 func set_interact_prompt(is_visible: bool):
-	$Camera2D/Control/RichTextLabel.visible = is_visible
-
+	%interact_prompt.visible = is_visible
 
 func _process(_delta):
 	if label.visible == true:

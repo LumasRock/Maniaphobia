@@ -1,8 +1,7 @@
 extends Area2D
 
-enum Placement { UP, LEFT, RIGHT, BOTTOM }
-
-@export var my_placement: Placement = Placement.UP
+## This should refer to which direction the shadow is from the door
+@export var my_placement: Types.Direction = Types.Direction.UP
 
 func _ready() -> void:
 	for c: Node2D in self.get_children():
@@ -16,13 +15,13 @@ func _ready() -> void:
 
 func _is_going_same_direction(player: Player) -> bool:
 	match my_placement:
-		Placement.LEFT:
+		Types.Direction.LEFT:
 			return player.velocity.x < 0
-		Placement.RIGHT:
+		Types.Direction.RIGHT:
 			return player.velocity.x > 0
-		Placement.UP:
+		Types.Direction.UP:
 			return player.velocity.y < 0
-		Placement.BOTTOM:
+		Types.Direction.DOWN:
 			return player.velocity.y > 0
 	return false
 

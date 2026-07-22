@@ -1,7 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bpibq7gjqujn7"]
+[gd_scene load_steps=6 format=3 uid="uid://bpibq7gjqujn7"]
 
 [ext_resource type="Texture2D" uid="uid://bnqatx8uvcy4q" path="res://Assets/Npc_Rpg.png" id="1_b5x2e"]
-[ext_resource type="Script" uid="uid://j1c6ad3s4ajb" path="res://src/common/Npc.gd" id="1_c8tqv"]
+[ext_resource type="Script" uid="uid://j1c6ad3s4ajb" path="res://src/common/npc.gd" id="1_c8tqv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ets8h"]
+atlas = ExtResource("1_b5x2e")
+region = Rect2(38, 1, 32, 32)
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_c8tqv"]
 radius = 12.0
@@ -14,10 +18,7 @@ radius = 67.082
 script = ExtResource("1_c8tqv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_b5x2e")
-hframes = 5
-vframes = 4
-frame = 7
+texture = SubResource("AtlasTexture_ets8h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-1, 0)

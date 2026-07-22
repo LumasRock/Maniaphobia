@@ -1,4 +1,5 @@
 extends Node
+class_name DialogueIcons
 
 const npc_icons = {
 	"Sebastian": {

@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=3 uid="uid://c6h2ry3qrldmf"]
+[gd_scene load_steps=45 format=3 uid="uid://c6h2ry3qrldmf"]
 
 [ext_resource type="Script" uid="uid://cntuc1qp8qqw7" path="res://src/Player/Player.gd" id="1_kpjcp"]
 [ext_resource type="Texture2D" uid="uid://dopxw0knqdcce" path="res://Assets/Sebastian1-Sheet.png" id="2_5ixxa"]
@@ -317,18 +317,8 @@ animations = [{
 radius = 4.0
 height = 12.2175
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kyqiw"]
-bg_color = Color(0.6, 0.6, 0.6, 0)
-border_width_left = 8
-border_width_top = 6
-border_width_right = 8
-border_width_bottom = 6
-border_color = Color(0, 0, 0, 1)
-
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("animated_sprite", "hiding_manager") groups=["player"]]
-scale = Vector2(0.812743, 0.800001)
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("hiding_manager") groups=["player"]]
 script = ExtResource("1_kpjcp")
-animated_sprite = NodePath("AnimatedSprite2D")
 hiding_manager = NodePath("HidingManager")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -336,43 +326,24 @@ position = Vector2(1.19209e-07, 0)
 scale = Vector2(0.641667, 0.691667)
 sprite_frames = SubResource("SpriteFrames_q6r6c")
 animation = &"down_idle"
+autoplay = "down_idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 6.24999)
 scale = Vector2(1, 0.818496)
 shape = SubResource("CapsuleShape2D_kdubu")
 
-[node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(6, 6)
-limit_smoothed = true
-position_smoothing_speed = 2.0
-
-[node name="Control" type="Control" parent="Camera2D"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-metadata/_edit_use_anchors_ = true
-
-[node name="RichTextLabel" type="RichTextLabel" parent="Camera2D/Control"]
+[node name="interact_prompt" type="RichTextLabel" parent="."]
+unique_name_in_owner = true
 visible = false
 z_index = 100
-layout_mode = 0
 offset_left = -3.6912
 offset_top = -30.0
 offset_right = 36.3088
 offset_bottom = 10.0
 text = "E"
 
-[node name="Panel" type="Panel" parent="Camera2D"]
-offset_left = 326.056
-offset_top = 92.4999
-offset_right = 582.056
-offset_bottom = 243.5
-mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_kyqiw")
-
-[node name="Label" type="Label" parent="." groups=["player"]]
+[node name="Label" type="Label" parent="."]
 visible = false
 offset_left = -124.271
 offset_top = -66.2499

@@ -117,7 +117,12 @@ tile_map_data = PackedByteArray("AAARAP3/AwAGAA4AAAAEAAEAAwANABEAAAANAPv/AwAIABE
 tile_set = SubResource("TileSet_k5iqw")
 
 [node name="Player" parent="." instance=ExtResource("5_eouh3")]
-position = Vector2(192, 55)
+position = Vector2(192, 56)
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+zoom = Vector2(6, 6)
+limit_smoothed = true
+position_smoothing_speed = 2.0
 
 [node name="bedroom" parent="." instance=ExtResource("6_4bhhw")]
 position = Vector2(192, 48)

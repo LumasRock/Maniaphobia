@@ -28,6 +28,7 @@ buses/default_bus_layout=""
 EventBus="*res://src/autoloads/Event_Bus.gd"
 Transition="*res://src/autoloads/transition.tscn"
 SAVE_MANAGER="*res://addons/simple_save_tool/tool/saveManager.gd"
+Types="*res://src/autoloads/types.gd"
 
 [debug]
 
@@ -151,6 +152,10 @@ Q={
 
 2d_physics/layer_1="Floor 1"
 2d_physics/layer_2="Floor 2"
+
+[physics]
+
+2d/default_gravity=0.0
 
 [rendering]
 

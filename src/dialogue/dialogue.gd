@@ -18,9 +18,7 @@ var visible_characters = 0
 var awaiting_option_selection = false
 var displayed_option_node_id = ""
 var paused_game_for_dialogue = false
-# icons
-# "res://src/dialogue/Icons.gd"
-const npc_icons = preload("uid://d5cnies00afl").npc_icons
+
 func _ready():
 	connect("visibility_changed", _on_visibility_changed)
 	load_dialogues(json_file)
@@ -80,8 +78,8 @@ func start_typing(text):
 	
 	var speaker_name = current_node.get("speaker", "")
 	var emotion = str(current_node.get("emotion", "neutral")).to_lower()
-	if npc_icons.has(speaker_name) and npc_icons[speaker_name].has(emotion):
-		var portrait_set: Dictionary = npc_icons[speaker_name][emotion]
+	if DialogueIcons.npc_icons.has(speaker_name) and DialogueIcons.npc_icons[speaker_name].has(emotion):
+		var portrait_set: Dictionary = DialogueIcons.npc_icons[speaker_name][emotion]
 		full_body_sprite.texture = portrait_set.get("body", portrait_set.get("icon"))
 	else:
 		print("Portrait not found — speaker: '%s', emotion: '%s'" % [speaker_name, emotion])

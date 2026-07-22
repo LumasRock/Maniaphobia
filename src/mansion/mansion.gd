@@ -1,9 +1,10 @@
 extends Node2D
+class_name Mansion
 
 @onready var dialogue: Dialogue = $Dialogue
-@onready var transition: AnimationPlayer = $Transition/AnimationPlayer
+@onready var local_transition: AnimationPlayer = $Transition/AnimationPlayer
 var Npcs_Talked_To: int = 0
-var talked_npc_ids: Array[String] = []
+var talked_npc_ids: Array[Types.NpcCharacter] = []
 var pending_special_dialogue: bool = false
 var special_dialogue_played: bool = false
 @export_file("*.tscn", "*.scn") var hide_and_seek_scene: String
@@ -14,13 +15,12 @@ func _ready() -> void:
 	if Transition.is_transitioning:
 		await Transition.fade_out_finished
 	dialogue.play("Mansion")
-	transition.play("RESET")
 
-func register_npc_talk(npc_id: String) -> void:
-	if talked_npc_ids.has(npc_id):
+func register_npc_talk(npc: Types.NpcCharacter) -> void:
+	if talked_npc_ids.has(npc):
 		return
 
-	talked_npc_ids.append(npc_id)
+	talked_npc_ids.append(npc)
 	Npcs_Talked_To = talked_npc_ids.size()
 
 	if Npcs_Talked_To >= 5 and not special_dialogue_played:
@@ -39,8 +39,8 @@ func _on_dialogue_visibility_changed() -> void:
 	if pending_special_dialogue and Npcs_Talked_To >= 5 and not special_dialogue_played:
 		pending_special_dialogue = false
 		special_dialogue_played = true
-		transition.play("Fade_in")
+		local_transition.play("Fade_in")
 		await get_tree().create_timer(3.0).timeout
-		transition.play("Fade_out")
+		local_transition.play("Fade_out")
 		await get_tree().create_timer(0.3).timeout
 		dialogue.play("Mansion", "70")

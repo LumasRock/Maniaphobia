@@ -1,8 +1,9 @@
 extends Node2D
 
-@onready var Dialogue = $Dialogue
+@onready var dialogue: Dialogue = $Dialogue
 
-func _ready():
+func _ready() -> void:
 	if Transition.is_transitioning:
 		await Transition.fade_out_finished
-	Dialogue.play("Apartment")
+	print("play")
+	dialogue.play("Apartment")

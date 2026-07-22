@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxtir5qxo364k"]
+
+[ext_resource type="Script" uid="uid://byq8lc1emcyoa" path="res://src/common/interaction_tp_area.gd" id="1_2oujy"]
+
+[node name="Stairs1L" type="Area2D"]
+script = ExtResource("1_2oujy")
