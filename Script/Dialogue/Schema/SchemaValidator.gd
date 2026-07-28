@@ -2,7 +2,23 @@
 # Schema rules are defined in DialogueSchema.gd
 class_name SchemaValidator
 
-static func validate(raw: Dictionary, schema: Dictionary, context: String) -> Array[String]:
+
+# This method checks if the JSON specified in 'file_path' is a valid JSON file and is parsable, 
+# or returns an array of error messages if invalid
+# See 'validate_schema' for schema validation
+static func validate_json_parsing(file_path: String) -> Array[String]:
+	var file : FileAccess = FileAccess.open(file_path, FileAccess.READ)
+	if file == null:
+		return ["Failed to open file: %s" % file_path]
+	var json : JSON = JSON.new()
+	var json_result : int = json.parse(file.get_as_text())
+	if json_result != OK:
+		return ["Failed to parse JSON in '%s': %s" % [file_path, json.get_error_message()]]
+	return []
+
+# This method validates a raw dictionary against a schema definition, checking for required fields and type correctness.
+# For schemas see DialogueSchema.gd
+static func validate_schema(raw: Dictionary, schema: Dictionary, context: String) -> Array[String]:
 	var errors: Array[String] = []
 	for key : String in schema.keys():
 

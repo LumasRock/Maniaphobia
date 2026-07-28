@@ -87,7 +87,7 @@ func _parse_file_as_dictionary(file: FileAccess) -> Dictionary:
 	return _json.data
 
 func _validate_dialogue_data(data: Dictionary) -> bool:
-	var errors : Array = SchemaValidator.validate(data, 
+	var errors : Array = SchemaValidator.validate_schema(data, 
 			DialogueSchemas.GRAPH_FIELDS, 
 			"dialogue '%s'" % data.get("dialogue_id", "?"))
 	if not errors.is_empty():
@@ -97,7 +97,7 @@ func _validate_dialogue_data(data: Dictionary) -> bool:
 	return true
 
 func _validate_node_data(node_data: Dictionary) -> bool:
-	var errors : Array = SchemaValidator.validate(node_data, 
+	var errors : Array = SchemaValidator.validate_schema(node_data, 
 			DialogueSchemas.NODE_FIELDS, 
 			"node '%s'" % node_data.get("id", "?"))
 	if not errors.is_empty():

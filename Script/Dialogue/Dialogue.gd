@@ -341,3 +341,20 @@ func _resolve_dialogue_source() -> String:
 		return dialogue_source  # 1. explicit export always wins
 	var scene_name : String = get_scene_file_path().get_file().get_basename()
 	return DialogueConfig.json_base_path.path_join(scene_name + ".json")  # 3. naming-convention fallback
+
+func _get_configuration_warnings() -> PackedStringArray: 
+	var warnings : PackedStringArray = PackedStringArray()
+	if dialogue_source == "":
+		return warnings # no dialogue selected, nothing to check
+
+	if not FileAccess.file_exists(dialogue_source):
+		warnings.append("Dialogue: dialogue source file '%s' does not exist" % dialogue_source)
+		return warnings
+
+	if _graph == null:
+		warnings.append("Dialogue: dialogue graph is null. Did you call load_dialogue_graph() first?")
+	if _current_node == null:
+		warnings.append("Dialogue: current node is null. Did you call _enter_node() first?")
+	if _current_char == null and not StringUtils.is_null_or_empty(_current_node.speaker):
+		warnings.append("Dialogue: current character is null, but the current node has a speaker. Did you call build_character_lookup() first?")
+	return warnings

@@ -1,12 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://4jhvm4xuvxve"]
+[gd_scene load_steps=6 format=3 uid="uid://4jhvm4xuvxve"]
 
 [ext_resource type="Script" uid="uid://tik8c8y8f3pg" path="res://Script/Dialogue/Dialogue.gd" id="1_ro8un"]
 [ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://Assets/CharacterDefinitions/sebastian.tres" id="2_80avi"]
 [ext_resource type="Script" uid="uid://dcon83i1imcd2" path="res://Script/Dialogue/CharacterDefinition.gd" id="2_b6pb6"]
 [ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://Assets/CharacterDefinitions/npc.tres" id="3_b6pb6"]
 [ext_resource type="Texture2D" uid="uid://c5otct6dmlble" path="res://Assets/sprites/dialogue_box1.png" id="3_oj6as"]
-[ext_resource type="Texture2D" uid="uid://246mh0fxac25" path="res://Assets/sprites/portraits/sebastian/Seb_Neutral.png" id="4_fugfe"]
-[ext_resource type="Texture2D" uid="uid://ccfkx85wb5828" path="res://Assets/sprites/portraits/npc/J_NPC.png" id="5_7dtm1"]
 
 [node name="Dialogue" type="Control"]
 layout_mode = 3
@@ -71,7 +69,6 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Portrait1"]
 position = Vector2(35, -30)
-texture = ExtResource("4_fugfe")
 
 [node name="Name" type="RichTextLabel" parent="Portrait1"]
 z_index = 10
@@ -92,7 +89,6 @@ metadata/_edit_group_ = true
 
 [node name="Sprite2D" type="Sprite2D" parent="Portrait2"]
 position = Vector2(204, -30)
-texture = ExtResource("5_7dtm1")
 flip_h = true
 
 [node name="Name" type="RichTextLabel" parent="Portrait2"]
