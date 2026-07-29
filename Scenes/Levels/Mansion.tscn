@@ -8,7 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="6_kqqdl"]
 [ext_resource type="Script" uid="uid://bdeosb14jft6k" path="res://Script/Interactables/stairs.gd" id="7_o7vnp"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/sprites/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://dialogue-system/old/Dialogue.tscn" id="10_3li1f"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://Scenes/OldDialogue.tscn" id="10_3li1f"]
 [ext_resource type="PackedScene" uid="uid://bpibq7gjqujn7" path="res://Scenes/Npc.tscn" id="11_rgm0c"]
 [ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://Scenes/Transition.tscn" id="12_nda5f"]
 
@@ -523,6 +523,7 @@ down = Vector2i(0, 0)
 Dialogue = NodePath("../../Dialogue")
 
 [node name="Sprite2D" parent="Floor1/Connor" index="0"]
+texture = null
 frame = 0
 
 [node name="Evelyn" parent="Floor1" node_paths=PackedStringArray("Dialogue") groups=["npc"] instance=ExtResource("11_rgm0c")]
@@ -535,6 +536,7 @@ up = Vector2i(0, 1)
 Dialogue = NodePath("../../Dialogue")
 
 [node name="Sprite2D" parent="Floor1/Evelyn" index="0"]
+texture = null
 frame = 4
 
 [node name="Silvia" parent="Floor1" node_paths=PackedStringArray("Dialogue") groups=["npc"] instance=ExtResource("11_rgm0c")]
@@ -548,6 +550,7 @@ down = Vector2i(1, 3)
 Dialogue = NodePath("../../Dialogue")
 
 [node name="Sprite2D" parent="Floor1/Silvia" index="0"]
+texture = null
 frame = 16
 
 [node name="Evan" parent="Floor1" node_paths=PackedStringArray("Dialogue") groups=["npc"] instance=ExtResource("11_rgm0c")]
@@ -561,6 +564,7 @@ down = Vector2i(2, 2)
 Dialogue = NodePath("../../Dialogue")
 
 [node name="Sprite2D" parent="Floor1/Evan" index="0"]
+texture = null
 frame = 12
 
 [node name="Sylas" parent="Floor1" node_paths=PackedStringArray("Dialogue") groups=["npc"] instance=ExtResource("11_rgm0c")]
@@ -574,6 +578,7 @@ down = Vector2i(3, 1)
 Dialogue = NodePath("../../Dialogue")
 
 [node name="Sprite2D" parent="Floor1/Sylas" index="0"]
+texture = null
 frame = 8
 
 [node name="Stairs" type="Area2D" parent="."]
@@ -748,10 +753,10 @@ libraries = {
 }
 
 [node name="Dialogue" parent="." instance=ExtResource("10_3li1f")]
-offset_left = 202.0
-offset_top = 389.0
-offset_right = 202.0
-offset_bottom = 389.0
+offset_left = -107.0
+offset_top = -1.0
+offset_right = -107.0
+offset_bottom = -1.0
 json_file = "res://Assets/dialogues/Mansion.json"
 
 [node name="TextureRect" parent="." instance=ExtResource("12_nda5f")]

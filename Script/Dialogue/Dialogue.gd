@@ -25,6 +25,7 @@ signal portrait_changed(previous_portrait: String, previous_emotion: String, new
 @export_file("*.json") var dialogue_source: String = ""   # optional explicit override; see §6 for default resolutionon
 
 @export_category("Settings")
+@export var lazy_load: bool = true  # if true, the dialogue graph will be loaded on demand when start() is called. If false, it will be loaded in _ready().
 @export var start_on_load: bool = false
 @export var skippable: bool = true
 @export var pausable: bool = true
@@ -48,8 +49,14 @@ var sync_slots_action: Callable = _sync_slot_dictionaries
 @export var text_size: int = -1
 @export var locale: String = ""
 
+@export_category("Debug")
+@export var warn_on_missing_character: bool = true
+@export var warn_on_missing_portrait: bool = true
+@export var warn_on_missing_node_dialogue: bool = true
+
 @onready var dialogue_text : RichTextLabel = $DialogueText
 @onready var options_container : BoxContainer = $OptionsContainer
+@onready var dialogue_camera : Camera2D = $Camera2D
 
 var _graph : DialogueGraph
 var _current_node : DialogueNode
@@ -66,13 +73,15 @@ enum DialogueState {
 	Paused,
 	Finished
 }
-var _state : DialogueState = DialogueState.Idle
+var current_state : DialogueState = DialogueState.Idle
 
 var _character_lookup: Dictionary[String, CharacterDefinition] = {}  # character_name -> CharacterDefinition
 var _dialogue_loader : DialogueLoader
 
-func _ready() -> void:
+func get_dialogue_id() -> String:
+	return _graph.dialogue_id if _graph != null else ""
 
+func _ready() -> void:
 	# cache the dialogue files and build the character lookup table
 	# these are required to setup the dialogue graph and character portraits correctly
 	_dialogue_loader = DialogueLoader.new()
@@ -81,7 +90,8 @@ func _ready() -> void:
 	initialize_portraits()
 	# auto-start if configured to do so, but only in the game, not in the editor
 	if not Engine.is_editor_hint() and start_on_load:
-		load_dialogue_graph()
+		if not lazy_load:
+			load_dialogue_graph()
 		start()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -89,7 +99,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("Pause") and pausable:
 		toggle_pause()
 
-	if _state == DialogueState.WaitingForInput:
+	if current_state == DialogueState.WaitingForInput:
 		# accept is to select an option
 		if event.is_action_pressed("accept") and _current_node.has_options():
 			handle_option_selection()
@@ -104,9 +114,9 @@ func _process(delta: float) -> void:
 		return
 
 	# TODO : implement text speed and typing effect here
-	_state = DialogueState.Typing
+	current_state = DialogueState.Typing
 	dialogue_text.text = _current_node.text
-	_state = DialogueState.WaitingForInput
+	current_state = DialogueState.WaitingForInput
 
 
 #############################
@@ -119,7 +129,8 @@ func initialize_portraits() -> void:
 		var sprite : Sprite2D = _get_slot_sprite(slot_name)
 		var name_label : RichTextLabel = _get_slot_name_label(slot_name)
 		if sprite == null or name_label == null:
-			push_warning("Dialogue: slot '%s' is missing a Sprite2D or RichTextLabel node" % slot_name)
+			if warn_on_missing_portrait:
+				push_warning("Dialogue: slot '%s' is missing a Sprite2D or RichTextLabel node" % slot_name)
 			continue
 		_portraits[slot_name] = {"sprite": sprite, "name_label": name_label}
 		sprite.texture = null
@@ -129,7 +140,8 @@ func build_character_lookup() -> void:
 	_character_lookup.clear()
 	for c : CharacterDefinition in characters:
 		if c == null or not c.validate():
-			push_warning("Dialogue: invalid CharacterDefinition in %s" % get_scene_file_path())
+			if warn_on_missing_character:
+				push_warning("Dialogue: invalid CharacterDefinition in %s" % get_scene_file_path())
 			continue
 		_character_lookup[c.character_name.to_lower()] = c
 
@@ -149,8 +161,11 @@ func load_dialogue_graph() -> void:
 
 func start() -> void:
 	if _graph == null :
-		push_error("Dialogue: cannot start dialogue; graph is null. Did you call load_dialogue_graph() first?")
-		return
+		if lazy_load: 
+			load_dialogue_graph()
+		else:
+			push_error("Dialogue: cannot start dialogue; graph is null. Did you call load_dialogue_graph() first?")
+			return
 	dialogue_started.emit(_graph.dialogue_id)
 	_enter_node(_graph.start_node_id)
 
@@ -161,7 +176,7 @@ func finish() -> void:
 	_exit_node()
 	var id : String = _graph.dialogue_id
 	_current_node = null
-	_state = DialogueState.Finished
+	current_state = DialogueState.Finished
 	_graph = null
 	dialogue_finished.emit(id)
 
@@ -169,11 +184,11 @@ func toggle_pause() -> void:
 	if not pausable:
 		push_warning("Dialogue: attempt to pause a non-pausable dialogue")
 		return
-	if _state == DialogueState.Paused:
-		_state = DialogueState.WaitingForInput
+	if current_state == DialogueState.Paused:
+		current_state = DialogueState.WaitingForInput
 		dialogue_resumed.emit()
 	else :
-		_state = DialogueState.Paused
+		current_state = DialogueState.Paused
 		dialogue_paused.emit()
 
 func handle_option_selection() -> void:
@@ -205,7 +220,7 @@ func _enter_node(node_id: String) -> void:
 	_current_node = new_node
 	_current_char = new_char
 
-	_state = DialogueState.Typing
+	current_state = DialogueState.Typing
 	node_entered.emit(_current_node)
 
 
@@ -213,7 +228,8 @@ func _enter_node(node_id: String) -> void:
 # Returns true if successful, false if there is no next node.
 func _move_next_node() -> bool:
 	if _current_node == null:
-		push_warning("Dialogue: attempt to move to next node from a null node. Did you call _enter_node() first?")
+		if warn_on_missing_node_dialogue:
+			push_warning("Dialogue: attempt to move to next node from a null node. Did you call _enter_node() first?")
 		return false
 	# we use the graph to resolve the next node id, 
 	# because it handles branching and explicit next_node jumps.
@@ -225,15 +241,17 @@ func _move_next_node() -> bool:
 
 func _move_to_node(node_id: String) -> void:
 	if not _graph.has_node(node_id):
-		push_error("Dialogue: node '%s' does not exist in graph '%s'" % [node_id, _graph.dialogue_id])
+		if warn_on_missing_node_dialogue:
+			push_warning("Dialogue: node '%s' does not exist in graph '%s'" % [node_id, _graph.dialogue_id])
 		return
 	_enter_node(node_id)
 
 func _exit_node() -> void:
 	if _current_node == null:
-		push_warning("Dialogue: attempt to exit a null node. Did you call _enter_node() first?")
+		if warn_on_missing_node_dialogue:
+			push_warning("Dialogue: attempt to exit a null node. Did you call _enter_node() first?")
 		return
-	_state = DialogueState.Idle
+	current_state = DialogueState.Idle
 	node_exited.emit(_current_node)
 
 # Applies the changes between the previous node and the new node, 
@@ -246,7 +264,8 @@ func _apply_node_changes(previous_node: DialogueNode, new_node: DialogueNode, pr
 	if not StringUtils.is_null_or_empty(new_node.speaker):
 		new_portrait = portrait_character.find_key(new_node.speaker.to_lower())
 		if StringUtils.is_null_or_empty(new_portrait):
-			push_error("Dialogue: speaker '%s' has no portrait assigned in portrait_character" % new_node.speaker)
+			if warn_on_missing_character:
+				push_warning("Dialogue: speaker '%s' has no portrait assigned in portrait_character" % new_node.speaker)
 			return
 	var previous_portrait : String = _current_portrait
 	
@@ -285,13 +304,15 @@ func _update_portrait(portrait: String, node: DialogueNode, char_def: CharacterD
 
 func _get_slot_sprite(slot: String) -> Sprite2D:
 	if not portrait_sprites.has(slot):
-		push_error("Dialogue: slot '%s' has no sprite path configured." % slot)
+		if warn_on_missing_portrait:
+			push_warning("Dialogue: slot '%s' has no sprite path configured." % slot)
 		return null
 	return get_node(portrait_sprites[slot]) as Sprite2D
 
 func _get_slot_name_label(slot: String) -> RichTextLabel:
 	if not portrait_labels.has(slot):
-		push_error("Dialogue: slot '%s' has no name label path configured." % slot)
+		if warn_on_missing_portrait:
+			push_warning("Dialogue: slot '%s' has no name label path configured." % slot)
 		return null
 	return get_node(portrait_labels[slot]) as RichTextLabel
 
@@ -328,7 +349,8 @@ func _get_character(speaker: String) -> CharacterDefinition:
 		# no character dialog. eg: narrator. Not an error
 		return null
 	if not _character_lookup.has(speaker):
-		push_error("Dialogue: speaker '%s' has no matching CharacterDefinition in this Dialogue instance" % speaker)
+		if warn_on_missing_character:
+			push_warning("Dialogue: speaker '%s' has no matching CharacterDefinition in this Dialogue instance" % speaker)
 		return null
 	return _character_lookup[speaker]
 

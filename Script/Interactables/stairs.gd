@@ -21,8 +21,8 @@ func _on_body_entered(body: Node2D):
 		prompt_visible = true
 func _on_body_exited(body: Node2D):
 	if body is Player:
-		body.can_move = true
-		body.set_interact_prompt(false)
+		body._can_move = true
+		body.show_interact_prompt(false)
 		prompt_visible = false
 func _input(event: InputEvent) -> void:
 	if prompt_visible == true and event.is_action_pressed("interact"):

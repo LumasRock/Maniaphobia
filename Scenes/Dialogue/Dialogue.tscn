@@ -24,9 +24,13 @@ portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": ""
 })
+warn_on_missing_character = null
+warn_on_missing_portrait = null
+warn_on_missing_node_dialogue = null
 metadata/_custom_type_script = "uid://tik8c8y8f3pg"
 metadata/_edit_horizontal_guides_ = [34.0]
 metadata/_edit_vertical_guides_ = [187.0]
+metadata/_edit_group_ = true
 
 [node name="MainContainer" type="NinePatchRect" parent="."]
 z_index = 1

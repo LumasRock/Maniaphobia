@@ -1,4 +1,5 @@
 extends Control
+class_name DialogueDeprecated 
 
 @onready var icon : Sprite2D = $CanvasLayer/DialogueBox/Icon
 @onready var full_body_sprite : Sprite2D = $CanvasLayer/DialogueBox/FullBodySprite
@@ -11,32 +12,33 @@ extends Control
 @export_file("*.json") var json_file
 @export var pause_game_during_dialogue := true
 
-var dialogues = {}	# stores all dialogue sets by dialogue_id
-var node_dict = {}	# current scene's nodes keyed by ID
-var current_node = {}	# currently active node
-var full_text = ""
-var visible_characters = 0
-var awaiting_option_selection = false
-var displayed_option_node_id = ""
-var paused_game_for_dialogue = false
+var dialogues : Dictionary = {}	# stores all dialogue sets by dialogue_id
+var node_dict : Dictionary = {}	# current scene's nodes keyed by ID
+var current_node : Dictionary = {}	# currently active node
+var full_text : String = ""
+var visible_characters : int = 0
+var awaiting_option_selection : bool = false
+var displayed_option_node_id : String = ""
+var paused_game_for_dialogue : bool = false
+
 # icons
-var npc_icons = {
+var npc_icons : Dictionary = {
 	"logo": {
 		"neutral": {
-			"icon": preload("res://dialogue-system/Neutral.png"),
-			"body": preload("res://dialogue-system/Neutral.png")
+			"icon": preload("res://Assets/dialogue_system/Neutral.png"),
+			"body": preload("res://Assets/dialogue_system/Neutral.png")
 		},
 		"happy": {
-			"icon": preload("res://dialogue-system/Happy.png"),
-			"body": preload("res://dialogue-system/Happy.png")
+			"icon": preload("res://Assets/dialogue_system/Happy.png"),
+			"body": preload("res://Assets/dialogue_system/Happy.png")
 		},
 		"glee": {
-			"icon": preload("res://dialogue-system/Glee.png"),
-			"body": preload("res://dialogue-system/Glee.png")
+			"icon": preload("res://Assets/dialogue_system/Glee.png"),
+			"body": preload("res://Assets/dialogue_system/Glee.png")
 		}
 	}
 }
-func _ready():
+func _ready() -> void:
 	load_dialogues(json_file)
 	process_mode = Node.PROCESS_MODE_WHEN_PAUSED
 	TypingTimer.process_mode = Node.PROCESS_MODE_WHEN_PAUSED
@@ -44,12 +46,12 @@ func _ready():
 
 # this is the parser code which loads the json file into a dictionary for easy access
 #you can get a better definition of what a parser is here -> https://www.techtarget.com/searchapparchitecture/definition/parser
-func load_dialogues(file_path: String):
+func load_dialogues(file_path: String) -> void:
 	if not FileAccess.file_exists(file_path):
 		print("Dialogue file not found")
 		return
 
-	var json_text = FileAccess.get_file_as_string(file_path)
+	var json_text : String = FileAccess.get_file_as_string(file_path)
 	var data = JSON.parse_string(json_text)
 	if not data:
 		print("Failed to parse JSON")
@@ -59,8 +61,8 @@ func load_dialogues(file_path: String):
 	#an array in a dictionary is like a word with its list of definitions below it.
 	#like a actual dictionary would havve
 	for dialogue_set in data:
-		var dialogue_id = dialogue_set["dialogue_id"]
-		var tmp_node_dict = {}
+		var dialogue_id : String = dialogue_set["dialogue_id"]
+		var tmp_node_dict : Dictionary = {}
 		for node in dialogue_set["nodes"]:
 			tmp_node_dict[node["id"]] = node
 		dialogues[dialogue_id] = tmp_node_dict
@@ -79,7 +81,7 @@ func start_scene_dialogue(dialogue_id: String):
 		print("No dialogue with ID:", dialogue_id)
 
 # typing animation for dialogue
-func start_typing(text):
+func start_typing(text: String) -> void:
 	clear_options()
 	awaiting_option_selection = false
 	displayed_option_node_id = ""
@@ -90,8 +92,8 @@ func start_typing(text):
 	if current_node.has("speaker"):
 		character.text = current_node["speaker"]
 	
-	var speaker_name = current_node.get("speaker", "")
-	var emotion = str(current_node.get("emotion", "neutral")).to_lower()
+	var speaker_name : String = current_node.get("speaker", "")
+	var emotion : String = str(current_node.get("emotion", "neutral")).to_lower()
 	if npc_icons.has(speaker_name) and npc_icons[speaker_name].has(emotion):
 		var portrait_set: Dictionary = npc_icons[speaker_name][emotion]
 		icon.texture = portrait_set.get("icon")
@@ -99,13 +101,14 @@ func start_typing(text):
 
 	TypingTimer.start()
 #this stops the typing when it is done
-func _on_typing_timer_timeout():
+func _on_typing_timer_timeout() -> void:
 	if content.visible_characters < full_text.length():
 		content.visible_characters += 1
 	else:
 		TypingTimer.stop()
 		if current_node.has("options") and not awaiting_option_selection:
 			show_options(current_node["options"])
+
 #this is for different scenes when the dialogue needs a signal to actually play
 func is_active() -> bool:
 	return Canvas.visible
@@ -114,7 +117,7 @@ func is_playing() -> bool:
 	return Canvas.visible
 
 # input handling
-func _process(_delta):
+func _process(_delta: float) -> void:
 	if not is_active():
 		return
 	if Input.is_action_just_pressed("accept"):
@@ -129,9 +132,9 @@ func _process(_delta):
 			play_next_node()
 
 # go to next dialogue node
-func play_next_node():
+func play_next_node() -> void:
 	if current_node.has("next_node"):
-		var next_id = current_node["next_node"]
+		var next_id : String = current_node["next_node"]
 		if node_dict.has(next_id):
 			current_node = node_dict[next_id]
 			start_typing(current_node["text"])
@@ -145,8 +148,8 @@ func clear_options():
 		child.queue_free()
 	options_container.visible = false
 
-func show_options(options: Array):
-	var node_id = str(current_node.get("id", ""))
+func show_options(options: Array) -> void:
+	var node_id : String = str(current_node.get("id", ""))
 	if displayed_option_node_id == node_id and options_container.get_child_count() > 0:
 		return
 
@@ -155,7 +158,7 @@ func show_options(options: Array):
 	displayed_option_node_id = node_id
 
 	for option_data in options:
-		var option_button := Button.new()
+		var option_button : Button = Button.new()
 		option_button.text = option_data.get("text", "Continue")
 		option_button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		option_button.pressed.connect(_on_option_selected.bind(option_data))
@@ -165,10 +168,10 @@ func show_options(options: Array):
 	if options_container.get_child_count() > 0:
 		(options_container.get_child(0) as Button).grab_focus()
 
-func _on_option_selected(option_data: Dictionary):
+func _on_option_selected(option_data: Dictionary) -> void:
 	awaiting_option_selection = false
 	displayed_option_node_id = ""
-	var next_id = option_data.get("next_node", "")
+	var next_id : String = option_data.get("next_node", "")
 	clear_options()
 
 	if next_id != "" and node_dict.has(next_id):
@@ -178,7 +181,7 @@ func _on_option_selected(option_data: Dictionary):
 
 	stop()
 
-func play(dialogue_id: String, node_id: String = "1"):
+func play(dialogue_id: String, node_id: String = "1") -> void:
 	if not dialogues.has(dialogue_id):
 		print("No dialogue with ID:", dialogue_id)
 		return

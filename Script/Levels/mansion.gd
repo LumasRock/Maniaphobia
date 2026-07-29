@@ -1,16 +1,27 @@
 extends Node2D
 
-@onready var Dialogue = $Dialogue
-@onready var transition = $Transition/AnimationPlayer
-var Npcs_Talked_To := 0
-var talked_npc_ids: Array[String] = []
-var pending_special_dialogue := false
-var special_dialogue_played := false
-const HIDE_AND_SEEK_SCENE := "res://Scenes/Levels/Hide_And_Seek.tscn"
+@export_category("Dialogue")
+@export var dialogue_name : String = "Mansion"
+@export var transition_dialog_id : String = "118"
+@export var special_dialogue_id : String = "70"
 
-func _ready(): 
-	Dialogue.visibility_changed.connect(_on_dialogue_visibility_changed)
-	Dialogue.play("Mansion")
+@export_category("Scene Transition")
+@export_file("*.tscn") var next_scene: String = "res://Scenes/Levels/Hide_And_Seek.tscn"
+@export var fade_in_time: float = 3.0
+@export var fade_out_time: float = 0.3
+
+@onready var dialog : OldDialogue = $Dialogue
+@onready var transition : AnimationPlayer = $Transition/AnimationPlayer
+
+var npcs_talked_to : int = 0
+var npcs_count : int = 5
+var talked_npc_ids: Array[String] = []
+var pending_special_dialogue : bool = false
+var special_dialogue_played : bool = false
+
+func _ready() -> void: 
+	dialog.visibility_changed.connect(_on_dialogue_visibility_changed)
+	dialog.play(dialogue_name)
 	transition.play("RESET")
 
 func register_npc_talk(npc_id: String) -> void:
@@ -18,26 +29,26 @@ func register_npc_talk(npc_id: String) -> void:
 		return
 
 	talked_npc_ids.append(npc_id)
-	Npcs_Talked_To = talked_npc_ids.size()
+	npcs_talked_to = talked_npc_ids.size()
 
-	if Npcs_Talked_To >= 5 and not special_dialogue_played:
+	if npcs_talked_to >= npcs_count and not special_dialogue_played:
 		pending_special_dialogue = true
 
 func _on_dialogue_visibility_changed() -> void:
-	if Dialogue.visible:
+	if dialog.visible:
 		return
 
-	var finished_node_id := str(Dialogue.current_node.get("id", ""))
+	var finished_node_id : String = str(dialog.current_node.get("id", ""))
 
-	if finished_node_id == "118":
-		Transition.transition_to("res://Scenes/Levels/Hide_And_Seek.tscn")
+	if finished_node_id == transition_dialog_id:
+		Transition.transition_to(next_scene)
 		return
 
-	if pending_special_dialogue and Npcs_Talked_To >= 5 and not special_dialogue_played:
+	if pending_special_dialogue and npcs_talked_to >= npcs_count and not special_dialogue_played:
 		pending_special_dialogue = false
 		special_dialogue_played = true
 		transition.play("Fade_in")
-		await get_tree().create_timer(3.0).timeout
+		await get_tree().create_timer(fade_in_time).timeout
 		transition.play("Fade_out")
-		await get_tree().create_timer(0.3).timeout
-		Dialogue.play("Mansion", "70")
+		await get_tree().create_timer(fade_out_time).timeout
+		dialog.play(dialogue_name, special_dialogue_id)

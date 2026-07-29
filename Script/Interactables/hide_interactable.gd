@@ -43,14 +43,14 @@ func _physics_process(delta: float):
 func _on_body_entered(body: Node2D):
 	if body is Player:
 		_player_is_colliding = true
-		player.set_interact_prompt(true)
+		player.show_interact_prompt(true)
 		player.hiding_manager.current_hide_interactable = self
 
 
 func _on_body_exited(body: Node2D):
 	if body is Player:
 		_player_is_colliding = false
-		player.set_interact_prompt(false)
+		player.show_interact_prompt(false)
 		player.hiding_manager.current_hide_interactable = null
 
 

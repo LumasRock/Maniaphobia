@@ -41,9 +41,9 @@ func start_hiding() -> void:
 		player.animated_sprite.visible = false
 		player.hiding_manager.is_hiding = true
 		player.global_position = interactable.global_position
-		player.can_move = false
+		player._can_move = false
 		player.velocity = Vector2.ZERO
-		player.set_interact_prompt(false)
+		player.show_interact_prompt(false)
 		
 		start_hiding_breathing()
 		
@@ -77,7 +77,7 @@ func stop_hiding() -> void:
 	if not is_hiding or not interactable: return
 
 	player.animated_sprite.visible = true
-	player.can_move = true
+	player._can_move = true
 	
 	hiding_left = 5.0
 	hide_timer = 0.0

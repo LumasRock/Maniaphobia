@@ -1,67 +1,52 @@
 extends Area2D
+class_name Door
+
 @export var Shadows: TileMapLayer
 
 enum Placement { UP, LEFT, RIGHT, BOTTOM }
 
 @export var my_placement: Placement = Placement.UP
 
-func _ready():
+func _ready() -> void:
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
 	if not body_exited.is_connected(_on_body_exited):
 		body_exited.connect(_on_body_exited)
 
 func _on_body_entered(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var pl: Player = body as Player
 	match my_placement:
-		Placement.LEFT:
-			if body is Player:
-				if body.velocity.x < 0: 
-					Shadows.modulate.a = 0.5
-				if body.velocity.x > 0:
-					Shadows.modulate.a = 0.5
-		Placement.RIGHT:
-			if body is Player:
-				if body.velocity.x < 0: 
-					Shadows.modulate.a = 0.5
-				if body.velocity.x > 0:
-					Shadows.modulate.a = 0.5
-		Placement.UP:
-			if body is Player:
-				if body.velocity.y < 0: 
-					Shadows.modulate.a = 0.5
-				if body.velocity.y > 0:
-					Shadows.modulate.a = 0.5
-		Placement.BOTTOM:
-			if body is Player:
-				if body.velocity.y > 0: 
-					Shadows.modulate.a = 0.5
-				if body.velocity.y < 0:
-					Shadows.modulate.a = 0.5
-
+		Placement.LEFT, Placement.RIGHT:
+			if pl.velocity.x != 0: 
+				Shadows.modulate.a = 0.5
+		Placement.UP, Placement.BOTTOM:
+			if pl.velocity.y != 0: 
+				Shadows.modulate.a = 0.5
 
 func _on_body_exited(body: Node2D) -> void:
+	if not body is Player:
+		return
+	var pl : Player = body as Player
 	match my_placement:
 		Placement.LEFT:
-			if body is Player:
-				if body.velocity.x > 0: 
-					Shadows.modulate.a = 1
-				if body.velocity.x < 0:
-					Shadows.modulate.a=0
+			if pl.velocity.x > 0: 
+				Shadows.modulate.a = 1
+			elif pl.velocity.x < 0:
+				Shadows.modulate.a = 0
 		Placement.RIGHT:
-			if body is Player:
-				if body.velocity.x < 0: 
-					Shadows.modulate.a=1
-				if body.velocity.x > 0:
-					Shadows.modulate.a=0
+			if pl.velocity.x < 0: 
+				Shadows.modulate.a = 1
+			elif pl.velocity.x > 0:
+				Shadows.modulate.a = 0
 		Placement.UP:
-			if body is Player:
-				if body.velocity.y > 0: 
-					Shadows.modulate.a=1
-				if body.velocity.y < 0:
-					Shadows.modulate.a=0
+			if pl.velocity.y > 0: 
+				Shadows.modulate.a = 1
+			elif pl.velocity.y < 0:
+				Shadows.modulate.a = 0
 		Placement.BOTTOM:
-			if body is Player:
-				if body.velocity.y < 0: 
-					Shadows.modulate.a=1
-				if body.velocity.y > 0:
-					Shadows.modulate.a=0
+			if pl.velocity.y < 0: 
+				Shadows.modulate.a = 1
+			elif pl.velocity.y > 0:
+				Shadows.modulate.a = 0

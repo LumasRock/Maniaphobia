@@ -1,0 +1,11 @@
+{
+"dialogue_id": "Apartment-jacob-room",
+"nodes": [
+  {
+    "id": "1",
+    "speaker": "Sebastian",
+    "text": "That's Jacob's room. He'd probably value some privacy.",
+    "emotion": "worry"
+  }
+]
+}

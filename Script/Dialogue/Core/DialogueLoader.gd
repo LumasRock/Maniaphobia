@@ -2,7 +2,7 @@
 class_name DialogueLoader extends Node 
 
 # mandatory keys for the core schema of a dialogue node; used for validation
-const CORE_SCHEMA_KEYS : Array[String] = ["id", "speaker", "show_portrait", "text", "emotion", "sound", "tags", "next_node_id", "options", "overrides"]
+const CORE_SCHEMA_KEYS : Array[String] = ["id", "speaker", "show_portrait", "text", "emotion", "sound", "tags", "next_node_id", "prompt", "overrides"]
 
 var _json : JSON = JSON.new()
 
@@ -124,7 +124,7 @@ func _create_node_from_dictionary(node_data: Dictionary) -> DialogueNode:
 		var opt : DialogueOption = DialogueOption.new()
 		opt.text = option_data.get("text", "")
 		opt.next_node_id = option_data.get("next_node_id", "")
-		opt.condition_id = option_data.get("condition_id", "")
+		opt.action = option_data.get("action", "")
 		node.options.append(opt)
 	
 	node.overrides = node_data.get("overrides", {})
