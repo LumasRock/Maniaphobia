@@ -1,28 +1,29 @@
 extends Area2D
 
-var Player_node: Node2D = null
-@onready var coffee_machine = $"../CoffeeMachine"
 @export_file("*.tscn", "*.scn") var target_scene: String
-@onready var Dialogue = $"../Dialogue"
 
+@onready var coffee_machine : CoffeeMachine = $"../CoffeeMachine"
+@onready var dialogue : OldDialogue = $"../Dialogue"
+
+var has_player : bool
 
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player:
-		Player_node = body
-		body.set_interact_prompt(true)
+		has_player = true
+		body.show_interact_prompt(true)
 
 func _on_body_exited(body: Node2D) -> void:
-	if body is Player:
-		Player_node = null
-		body.set_interact_prompt(false)
+	if body is Player and has_player:
+		body.show_interact_prompt(false)
+		has_player = false
 
-
-func _input(Event):
-	if Input.is_action_just_pressed("interact") and Player_node != null:
+## Prevents player from leaving apartment if coffee machine is not fixed
+func _input(event: InputEvent) -> void:
+	if Input.is_action_just_pressed("interact") and has_player:
 		if coffee_machine.coffee_fixed == true:
 			if target_scene.is_empty():
 				push_warning("No target_scene set for scenedoor at %s" % get_path())
 				return
 			Transition.transition_to(target_scene)
 		elif coffee_machine.coffee_fixed == false:
-			Dialogue.play("Apartment", "30")
+			dialogue.play("Apartment", "30")

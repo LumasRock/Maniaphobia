@@ -1,7 +1,7 @@
 extends Area2D
 class_name Door
 
-@export var Shadows: TileMapLayer
+@export var shadowsMapLayer: TileMapLayer
 
 enum Placement { UP, LEFT, RIGHT, BOTTOM }
 
@@ -20,10 +20,10 @@ func _on_body_entered(body: Node2D) -> void:
 	match my_placement:
 		Placement.LEFT, Placement.RIGHT:
 			if pl.velocity.x != 0: 
-				Shadows.modulate.a = 0.5
+				shadowsMapLayer.modulate.a = 0.5
 		Placement.UP, Placement.BOTTOM:
 			if pl.velocity.y != 0: 
-				Shadows.modulate.a = 0.5
+				shadowsMapLayer.modulate.a = 0.5
 
 func _on_body_exited(body: Node2D) -> void:
 	if not body is Player:
@@ -32,21 +32,21 @@ func _on_body_exited(body: Node2D) -> void:
 	match my_placement:
 		Placement.LEFT:
 			if pl.velocity.x > 0: 
-				Shadows.modulate.a = 1
+				shadowsMapLayer.modulate.a = 1
 			elif pl.velocity.x < 0:
-				Shadows.modulate.a = 0
+				shadowsMapLayer.modulate.a = 0
 		Placement.RIGHT:
 			if pl.velocity.x < 0: 
-				Shadows.modulate.a = 1
+				shadowsMapLayer.modulate.a = 1
 			elif pl.velocity.x > 0:
-				Shadows.modulate.a = 0
+				shadowsMapLayer.modulate.a = 0
 		Placement.UP:
 			if pl.velocity.y > 0: 
-				Shadows.modulate.a = 1
+				shadowsMapLayer.modulate.a = 1
 			elif pl.velocity.y < 0:
-				Shadows.modulate.a = 0
+				shadowsMapLayer.modulate.a = 0
 		Placement.BOTTOM:
 			if pl.velocity.y < 0: 
-				Shadows.modulate.a = 1
+				shadowsMapLayer.modulate.a = 1
 			elif pl.velocity.y > 0:
-				Shadows.modulate.a = 0
+				shadowsMapLayer.modulate.a = 0

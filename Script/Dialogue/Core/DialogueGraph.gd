@@ -34,6 +34,7 @@ func has_node(node_id: String) -> bool:
 	return nodes.has(node_id)
 
 # Lazily resolves "what comes after this node" — nothing is precomputed on DialogueNode itself.
+# Note: for nodes with options, if the next node wants to change the next node, must use the `request_navigation_override()`.
 func get_next_id(current_id: String) -> String:
 	if StringUtils.is_null_or_empty(current_id) :
 		current_id = start_node_id
@@ -41,8 +42,8 @@ func get_next_id(current_id: String) -> String:
 	var dnode : DialogueNode = get_node(current_id)
 	if dnode == null:
 		return ""
-	if dnode.has_options():
-		return ""  # branching resolves via the chosen DialogueOption, not a linear "next"
+#	if dnode.has_options():
+#		return ""  # branching resolves via the chosen DialogueOption, not a linear "next"
 	if dnode.next_node_id != "":
 		return dnode.next_node_id  # explicit jump always wins
 	var idx: int = _index.get(current_id, -1)

@@ -1,4 +1,4 @@
-﻿# DialogueNodeHandler.gd - Base class to implement custom behaviour when entering or exiting specific dialogue nodes. 
+# DialogueNodeHandler.gd - Base class to implement custom behaviour when entering or exiting specific dialogue nodes. 
 # Subclass this to create your own handlers for dialogue nodes.
 class_name DialogueNodeHandler extends Node
 

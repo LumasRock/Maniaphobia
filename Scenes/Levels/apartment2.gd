@@ -1,14 +1,31 @@
 extends Node2D
 
-@onready var initialDialogue : Dialogue = $InitialDialogue
-@onready var coffeeDialogue : Dialogue = $FixCoffeeMachine
-@onready var player : Player = $Player
+enum Area {
+	NONE,
+	COFFEE_MACHINE,
+	EXIT,
+	DOOR1,
+	DOOR2,
+	DOOR3
+}
 
-@onready var doors : Array[Door] = [$Door1, $Door2, $Door3]
-@onready var exit_door : Area2D = $ExitDoor
+@onready var initialDialogue : Dialogue = $Dialogues/InitialDialogue
+@onready var coffeeDialogue : Dialogue = $Dialogues/FixCoffeeMachine
+@onready var player : Player = $Entities/Player
+@onready var doors : Array[Node] = [$Interactives/Door, $Interactives/Door2, $Interactives/Door3]
+@onready var exit_door : Node = $Interactives/Exit
 
+# (Future) scenes like this one, should extend from a `BaseScene` class that handles common functionality like dialogue management, area tracking, and scene transitions. This would reduce code duplication and improve maintainability.
+@export_file("*.tscn", "*.scn") var exit_scene: String
+
+# this variable is only for logging purposes
 var _dialogue_id : String
-var _in_coffee_machine_area : bool = false
+
+# (Future) this could be an AreaOfInterest system that tracks the player's current area and triggers events based on their location.
+var _current_area : Area = Area.NONE
+
+# (FUTURE) this should be handled by a 'Checkpoint' system that can track progress within a scene or across multiple scenes.
+var _coffee_machine_fixed : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -17,9 +34,24 @@ func _ready() -> void:
 	EventBus.set_camera(initialDialogue.dialogue_camera)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("interact") and _in_coffee_machine_area:
-		player.show_interact_prompt(false)
-		_start_dialogue(coffeeDialogue)
+	if event.is_action_pressed("interact"): 
+		match _current_area: 
+			Area.NONE:
+				pass
+			Area.COFFEE_MACHINE:
+				player.show_interact_prompt(false)
+				_start_dialogue(coffeeDialogue)
+			Area.EXIT:
+				if _coffee_machine_fixed:
+					Transition.transition_to(exit_scene)
+				else:
+					_log("Coffee machine not fixed yet. Cannot exit.")
+			Area.DOOR1:
+				pass
+			Area.DOOR2:
+				pass
+			Area.DOOR3:
+				pass	
 
 
 #region DIALOGUE MANAGEMENT
@@ -40,7 +72,8 @@ func _finish_dialogue(dialogue: Dialogue) -> void:
 	_dialogue_id = ""
 #endregion
 
-#region SIGNALS
+#region INITIAL DIALOGUE
+
 func _on_dialogue_dialogue_started(dialogue_id: String) -> void:
 	_dialogue_id = dialogue_id
 	_log("Started")
@@ -53,9 +86,6 @@ func _on_dialogue_node_exited(node: DialogueNode) -> void:
 
 func _on_initial_dialogue_finished(dialogue_id: String) -> void:
 	_finish_dialogue(initialDialogue)
-
-func _on_fix_coffee_machine_dialogue_finished(dialogue_id: String) -> void:
-	_finish_dialogue(coffeeDialogue)
 
 func _on_dialogue_speaker_changed(previous_speaker: String, new_speaker: String) -> void:
 	_log("Speaker changed " + previous_speaker + " -> " + new_speaker)
@@ -78,17 +108,40 @@ func _on_dialogue_choice_presented(options: Array) -> void:
 func _on_dialogue_choice_selected(option: DialogueOption) -> void:
 	_log("Choice selected: " + option.text + " (next node: " + option.next_node_id + ")")
 
+#endregion
+
+#region COFFEE MACHINE AREA
+
 func _on_coffee_machine_body_entered(body: Node2D) -> void:
 	if body is Player:
 		_log("Player entered coffee machine area")
 		(body as Player).show_interact_prompt(true)
-		_in_coffee_machine_area = true
+		_current_area = Area.COFFEE_MACHINE
 
 func _on_coffee_machine_body_exited(body: Node2D) -> void:
 	if body is Player:
 		_log("Player exited coffee machine area")
 		(body as Player).show_interact_prompt(false)
-		_in_coffee_machine_area = false
+		_current_area = Area.NONE
+
+func _on_fix_coffee_machine_dialogue_finished(dialogue_id: String) -> void:
+	_finish_dialogue(coffeeDialogue)
+
+#endregion
+
+#region EXIT AREA
+func _on_exit_body_entered(body: Node2D) -> void:
+	if body is Player:
+		_log("Player entered exit area")
+		(body as Player).show_interact_prompt(true)
+		_current_area = Area.EXIT
+
+func _on_exit_body_exited(body: Node2D) -> void:
+	if body is Player:
+		_log("Player exited exit area")
+		(body as Player).show_interact_prompt(false)
+		_current_area = Area.NONE
+
 #endregion
 
 #region LOGGING

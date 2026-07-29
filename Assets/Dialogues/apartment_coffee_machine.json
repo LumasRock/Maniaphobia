@@ -4,7 +4,6 @@
   "nodes": [
     {
       "id": "1",
-      "speaker": "Sebastian",
       "text": "Fix the coffee machine?",
       "emotion": "neutral",
       "options": [
@@ -14,7 +13,7 @@
         },
         {
           "text": "No",
-          "action": "end_dialogue"
+          "next_node_id": "28"
         }
       ]
     },

@@ -1,4 +1,4 @@
-extends Area2D
+class_name CoffeeMachine extends Area2D
 
 @onready var dialogue : OldDialogue = $"../Dialogue"
 

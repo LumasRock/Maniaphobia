@@ -18,5 +18,11 @@ const NODE_FIELDS : Dictionary = {
 	"tags":          {"required": false, "type": TYPE_ARRAY,  "default": []},
 	"next_node_id":  {"required": false, "type": TYPE_STRING, "default": ""},
 	"options":       {"required": false, "type": TYPE_ARRAY,  "default": []},
-	"slot":          {"required": false, "type": TYPE_STRING, "default": ""},
+}
+
+const OPTION_FIELDS : Dictionary = {
+	"id":            {"required": false, "type": TYPE_STRING, "default": ""},
+	"text":          {"required": true,  "type": TYPE_STRING},
+	"next_node_id":  {"required": false, "type": TYPE_STRING, "default": ""},
+	"selected":      {"required": false, "type": TYPE_BOOL,   "default": false},
 }
