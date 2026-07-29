@@ -15,3 +15,11 @@ var overrides : Dictionary = {}  # Optional dictionary of override settings for 
 
 func has_options() -> bool:
 	return not options.is_empty()
+
+func selected_option() -> DialogueOption:
+	if not has_options():
+		return null
+	for option : DialogueOption in options:
+		if option.selected:
+			return option
+	return null

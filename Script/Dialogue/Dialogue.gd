@@ -65,6 +65,7 @@ var _current_portrait : String
 var _current_portrait_sprite : Sprite2D
 var _current_portrait_label : RichTextLabel
 var _portraits : Dictionary = {}  # slot_name -> {Sprite2D, RichTextLabel}
+var _pending_navigation_override : String = ""  # if set, this will be used to override the next node id for the current node. This is used for branching and choice selection.
 
 enum DialogueState {
 	Idle,
@@ -102,7 +103,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if current_state == DialogueState.WaitingForInput:
 		# accept is to select an option
 		if event.is_action_pressed("accept") and _current_node.has_options():
-			handle_option_selection()
+			_handle_selected_option(_current_node, _current_node.selected_option()) 
 
 		# continue is to advance the dialogue to the next node		
 		if event.is_action_pressed("continue"):
@@ -119,9 +120,7 @@ func _process(delta: float) -> void:
 	current_state = DialogueState.WaitingForInput
 
 
-#############################
-## Ready / Initialization
-#############################
+#region Ready / Initialization
 
 func initialize_portraits() -> void:
 	_portraits.clear()
@@ -154,11 +153,9 @@ func load_dialogue_graph() -> void:
 	if _graph == null:
 		push_error("Dialogue: failed to load dialogue graph from '%s'" % source_path)
 		return
+#endregion
 
-#############################
-## Dialogue Lifecycle
-#############################
-
+#region Dialogue Lifecycle
 func start() -> void:
 	if _graph == null :
 		if lazy_load: 
@@ -180,6 +177,12 @@ func finish() -> void:
 	_graph = null
 	dialogue_finished.emit(id)
 
+func request_navigation_override(next_node_id: String) -> void:
+	if current_state == DialogueState.Finished :
+		push_warning("Dialogue: attempt to request navigation override on a finished dialogue")
+		return
+	_pending_navigation_override = next_node_id
+
 func toggle_pause() -> void:
 	if not pausable:
 		push_warning("Dialogue: attempt to pause a non-pausable dialogue")
@@ -190,16 +193,6 @@ func toggle_pause() -> void:
 	else :
 		current_state = DialogueState.Paused
 		dialogue_paused.emit()
-
-func handle_option_selection() -> void:
-	if _current_node == null or not _current_node.has_options():
-		push_warning("Dialogue: attempt to select an option when there are no options available")
-		return
-	# TODO For now, we just select the first option.
-	var selected_option : DialogueOption = _current_node.options[0]
-	choice_selected.emit(selected_option)
-	# TODO implement condition callable
-	_move_to_node(selected_option.next_node_id)
 
 func _enter_node(node_id: String) -> void:
 	# if node does not exist in the graph, log an error and return
@@ -223,6 +216,8 @@ func _enter_node(node_id: String) -> void:
 	current_state = DialogueState.Typing
 	node_entered.emit(_current_node)
 
+	# will add options to the options container if the node has any
+	_present_node_options(_current_node)
 
 # moves the node index forward by one, and enters the next node. 
 # Returns true if successful, false if there is no next node.
@@ -239,6 +234,7 @@ func _move_next_node() -> bool:
 	_enter_node(next_id)
 	return true
 
+# Moves to the specified node id, if it exists in the graph. If it does not exist, logs a warning and does nothing.
 func _move_to_node(node_id: String) -> void:
 	if not _graph.has_node(node_id):
 		if warn_on_missing_node_dialogue:
@@ -257,7 +253,7 @@ func _exit_node() -> void:
 # Applies the changes between the previous node and the new node, 
 # including updating the portrait and emitting signals for speaker and portrait changes.
 func _apply_node_changes(previous_node: DialogueNode, new_node: DialogueNode, previous_char: CharacterDefinition, new_char: CharacterDefinition) -> void:
-	if previous_node == null or new_node == null: 
+	if new_node == null: 
 		return
 
 	var new_portrait : String = ""
@@ -266,22 +262,124 @@ func _apply_node_changes(previous_node: DialogueNode, new_node: DialogueNode, pr
 		if StringUtils.is_null_or_empty(new_portrait):
 			if warn_on_missing_character:
 				push_warning("Dialogue: speaker '%s' has no portrait assigned in portrait_character" % new_node.speaker)
-			return
 	var previous_portrait : String = _current_portrait
 	
 	_clear_portrait(previous_portrait)
 
 	# check if speaker changed
-	if previous_node.speaker != new_node.speaker:			
-		speaker_changed.emit(previous_node.speaker, new_node.speaker)
-	# check if portrait slot or emotion changed
-	if previous_portrait != new_portrait or previous_node.emotion != new_node.emotion:
-		portrait_changed.emit(previous_portrait, previous_node.emotion, new_portrait, new_node.emotion)
+	if previous_node == null : 
+		if not StringUtils.is_null_or_empty(new_node.speaker):
+			speaker_changed.emit("", new_node.speaker)
+		if not StringUtils.is_null_or_empty(new_portrait):
+			portrait_changed.emit("", new_portrait, new_node.emotion)
+	else :
+		if previous_node.speaker != new_node.speaker:			
+			speaker_changed.emit(previous_node.speaker, new_node.speaker)
+		# check if portrait slot or emotion changed
+		if previous_portrait != new_portrait or previous_node.emotion != new_node.emotion:
+			portrait_changed.emit(previous_portrait, new_portrait, new_node.emotion)
 
 	_current_portrait = new_portrait
 	_update_portrait(new_portrait, new_node, new_char)
 
+#endregion
 
+
+#region Dialogue Options
+
+# Updates the options container with the given node, emit signals and run DialogueOptionHandlers.
+# If the node has no options this method will do nothing.
+func _present_node_options(node: DialogueNode) -> void:
+	if node == null or not node.has_options():
+		return
+	
+	# present the options to the player and wait for selection
+	choice_presented.emit(node.options)
+	current_state = DialogueState.WaitingForInput
+	
+	# 'on before option presented' 
+	_run_option_presented_handlers(node, 
+			func(h : DialogueOptionHandler) -> void : 
+						h._on_before_option_presented(self, node))
+	
+	_update_options_container(node, node.options)
+
+	# 'on after option presented' 
+	_run_option_presented_handlers(node,  
+			func(h : DialogueOptionHandler) -> void : 
+						h._on_after_option_presented(self, node))
+
+# This method is hooked to the buttons in the options container when pressed 
+# Also, emits the choice_selected signal and runs any DialogueOptionHandlers that apply to the selected option.
+func _handle_selected_option(node: DialogueNode, selected_option: DialogueOption) -> void:
+	if selected_option == null:
+		push_warning("Dialogue: attempt to select a null option")
+		return
+	
+	choice_selected.emit(selected_option)
+
+	# 'on before option selected' 
+	_run_option_selected_handlers(node, selected_option, 
+			func(h : DialogueOptionHandler) -> void : 
+						h._on_before_option_selected(self, node, selected_option))
+
+	_clear_options_container()
+
+	# 'on after option selected'
+	_run_option_selected_handlers(node, selected_option, 
+			func(h : DialogueOptionHandler) -> void: 
+						h._on_after_option_selected(self, node, selected_option))
+
+	# handler might have finished the dialogue
+	if current_state == DialogueState.Finished:
+		return
+	
+	# handler might have overriden the next node id, so we check for that first. If not, we move to the next node in the graph.
+	if _pending_navigation_override != "":
+		var target : String = _pending_navigation_override
+		_pending_navigation_override = ""
+		_move_to_node(target)
+	else:
+		if not _move_next_node() : 
+			finish()
+
+func _run_option_presented_handlers(node: DialogueNode, callback: Callable) -> void:
+	for child : Node in get_children():
+		if not child is DialogueOptionHandler :
+			continue
+		var handler : DialogueOptionHandler = child as DialogueOptionHandler
+		if not handler.applies_to(node.id) :
+			continue
+		for option : DialogueOption in node.options:
+			if not handler.applies_to_option(option.id):
+				continue
+		callback.call(handler)
+
+func _run_option_selected_handlers(node: DialogueNode, option_selected: DialogueOption, callback: Callable) -> void:
+	for child : Node in get_children():
+		if not child is DialogueOptionHandler :
+			continue
+		var handler : DialogueOptionHandler = child as DialogueOptionHandler
+		if not handler.applies_to(node.id) or not handler.applies_to_option(option_selected.id):
+			continue
+		callback.call(handler)
+
+func _clear_options_container() -> void:
+	for child : Node in options_container.get_children():
+		child.queue_free()
+
+func _update_options_container(node: DialogueNode, options: Array[DialogueOption]) -> void:
+	_clear_options_container()
+	for option : DialogueOption in options:
+		var button : Button = Button.new()
+		button.text = option.text
+		button.pressed.connect(func() -> void:
+				_handle_selected_option(node, option))
+		options_container.add_child(button)
+#endregion
+
+
+#region Portrait Management
 func _update_portrait(portrait: String, node: DialogueNode, char_def: CharacterDefinition) -> void:
 
 	_current_portrait = portrait
@@ -325,10 +423,10 @@ func _clear_portrait(portrait_name: String) -> void:
 		sprite.texture = null
 	if name_label != null:
 		name_label.text = ""
+#endregion
 
-#############################
-## Editor / Tooling
-#############################
+
+#region Editor / Tooling
 
 # For each slot name, ensure that the slot_sprites, slot_name_labels, and slot_character dictionaries have an entry. If not, create an empty entry.
 func _sync_slot_dictionaries() -> void:
@@ -380,3 +478,4 @@ func _get_configuration_warnings() -> PackedStringArray:
 	if _current_char == null and not StringUtils.is_null_or_empty(_current_node.speaker):
 		warnings.append("Dialogue: current character is null, but the current node has a speaker. Did you call build_character_lookup() first?")
 	return warnings
+#endregion
