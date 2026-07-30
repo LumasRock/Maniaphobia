@@ -25,10 +25,10 @@ buses/default_bus_layout=""
 
 [autoload]
 
-EventBus="*res://src/autoloads/Event_Bus.gd"
-Transition="*res://src/autoloads/transition.tscn"
+EventBus="*res://src/00_autoloads/Event_Bus.gd"
+Transition="*res://src/00_autoloads/transition.tscn"
 SAVE_MANAGER="*res://addons/simple_save_tool/tool/saveManager.gd"
-Types="*res://src/autoloads/types.gd"
+Types="*res://src/00_autoloads/types.gd"
 
 [debug]
 

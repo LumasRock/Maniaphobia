@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://wlto5f14bi2c"]
 
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="1_37kl0"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/03_dialogue/dialogue.tscn" id="1_37kl0"]
 [ext_resource type="Script" uid="uid://c68xcrbq150ec" path="res://dialogue-system/button.gd" id="2_8uh7m"]
 
 [node name="test" type="Node2D"]

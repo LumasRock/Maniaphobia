@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=4 uid="uid://bihtv5hq0wlcq"]
 
-[ext_resource type="Script" uid="uid://gumowsdasvuc" path="res://src/outside/outside.gd" id="1_a16nd"]
+[ext_resource type="Script" uid="uid://gumowsdasvuc" path="res://src/10_intro/outside.gd" id="1_a16nd"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_ta2ys"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="3_xk1p1"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/dialogue/dialogue.tscn" id="4_8w1ju"]
+[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/03_dialogue/dialogue.tscn" id="4_8w1ju"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_4i2ym"]
 texture = ExtResource("2_ta2ys")
