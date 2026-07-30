@@ -80,9 +80,7 @@ func follow() -> void:
 		var angle: float = player_node.global_position.angle_to_point(self.global_position)
 		if angle - deg_to_rad(45) < 0:
 			angle += 2 * PI
-		print(angle)
 		var ordinal: int = floori((angle - deg_to_rad(45)) / deg_to_rad(90))
-		print(ordinal, " ", rad_to_deg(angle))
 		if ordinal == 0:
 			_update_sprite(Types.Direction.UP)
 		elif ordinal == 1:
