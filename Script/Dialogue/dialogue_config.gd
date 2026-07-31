@@ -1,5 +1,5 @@
-# DialogueConfig.gd -- stores global dialogue configuration settings
 extends Node
+# Global autoload to store global dialogue configuration settings
 
 @export var json_base_path: String = "res://Assets/Dialogues/"
 @export var text_speed: float = 0.05

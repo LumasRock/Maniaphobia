@@ -1,4 +1,4 @@
-# DialogueLoader.gd - Loads dialogue graphs from JSON files and provides access to them.
+# Loads dialogue graphs from JSON files and provides access to them.
 class_name DialogueLoader extends Node 
 
 var _json : JSON = JSON.new()

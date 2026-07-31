@@ -1,4 +1,4 @@
-# DialogueGraph.gd - Represents a complete dialogue graph, which is a collection of interconnected DialogueNode objects.
+# Represents a complete dialogue graph, which is a collection of interconnected DialogueNode objects.
 # 
 # Usage:
 #

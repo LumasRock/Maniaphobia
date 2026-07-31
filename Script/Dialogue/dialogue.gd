@@ -1,18 +1,20 @@
-## Dialogue.gd 
+@tool
+@icon("res://Script/Dialogue/Editor/dialog-icon.png")
+class_name Dialogue 
+extends Control
 ## The main script for the Dialogue System. Manages the `Scenes/Dialogue/Dialogue.tscn` packed scene, used to design and display dialogues in the game. 
 ## 
 ## [b]Signals[/b]:
-## - [dialogue_started(dialogue_id: String)]
-## - [dialogue_finished(dialogue_id: String)]
-## - [dialogue_paused]
-## - [dialogue_resumed]
-## - [node_entered(node: DialogueNode)]
-## - [node_exited(node: DialogueNode)]
-## - [text_fully_revealed(node: DialogueNode)]
-## - [speaker_changed(previous_speaker: String, new_speaker: String)]
-## - [choice_presented(options: Array)]
-## - [choice_selected(option: DialogueOption)]
-## - [portrait_changed(previous_portrait: String, previous_emotion: String, new_portrait: String, new_emotion: String)]
+## - [on_dialogue_started(dialogue_id: String)]
+## - [on_dialogue_finished(dialogue_id: String)]
+## - [on_dialogue_paused]
+## - [on_dialogue_resumed]
+## - [on_node_entered(node: DialogueNode)]
+## - [on_node_exited(node: DialogueNode)]
+## - [on_text_fully_revealed(node: DialogueNode)]
+## - [on_before_options_presented(node: DialogueNode)]
+## - [on_after_options_presented(node: DialogueNode)]
+## - [on_option_selected(node: DialogueNode, option: DialogueOption)]
 ##
 ## [b]Overall Workflow[/b]: 
 ## 1. Reads and validates the dialogue json file named as [dialogue_source]. 
@@ -25,20 +27,19 @@
 ## - [lazy_load]: if true, the dialogue graph is loaded on demand when [start()] is called. If false, it will be loaded in [_ready()].
 ##
 ## For each node, the workflow is as follows:
-## 1. Emits the [node_entered] signal.
-## 2. Updates the dialogue text and speaker portrait based on the node's data.
-## 3. If the node has options: 
-##	   3.1. Adds options as buttons in the scene. 
-## 			a. If speaker changed, emits the [speaker_changed] signal.
-## 			b. If portrait changed, emits the [portrait_changed] signal.
-##	   3.2. Emits the [choice_presented] signal and waits for player input.
-##     3.3. When the player selects an option: 
-##          a. Emits the [choice_selected] signal
-##			b. Calls any [DialogueOptionHandler] setup to handle an option selection.
-##          c. Resolves the next node based on the option's [next_node_id] or any other logic defined in the dialogue graph.
-## 4. If the node has no options, waits for player input to advance.
-## 5. If dialogue has a next node, emits [node_exited] signal 
-## 6. If there are nodes left, finishes the dialogue and emits the [dialogue_finished] signal.
+## 1. Emits the [on_node_entered] signal.
+## 2. Updates the dialogue text, speaker name, portrait and emotion based on the node's data.
+## 3. If the node has options, go to step 4. Otherwise, go to step 5 
+## 4. Process dialogue options:
+##     4.1. Emits the [on_before_options_presented] signal 
+##	   4.2. Adds options as buttons in the scene. 
+##	   4.3. Emits the [on_after_options_presented] signal and waits for player input.
+##     4.4. When the player selects an option: 
+##          a. Emits the [on_option_selected] signal
+##          b. Resolves next node using selected option's [next_node_id] and checks if [request_navigation_override] was called.
+## 5. If [auto_next] is true, moves to the next node automatically. Otherwise, waits for player input to advance.
+## 6. If dialogue has a next node, emits [on_node_exited] signal 
+## 7. If it was last node, finishes the dialogue and emits the [on_dialogue_finished] signal.
 ##
 ## [b]Portraits[/b]:
 ## Portraits are the character's visual representation in the dialogue. Each portrait is associated with a character and can have different emotions. The dialogue system manages the display of portraits based on the current node's speaker and emotion.
@@ -67,84 +68,26 @@
 ## Explore some built-in handlers: [GoToOptionHandler], [FinishOptionHandler], [LoadSceneOptionHandler], [TrueOptionHandler], [FalseOptionHandler].
 ## Also, you can combine multiple handlers to create complex behaviours for your dialogue options. 
 ## For this, check the following: [AndOptionHandler], [OrOptionHandler], [AnyTrueOptionHandler], [AnyFalseOptionHandler], [AllTrueOptionHandler], [AllFalseOptionHandler] to combine multiple handlers with logical AND and OR operations.
-@icon("res://Script/Dialogue/Editor/dialog-icon.png")
-@tool
-class_name Dialogue extends Control
+
+#region SIGNALS
 
 # Dialogue Lifecycle
-signal dialogue_started(dialogue_id: String)
-signal dialogue_finished(dialogue_id: String)
-signal dialogue_paused
-signal dialogue_resumed
+signal on_dialogue_started(dialogue_id: String)
+signal on_dialogue_finished(dialogue_id: String)
+signal on_dialogue_paused
+signal on_dialogue_resumed
 
 # Per-node — the primary hook for game-mechanic integration
-signal node_entered(node: DialogueNode)
-signal node_exited(node: DialogueNode)
-signal text_fully_revealed(node: DialogueNode)
-signal speaker_changed(previous_speaker: String, new_speaker: String)
+signal on_node_entered(node: DialogueNode)
+signal on_node_exited(node: DialogueNode)
+signal on_text_fully_revealed(node: DialogueNode)
 
 # Branching (within one Dialogue)
-signal choice_presented(options: Array)
-signal choice_selected(option: DialogueOption)
+signal on_before_options_presented(node: DialogueNode)
+signal on_after_options_presented(node: DialogueNode)
+signal on_option_selected(node: DialogueNode, option: DialogueOption)
 
-# Portraits
-signal portrait_changed(previous_portrait: String, previous_emotion: String, 
-						new_portrait: String, new_emotion: String)
-
-
-@export_file("*.json") var dialogue_source: String = ""   # optional explicit override; see §6 for default resolutionon
-
-@export_category("Settings")
-## if true, the dialogue graph will be loaded on demand when start() is called. If false, it will be loaded in _ready().
-@export var lazy_load                     : bool = true
-@export var start_on_load                 : bool = false
-@export var skippable                     : bool = true
-@export var pausable                      : bool = true
-## If true, the dialogue will automatically advance to the next node after the current one finishes displaying. If false, the player must manually advance the dialogue.
-@export var auto_next                     : bool = false
-
-@export_category("Characters")
-@export var characters                    : Array[CharacterDefinition] = []
-
-@export_category("Portraits")
-## list of portraits names for speakers (e.g. "left", "center", "right")
-@export var portrait_names                : Array[String] = []
-
-@export_tool_button("Sync Slot Dictionaries", "PlaceholderTexture2D")
-var sync_slots_action                     : Callable = _sync_slot_dictionaries
-
-## portrait_name -> TextureRect node
-@export var portrait_sprites              : Dictionary[String, NodePath] = {}
-## portrait_name -> RichTextLabel node
-@export var portrait_labels               : Dictionary[String, NodePath] = {}
-## portrait_name -> character_name
-@export var portrait_character            : Dictionary[String, String] = {}
-
-@export_category("Config Overrides")
-@export var text_speed                    : float = -1.0       # -1 = "use DialogueConfig default"
-@export var text_size                     : int = -1
-@export var locale                        : String = ""
-
-@export_category("Debug")
-@export var warn_on_missing_character     : bool = true
-@export var warn_on_missing_portrait      : bool = true
-@export var warn_on_missing_node_dialogue : bool = true
-
-@onready var dialogue_text                : RichTextLabel = $DialogueText
-@onready var options_container            : BoxContainer = $OptionsContainer
-@onready var dialogue_camera              : Camera2D = $Camera2D
-
-var _graph                   : DialogueGraph
-var _current_node            : DialogueNode
-var _current_char            : CharacterDefinition
-var _current_portrait        : String
-var _current_portrait_sprite : Sprite2D
-var _current_portrait_label  : RichTextLabel
-
-## slot_name -> {Sprite2D, RichTextLabel}
-var _portraits : Dictionary               = {}  
-## if set, this will be used to override the next node id for the current node. This is used for branching and choice selection.
-var _pending_navigation_override : String = ""  
+#endregion
 
 enum DialogueState {
 	Idle,
@@ -153,25 +96,90 @@ enum DialogueState {
 	Paused,
 	Finished
 }
-var current_state : DialogueState = DialogueState.Idle
 
-var _character_lookup: Dictionary[String, CharacterDefinition] = {}  # character_name -> CharacterDefinition
-var _dialogue_loader : DialogueLoader
+#region EXPORT VARS
+@export_file("*.json") var dialogue_source : String = ""   # optional explicit override; see §6 for default resolutionon
 
-func get_dialogue_id() -> String:
-	return _graph.dialogue_id if _graph != null else ""
+@export_category("Settings")
+## if true, the dialogue graph will be loaded on demand when start() is called. If false, it will be loaded in _ready().
+@export var lazy_load                            : bool = true
+@export var start_on_load                        : bool = false
+@export var skippable                            : bool = true
+@export var pausable                             : bool = true
+## If true, the dialogue will automaticall       y advance to the next node after the current one finishes displaying. If false, the player must manually advance the dialogue.
+@export var auto_next                            : bool = false
 
+@export_category("Characters")                   
+@export var characters                           : Array[CharacterDefinition] = []
+@export_category("Portraits")                    
+## list of portraits names for speakers (eg. "left", "center", "right")
+@export var portrait_names                       : Array[String] = []
+
+@export_tool_button("Sync Slot Dictionaries", "PlaceholderTexture2D")
+var sync_slots_action                            : Callable = _sync_slot_dictionaries
+
+## portrait_name -> TextureRect node             
+@export var portrait_sprites                     : Dictionary[String, NodePath] = {}
+## portrait_name -> RichTextLabel node           
+@export var portrait_labels                      : Dictionary[String, NodePath] = {}
+## portrait_name -> character_name               
+@export var portrait_character                   : Dictionary[String, String] = {}
+
+@export_category("Config Overrides")
+@export var text_speed                           : float = -1.0       # -1 = "use DialogueConfig default"
+@export var text_size                            : int = -1
+@export var locale                               : String = ""
+
+@export_category("Debug")
+@export var debug_overlay                        : bool = false
+@export var warn_on_missing_character            : bool = true
+@export var warn_on_missing_portrait             : bool = true
+@export var warn_on_missing_node_dialogue        : bool = true
+
+#endregion
+
+
+#region VARS
+
+var current_state                : DialogueState = DialogueState.Idle
+
+var _graph                       : DialogueGraph
+var _current_node                : DialogueNode
+var _current_char                : CharacterDefinition
+var _current_portrait            : String
+var _current_portrait_sprite     : Sprite2D
+var _current_portrait_label      : RichTextLabel
+
+## slot_name -> {Sprite2D, RichTextLabel}
+var _portraits                   : Dictionary               = {}
+## if set, this will be used to override the next node id for the current node. This is used for branching and choice selection.
+var _pending_navigation_override : String = ""
+var _character_lookup            : Dictionary[String, CharacterDefinition] = {}  # character_name -> CharacterDefinition
+var _dialogue_loader             : DialogueLoader
+
+#endregion
+
+#region ONREADY VARS
+@onready var dialogue_text       : RichTextLabel = $DialogueText
+@onready var options_container   : BoxContainer = $OptionsContainer
+@onready var dialogue_camera     : Camera2D = $Camera2D
+
+@onready var debug_overlay_node  : Control = $DebugOverlayContainer
+#endregion
+
+
+#region BUILT-IN METHODS
 ## cache the dialogue files and build the character lookup table
 ## these are required to setup the dialogue graph and character portraits correctly
 func _ready() -> void:
 	_dialogue_loader = DialogueLoader.new()
 	dialogue_text.bbcode_enabled = true
-	build_character_lookup()
-	initialize_portraits()
+	_build_character_lookup()
+	_initialize_portraits()
 	# auto-start if configured to do so, but only in the game, not in the editor
 	if not Engine.is_editor_hint() and start_on_load:
 		if not lazy_load:
-			load_dialogue_graph()
+			load_dialogue()
 		start()
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -197,33 +205,54 @@ func _process(delta: float) -> void:
 	current_state = DialogueState.Typing
 	dialogue_text.text = _current_node.text
 	current_state = DialogueState.WaitingForInput
+	
+	# update the debug overlay if in editor
+	_update_debug_overlay()
+
+func _get_configuration_warnings() -> PackedStringArray: 
+	var warnings : PackedStringArray = PackedStringArray()
+	if dialogue_source == "":
+		return warnings # no dialogue selected, nothing to check
+
+	if not FileAccess.file_exists(dialogue_source):
+		warnings.append("Dialogue: dialogue source file '%s' does not exist" % dialogue_source)
+		return warnings
+
+	if _graph == null:
+		warnings.append("Dialogue: dialogue graph is null. Did you call load_dialogue_graph() first?")
+	if _current_node == null:
+		warnings.append("Dialogue: current node is null. Did you call _enter_node() first?")
+	if _current_char == null and not StringUtils.is_null_or_empty(_current_node.speaker):
+		warnings.append("Dialogue: current character is null, but the current node has a speaker. Did you call build_character_lookup() first?")
+	return warnings
+
+#endregion
 
 
-#region Ready / Initialization
+#region PUBLIC API
 
-func initialize_portraits() -> void:
-	_portraits.clear()
-	for slot_name : String in portrait_names:
-		var sprite : Sprite2D = _get_slot_sprite(slot_name)
-		var name_label : RichTextLabel = _get_slot_name_label(slot_name)
-		if sprite == null or name_label == null:
-			if warn_on_missing_portrait:
-				push_warning("Dialogue: slot '%s' is missing a Sprite2D or RichTextLabel node" % slot_name)
-			continue
-		_portraits[slot_name] = {"sprite": sprite, "name_label": name_label}
-		sprite.texture = null
-		name_label.text = ""
+## returns the dialogue id of the current graph, or an empty string if the graph is null
+func get_dialogue_id() -> String:
+	return _graph.dialogue_id if _graph != null else ""
 
-func build_character_lookup() -> void:
-	_character_lookup.clear()
-	for c : CharacterDefinition in characters:
-		if c == null or not c.validate():
-			if warn_on_missing_character:
-				push_warning("Dialogue: invalid CharacterDefinition in %s" % get_scene_file_path())
-			continue
-		_character_lookup[c.character_name.to_lower()] = c
+## sugar coating to check if current_state is [DialogueState.Idle]
+func is_idle() -> bool:
+	return current_state == DialogueState.Idle
+## sugar coating to check if current_state is [DialogueState.Typing]
+func is_typing() -> bool:
+	return current_state == DialogueState.Typing
+## sugar coating to check if current_state is [DialogueState.WaitingForInput]	
+func is_waiting_for_input() -> bool:
+	return current_state == DialogueState.WaitingForInput
+## sugar coating to check if current_state is [DialogueState.Paused]
+func is_paused() -> bool:
+	return current_state == DialogueState.Paused
+## sugar coating to check if current_state is [DialogueState.Finished]
+func is_finished() -> bool:
+	return current_state == DialogueState.Finished
 
-func load_dialogue_graph() -> void:
+## If a dialogue graph is not loaded, this method will attempt to load it from the [dialogue_source] path. If the graph is already loaded, this method does nothing.
+func load_dialogue() -> void:
 	var source_path : String = _resolve_dialogue_source()
 	if source_path == "":
 		push_error("Dialogue: no dialogue source path resolved for %s" % get_scene_file_path())
@@ -232,30 +261,38 @@ func load_dialogue_graph() -> void:
 	if _graph == null:
 		push_error("Dialogue: failed to load dialogue graph from '%s'" % source_path)
 		return
-#endregion
 
-#region Dialogue Lifecycle
+## Starts the dialogue by entering the first node in the graph and emits [on_dialogue_started] signal.
+## If the graph is null, this method will attempt to load it from the [dialogue_source] path if [lazy_load] is true. 
+## If the graph is still null after that, this method will log an error and return.
 func start() -> void:
 	if _graph == null :
 		if lazy_load: 
-			load_dialogue_graph()
+			load_dialogue()
 		else:
-			push_error("Dialogue: cannot start dialogue; graph is null. Did you call load_dialogue_graph() first?")
+			push_error("Dialogue: cannot start dialogue; graph is null. Did you call load_dialogue() first?")
 			return
-	dialogue_started.emit(_graph.dialogue_id)
+	on_dialogue_started.emit(_graph.dialogue_id)
 	_enter_node(_graph.start_node_id)
 
+## Finishes the dialogue by exiting the current node and emits [on_dialogue_finished] signal.
 func finish() -> void:
 	if _graph == null:
-		push_warning("Dialogue: attempt to finish a null Dialogue. Did you call load_dialogue_graph() first?")
+		push_warning("Dialogue: attempt to finish a null Dialogue. Did you call load_dialogue() first?")
 		return
-	_exit_node()
+	_exit_node() # safeguard to exit the last node before finishing the dialogue
 	var id : String = _graph.dialogue_id
 	_current_node = null
-	current_state = DialogueState.Finished
+	_current_char = null
 	_graph = null
-	dialogue_finished.emit(id)
+	current_state = DialogueState.Finished
+	on_dialogue_finished.emit(id)
 
+## Requests a navigation override for the next node to enter. 
+## This is used to redirect the dialogue flow to a specific node, regardless of the current node's next_node_id or the selected option's next_node_id.
+## This method should be called before the next node is entered, typically in response to a player action or a game event. 
+## The override will be cleared after the next node is entered.
+## `next_node_id` is the id of the node to enter next.
 func request_navigation_override(next_node_id: String) -> void:
 	if current_state == DialogueState.Finished :
 		push_warning("Dialogue: attempt to request navigation override on a finished dialogue")
@@ -268,10 +305,42 @@ func toggle_pause() -> void:
 		return
 	if current_state == DialogueState.Paused:
 		current_state = DialogueState.WaitingForInput
-		dialogue_resumed.emit()
+		on_dialogue_resumed.emit()
 	else :
 		current_state = DialogueState.Paused
-		dialogue_paused.emit()
+		on_dialogue_paused.emit()
+
+#endregion
+
+
+#region INITIALIZATION
+
+func _initialize_portraits() -> void:
+	_portraits.clear()
+	for slot_name : String in portrait_names:
+		var sprite : Sprite2D = _get_slot_sprite(slot_name)
+		var name_label : RichTextLabel = _get_slot_name_label(slot_name)
+		if sprite == null or name_label == null:
+			if warn_on_missing_portrait:
+				push_warning("Dialogue: slot '%s' is missing a Sprite2D or RichTextLabel node" % slot_name)
+			continue
+		_portraits[slot_name] = {"sprite": sprite, "name_label": name_label}
+		sprite.texture = null
+		name_label.text = ""
+
+func _build_character_lookup() -> void:
+	_character_lookup.clear()
+	for c : CharacterDefinition in characters:
+		if c == null or not c.validate():
+			if warn_on_missing_character:
+				push_warning("Dialogue: invalid CharacterDefinition in %s" % get_scene_file_path())
+			continue
+		_character_lookup[c.character_name.to_lower()] = c
+
+#endregion
+
+
+#region DialogueNode methods
 
 func _enter_node(node_id: String) -> void:
 	# if node does not exist in the graph, log an error and return
@@ -282,7 +351,7 @@ func _enter_node(node_id: String) -> void:
 	var old_node : DialogueNode = _current_node
 	var old_char : CharacterDefinition = _current_char
 	var new_node : DialogueNode = _graph.get_node(node_id)
-	var new_char : CharacterDefinition = _get_character(new_node.speaker.to_lower())
+	var new_char : CharacterDefinition = _get_character_definition(new_node.speaker.to_lower())
 	
 	# exit current node
 	if _current_node != null:
@@ -293,7 +362,7 @@ func _enter_node(node_id: String) -> void:
 	_current_char = new_char
 
 	current_state = DialogueState.Typing
-	node_entered.emit(_current_node)
+	on_node_entered.emit(_current_node)
 
 	# will add options to the options container if the node has any
 	_present_node_options(_current_node)
@@ -327,7 +396,7 @@ func _exit_node() -> void:
 			push_warning("Dialogue: attempt to exit a null node. Did you call _enter_node() first?")
 		return
 	current_state = DialogueState.Idle
-	node_exited.emit(_current_node)
+	on_node_exited.emit(_current_node)
 
 ## Applies the changes between the previous node and the new node, 
 ## including updating the portrait and emitting signals for speaker and portrait changes.
@@ -345,51 +414,35 @@ func _apply_node_changes(previous_node: DialogueNode, new_node: DialogueNode, pr
 	
 	_clear_portrait(previous_portrait)
 
-	# check if speaker changed
-	if previous_node == null : 
-		if not StringUtils.is_null_or_empty(new_node.speaker):
-			speaker_changed.emit("", new_node.speaker)
-		if not StringUtils.is_null_or_empty(new_portrait):
-			portrait_changed.emit("", new_portrait, "", new_node.emotion)
-	else :
-		if previous_node.speaker != new_node.speaker:			
-			speaker_changed.emit(previous_node.speaker, new_node.speaker)
-		# check if portrait slot or emotion changed
-		if previous_portrait != new_portrait or previous_node.emotion != new_node.emotion:
-			portrait_changed.emit(previous_portrait, new_portrait, previous_node.emotion, new_node.emotion)
-
 	_current_portrait = new_portrait
 	_update_portrait(new_portrait, new_node, new_char)
 
+func _get_character_definition(speaker: String) -> CharacterDefinition:
+	if StringUtils.is_null_or_empty(speaker):
+		# no character dialog. eg: narrator. Not an error
+		return null
+	if not _character_lookup.has(speaker):
+		if warn_on_missing_character:
+			push_warning("Dialogue: speaker '%s' has no matching CharacterDefinition in this Dialogue instance" % speaker)
+		return null
+	return _character_lookup[speaker]
 #endregion
 
 
-#region Dialogue Options
+#region DialogueOption methods
 
 ## Called to check if a node has options, and present them in the dialogue container.
 ## `node` is the node to present options. `Dialogue._enter_node` calls this method.
 ## If the node has options, this method replace any Nodes in the `options_container` with `Button` for each option,
-## emits the `choice_presented` signal and runs DialogueOptionHandlers for `on_before_options_presented` and `on_after_options_presented`.
+## emits the `on_choice_presented` signal and runs DialogueOptionHandlers for `on_before_options_presented` and `on_after_options_presented`.
 ## If the node has no options this method will do nothing.
 func _present_node_options(node: DialogueNode) -> void:
 	if node == null or not node.has_options():
 		return
-	
-	# present the options to the player and wait for selection
-	choice_presented.emit(node.options)
 	current_state = DialogueState.WaitingForInput
-	
-	# 'on before option presented' 
-	_run_option_presented_handlers(node, 
-			func(h : DialogueOptionHandler) -> void : 
-						h._on_before_options_presented(self, node))
-	
+	on_before_options_presented.emit(node)
 	_update_options_container(node, node.options)
-
-	# 'on after options presented' 
-	_run_option_presented_handlers(node,  
-			func(h : DialogueOptionHandler) -> void : 
-						h._on_after_options_presented(self, node))
+	on_after_options_presented.emit(node)
 
 
 ## This method is hooked to the buttons in the options container when pressed 
@@ -398,15 +451,8 @@ func _handle_selected_option(node: DialogueNode, selected_option: DialogueOption
 	if selected_option == null:
 		push_warning("Dialogue: attempt to select a null option")
 		return
-	
-	choice_selected.emit(selected_option)
-
+	on_option_selected.emit(node, selected_option)
 	_clear_options_container()
-
-	# 'on after option selected'
-	_run_option_selected_handlers(node, selected_option, 
-			func(h : DialogueOptionHandler) -> void: 
-						h._on_after_option_selected(self, node, selected_option))
 
 
 ## Attempts to resolve where the graph goes next, based on the selected option and any pending navigation override.
@@ -434,27 +480,6 @@ func _resolve_option_navigation(selected_option: DialogueOption = null) -> void:
 	else :
 		_pending_navigation_override = ""
 
-func _run_option_presented_handlers(node: DialogueNode, callback: Callable) -> void:
-	for child : Node in get_children():
-		if not child is DialogueOptionHandler :
-			continue
-		var handler : DialogueOptionHandler = child as DialogueOptionHandler
-		if not handler.applies_to(node.id) :
-			continue
-		for option : DialogueOption in node.options:
-			if not handler.applies_to_option(option.id):
-				continue
-			callback.call(handler)
-
-func _run_option_selected_handlers(node: DialogueNode, option_selected: DialogueOption, callback: Callable) -> void:
-	for child : Node in get_children():
-		if not child is DialogueOptionHandler :
-			continue
-		var handler : DialogueOptionHandler = child as DialogueOptionHandler
-		if not handler.applies_to(node.id) or not handler.applies_to_option(option_selected.id):
-			continue
-		callback.call(handler)
-
 func _clear_options_container() -> void:
 	for child : Node in options_container.get_children():
 		child.queue_free()
@@ -478,6 +503,8 @@ func _on_option_button_pressed(node: DialogueNode, option: DialogueOption) -> Ca
 
 
 #region Portrait Management
+
+## Update the portrait node in the scene based on the current node's speaker and emotion.
 func _update_portrait(portrait: String, node: DialogueNode, char_def: CharacterDefinition) -> void:
 
 	_current_portrait = portrait
@@ -497,7 +524,7 @@ func _update_portrait(portrait: String, node: DialogueNode, char_def: CharacterD
 		if _current_portrait_label != null:
 			_current_portrait_label.text = ""
 	
-
+## Returns the [Sprite2D] node for the given portrait slot name, or null if not found. Logs a warning if [warn_on_missing_portrait] is true.
 func _get_slot_sprite(slot: String) -> Sprite2D:
 	if not portrait_sprites.has(slot):
 		if warn_on_missing_portrait:
@@ -505,6 +532,7 @@ func _get_slot_sprite(slot: String) -> Sprite2D:
 		return null
 	return get_node(portrait_sprites[slot]) as Sprite2D
 
+## Returns the [RichTextLabel] node for the given portrait slot name, or null if not found. Logs a warning if [warn_on_missing_portrait] is true.
 func _get_slot_name_label(slot: String) -> RichTextLabel:
 	if not portrait_labels.has(slot):
 		if warn_on_missing_portrait:
@@ -512,6 +540,7 @@ func _get_slot_name_label(slot: String) -> RichTextLabel:
 		return null
 	return get_node(portrait_labels[slot]) as RichTextLabel
 
+## Clears the portrait sprite and name label for the given portrait slot name. If the slot name is empty or null, does nothing.
 func _clear_portrait(portrait_name: String) -> void:
 	if StringUtils.is_null_or_empty(portrait_name):
 		return
@@ -524,8 +553,9 @@ func _clear_portrait(portrait_name: String) -> void:
 #endregion
 
 
-#region Editor / Tooling
+#region EDITOR/TOOLING
 
+## Inspector only. 
 ## For each slot name, ensure that the slot_sprites, slot_name_labels, and slot_character dictionaries have an entry. If not, create an empty entry.
 func _sync_slot_dictionaries() -> void:
 	for slot : String in portrait_names:
@@ -540,40 +570,28 @@ func _sync_slot_dictionaries() -> void:
 	
 	notify_property_list_changed()  # forces the Inspector to redraw and show the new empty entries
 
-func _get_character(speaker: String) -> CharacterDefinition:
-	if StringUtils.is_null_or_empty(speaker):
-		# no character dialog. eg: narrator. Not an error
-		return null
-	if not _character_lookup.has(speaker):
-		if warn_on_missing_character:
-			push_warning("Dialogue: speaker '%s' has no matching CharacterDefinition in this Dialogue instance" % speaker)
-		return null
-	return _character_lookup[speaker]
-
-## This method resolves the name of the json file with the dialogue data to load. It uses the following priority:
-## 1. If dialogue_source export variable is set, use that.
-## 2. If dialogue_source export variable is empty, use the scene name (without extension) and append ".json". 
-## 	 The file is then looked for in the DialogueConfig.json_base_path directory.
+## This method resolves the json file with the dialogue data to load. It uses the following priority:
+## 1. File name in [dialogue_source], if set.
+## 2. File name with [scene_name] (without extension) and append ".json". 
+## Files are looked in the [DialogueConfig.json_base_path] directory.
 func _resolve_dialogue_source() -> String:
 	if dialogue_source != "":
 		return dialogue_source  # 1. explicit export always wins
 	var scene_name : String = get_scene_file_path().get_file().get_basename()
-	return DialogueConfig.json_base_path.path_join(scene_name + ".json")  # 3. naming-convention fallback
+	var base_path : String = DialogueConfig.json_base_path
+	return base_path.path_join(scene_name + ".json") 
 
-func _get_configuration_warnings() -> PackedStringArray: 
-	var warnings : PackedStringArray = PackedStringArray()
-	if dialogue_source == "":
-		return warnings # no dialogue selected, nothing to check
 
-	if not FileAccess.file_exists(dialogue_source):
-		warnings.append("Dialogue: dialogue source file '%s' does not exist" % dialogue_source)
-		return warnings
+func _update_debug_overlay() -> void:
+	if debug_overlay:
+		var debug_text : Label = debug_overlay_node.get_node("Label") as Label
+		debug_text.text = "Dialogue: " + _resolve_dialogue_source()
+		debug_overlay_node.visible = true
+	else:
+		debug_overlay_node.visible = false
 
-	if _graph == null:
-		warnings.append("Dialogue: dialogue graph is null. Did you call load_dialogue_graph() first?")
-	if _current_node == null:
-		warnings.append("Dialogue: current node is null. Did you call _enter_node() first?")
-	if _current_char == null and not StringUtils.is_null_or_empty(_current_node.speaker):
-		warnings.append("Dialogue: current character is null, but the current node has a speaker. Did you call build_character_lookup() first?")
-	return warnings
+func _on_debug_exit_button_pressed() -> void:
+	finish()
+	hide()
+
 #endregion

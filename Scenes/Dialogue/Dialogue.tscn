@@ -1,14 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://4jhvm4xuvxve"]
+[gd_scene load_steps=7 format=3 uid="uid://4jhvm4xuvxve"]
 
-[ext_resource type="Script" uid="uid://tik8c8y8f3pg" path="res://Script/Dialogue/Dialogue.gd" id="1_ro8un"]
+[ext_resource type="Script" uid="uid://bdtygx1b2of2p" path="res://Script/Dialogue/dialogue.gd" id="1_ro8un"]
 [ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://Assets/CharacterDefinitions/sebastian.tres" id="2_80avi"]
-[ext_resource type="Script" uid="uid://dcon83i1imcd2" path="res://Script/Dialogue/CharacterDefinition.gd" id="2_b6pb6"]
+[ext_resource type="Script" uid="uid://dcon83i1imcd2" path="res://Script/Dialogue/resources/character_definition.gd" id="2_b6pb6"]
 [ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://Assets/CharacterDefinitions/npc.tres" id="3_b6pb6"]
 [ext_resource type="Texture2D" uid="uid://c5otct6dmlble" path="res://Assets/sprites/dialogue_box1.png" id="3_oj6as"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_s5sbd"]
+line_spacing = 1.0
+font_color = Color(1.63645e-06, 0.808187, 1.54018e-06, 1)
 
 [node name="Dialogue" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = -2.0
 script = ExtResource("1_ro8un")
 characters = Array[ExtResource("2_b6pb6")]([ExtResource("2_80avi"), ExtResource("3_b6pb6")])
 portrait_names = Array[String](["left", "right"])
@@ -24,7 +32,6 @@ portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": ""
 })
-metadata/_custom_type_script = "uid://tik8c8y8f3pg"
 metadata/_edit_horizontal_guides_ = [34.0]
 metadata/_edit_vertical_guides_ = [187.0]
 metadata/_edit_group_ = true
@@ -106,3 +113,31 @@ vertical_alignment = 1
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(120, -73)
 zoom = Vector2(5, 5)
+
+[node name="DebugOverlayContainer" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
+
+[node name="Label" type="Label" parent="DebugOverlayContainer"]
+layout_mode = 2
+offset_left = -7.0
+offset_top = -144.0
+offset_right = 61.0
+offset_bottom = -128.0
+scale = Vector2(0.5, 0.5)
+text = "Dialogue:"
+label_settings = SubResource("LabelSettings_s5sbd")
+
+[node name="Button" type="Button" parent="DebugOverlayContainer"]
+layout_mode = 2
+offset_left = 202.0
+offset_top = -146.0
+offset_right = 307.0
+offset_bottom = -122.0
+scale = Vector2(0.4, 0.4)
+text = "Exit Dialogue"
+
+[connection signal="pressed" from="DebugOverlayContainer/Button" to="." method="_on_debug_exit_button_pressed"]

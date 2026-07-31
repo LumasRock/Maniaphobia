@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cl3iky4pqlsf0" path="res://Scenes/Levels/apartment2.gd" id="1_i23dw"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="2_ebixs"]
-[ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://Scenes/Dialogue/Dialogue.tscn" id="2_i23dw"]
+[ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://Scenes/dialogue/dialogue.tscn" id="2_i23dw"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/sprites/Maniaphobia_sheet (1).png" id="3_xox5p"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/sprites/Screenshot 2026-03-31 175014.png" id="4_0pk1v"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://Scenes/Player/Player.tscn" id="5_b2xic"]
@@ -171,28 +171,31 @@ tile_set = SubResource("TileSet_hq0fg")
 [node name="Player" parent="Entities" instance=ExtResource("5_b2xic")]
 position = Vector2(192, 55)
 
+[node name="Camera2D" parent="Entities/Player" index="2"]
+zoom = Vector2(5, 5)
+
 [node name="Dialogues" type="Node" parent="."]
 
 [node name="InitialDialogue" parent="Dialogues" instance=ExtResource("2_i23dw")]
 z_index = 1
-offset_left = 102.0
-offset_top = 112.0
-offset_right = 102.0
-offset_bottom = 112.0
-scale = Vector2(0.8, 0.8)
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 72.0
+offset_bottom = 128.0
 dialogue_source = "res://Assets/Dialogues/Apartment2.json"
 start_on_load = true
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": "npc"
 })
+debug_overlay = true
 
 [node name="FixCoffeeMachine" parent="Dialogues" instance=ExtResource("2_i23dw")]
 visible = false
-offset_left = 100.0
-offset_top = 114.0
-offset_right = 100.0
-offset_bottom = 114.0
+offset_left = 72.0
+offset_top = 128.0
+offset_right = 72.0
+offset_bottom = 128.0
 scale = Vector2(0.8, 0.8)
 dialogue_source = "res://Assets/Dialogues/apartment_coffee_machine.json"
 portrait_character = Dictionary[String, String]({
@@ -207,17 +210,6 @@ portrait_character = Dictionary[String, String]({
 [connection signal="body_exited" from="Interactives/CoffeeMachine" to="." method="_on_coffee_machine_body_exited"]
 [connection signal="body_exited" from="Interactives/CoffeeMachine" to="Interactives/CoffeeMachine" method="_on_body_exited"]
 [connection signal="input_event" from="Interactives/CoffeeMachine" to="." method="_on_coffee_machine_input_event"]
-[connection signal="choice_presented" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_choice_presented"]
-[connection signal="choice_selected" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_choice_selected"]
-[connection signal="dialogue_finished" from="Dialogues/InitialDialogue" to="." method="_on_initial_dialogue_finished"]
-[connection signal="dialogue_paused" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_dialogue_paused"]
-[connection signal="dialogue_resumed" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_dialogue_resumed"]
-[connection signal="dialogue_started" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_dialogue_started"]
-[connection signal="node_entered" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_node_entered"]
-[connection signal="node_exited" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_node_exited"]
-[connection signal="portrait_changed" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_portrait_changed"]
-[connection signal="speaker_changed" from="Dialogues/InitialDialogue" to="." method="_on_dialogue_speaker_changed"]
-[connection signal="dialogue_finished" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_dialogue_finished"]
 
 [editable path="Entities/Player"]
 [editable path="Dialogues/InitialDialogue"]

@@ -1,6 +1,4 @@
-﻿# DialogueManager.gd -- manages the dialogue system for the game, including displaying dialogue boxes, handling player choices, and managing dialogue flow.
-
-extends Node
+﻿extends Node
 
 
 # Called when the node enters the scene tree for the first time.
