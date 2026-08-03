@@ -1,0 +1,166 @@
+[gd_scene load_steps=7 format=3 uid="uid://4jhvm4xuvxve"]
+
+[ext_resource type="Script" uid="uid://bdtygx1b2of2p" path="res://src/03_dialogue/scenes/dialogue.gd" id="1_ro8un"]
+[ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://src/03_dialogue/resources/character_definitions/sebastian.tres" id="2_80avi"]
+[ext_resource type="Script" uid="uid://b0vxypo0e7gu" path="res://src/03_dialogue/resources/character_definition.gd" id="2_b6pb6"]
+[ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://src/03_dialogue/resources/character_definitions/npc.tres" id="3_b6pb6"]
+[ext_resource type="Texture2D" uid="uid://c5otct6dmlble" path="res://Assets/sprites/dialogue_box1.png" id="3_oj6as"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_s5sbd"]
+line_spacing = 1.0
+font_color = Color(1.63645e-06, 0.808187, 1.54018e-06, 1)
+
+[node name="Dialogue" type="Control" node_paths=PackedStringArray("skip_button")]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -2.0
+offset_top = -2.0
+offset_right = -2.0
+offset_bottom = -2.0
+script = ExtResource("1_ro8un")
+skip_button = NodePath("GUI/SkipButton")
+characters = Array[ExtResource("2_b6pb6")]([ExtResource("2_80avi"), ExtResource("3_b6pb6")])
+portrait_names = Array[String](["left", "right"])
+portrait_sprites = Dictionary[String, NodePath]({
+"left": NodePath("Portrait1/Sprite2D"),
+"right": NodePath("Portrait2/Sprite2D")
+})
+portrait_labels = Dictionary[String, NodePath]({
+"left": NodePath("Portrait1/Name"),
+"right": NodePath("Portrait2/Name")
+})
+portrait_character = Dictionary[String, String]({
+"left": "sebastian",
+"right": ""
+})
+metadata/_edit_horizontal_guides_ = [34.0]
+metadata/_edit_vertical_guides_ = [187.0]
+metadata/_edit_group_ = true
+
+[node name="Background" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MainContainer" type="NinePatchRect" parent="Background"]
+z_index = 1
+layout_mode = 0
+offset_top = -70.0
+offset_right = 241.0
+offset_bottom = -2.0
+texture = ExtResource("3_oj6as")
+patch_margin_left = 11
+patch_margin_top = 8
+patch_margin_right = 9
+patch_margin_bottom = 8
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[node name="GUI" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SkipButton" type="Button" parent="GUI"]
+visible = false
+z_index = 1
+layout_mode = 0
+offset_left = 212.0
+offset_top = -23.0
+offset_right = 252.0
+offset_bottom = 1.0
+scale = Vector2(0.5, 0.5)
+text = "Skip"
+
+[node name="DialogueText" type="RichTextLabel" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 11.0
+offset_top = -62.0
+offset_right = 186.0
+offset_bottom = -10.0
+bbcode_enabled = true
+fit_content = true
+
+[node name="OptionsContainer" type="BoxContainer" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 188.0
+offset_top = -62.0
+offset_right = 232.0
+offset_bottom = -10.0
+
+[node name="Portrait1" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -62.0
+offset_bottom = -62.0
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Portrait1"]
+position = Vector2(35, -30)
+
+[node name="Name" type="RichTextLabel" parent="Portrait1"]
+z_index = 10
+layout_mode = 0
+offset_left = 17.0
+offset_top = -11.0
+offset_right = 107.0
+offset_bottom = 4.0
+bbcode_enabled = true
+vertical_alignment = 1
+
+[node name="Portrait2" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_top = -62.0
+offset_bottom = -62.0
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="Portrait2"]
+position = Vector2(204, -30)
+flip_h = true
+
+[node name="Name" type="RichTextLabel" parent="Portrait2"]
+z_index = 10
+layout_mode = 0
+offset_left = 134.0
+offset_top = -11.0
+offset_right = 224.0
+offset_bottom = 4.0
+bbcode_enabled = true
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(120, -73)
+zoom = Vector2(5, 5)
+
+[node name="DebugOverlayContainer" type="Control" parent="."]
+visible = false
+anchors_preset = 0
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 2.0
+offset_bottom = 2.0
+
+[node name="Label" type="Label" parent="DebugOverlayContainer"]
+layout_mode = 2
+offset_left = -7.0
+offset_top = -144.0
+offset_right = 61.0
+offset_bottom = -128.0
+scale = Vector2(0.5, 0.5)
+text = "Dialogue:"
+label_settings = SubResource("LabelSettings_s5sbd")
+
+[node name="Button" type="Button" parent="DebugOverlayContainer"]
+layout_mode = 2
+offset_left = 202.0
+offset_top = -146.0
+offset_right = 307.0
+offset_bottom = -122.0
+scale = Vector2(0.4, 0.4)
+text = "Exit Dialogue"
+
+[connection signal="pressed" from="DebugOverlayContainer/Button" to="." method="_on_debug_exit_button_pressed"]
