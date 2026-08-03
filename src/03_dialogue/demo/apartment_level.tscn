@@ -1,7 +1,7 @@
 [gd_scene load_steps=19 format=4 uid="uid://b6k278ypydhc2"]
 
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="1_h7nyj"]
-[ext_resource type="Script" uid="uid://d4a4b1v8lq10d" path="res://src/10_intro/apartment_level.gd" id="1_vsaj6"]
+[ext_resource type="Script" uid="uid://b52qm1o4825ng" path="res://src/03_dialogue/demo/apartment_level.gd" id="1_vsaj6"]
 [ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/sprites/Maniaphobia_sheet (1).png" id="2_vsaj6"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/sprites/Screenshot 2026-03-31 175014.png" id="3_34xw1"]
 [ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="4_mc4uj"]
