@@ -1,8 +1,7 @@
 class_name InteractionDialogueArea
 extends Area2D
 
-@export var dialogue: Dialogue
-@export var node_id: String = ""
+var start_dialogue: Callable
 @export var play_once: bool = false
 
 var already_played: bool = false
@@ -31,7 +30,11 @@ func _on_body_exited(body: Node2D) -> void:
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") and _player_in_area:
+		print("AAAA: interact")
 		if play_once and already_played:
 			return
-		dialogue.start()
+		if start_dialogue == null:
+			push_error("interaction dialogue not set")
+			return
+		start_dialogue.call()
 		already_played = true

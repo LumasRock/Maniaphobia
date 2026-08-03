@@ -1,19 +1,20 @@
+class_name Apartment
 extends Node2D
 
 enum Area {
 	NONE,
 	COFFEE_MACHINE,
 	EXIT,
-	DOOR1,
-	DOOR2,
-	DOOR3
+	JACOBS_ROOM,
 }
 
 @onready var initialDialogue : Dialogue = $Dialogues/InitialDialogue
 @onready var coffeeDialogue : Dialogue = $Dialogues/FixCoffeeMachine
+@onready var jacobs_room: Dialogue = $Dialogues/JacobsRoom
+@onready var leave_early: Dialogue = $Dialogues/LeaveEarly
+
+
 @onready var player : Player = $Entities/Player
-@onready var doors : Array[Node] = [$Interactives/Door, $Interactives/Door2, $Interactives/Door3]
-@onready var exit_door : Node = $Interactives/Exit
 
 # (Future) scenes like this one, should extend from a `BaseScene` class that handles common functionality like dialogue management, area tracking, and scene transitions. This would reduce code duplication and improve maintainability.
 @export_file("*.tscn", "*.scn") var exit_scene: String
@@ -29,9 +30,12 @@ var _coffee_machine_fixed : bool
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	initialDialogue.show()
+	coffeeDialogue.hide()
+	jacobs_room.hide()
+	leave_early.hide()
 	if Transition.is_transitioning:
 		await Transition.fade_out_finished
-	initialDialogue.show()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact"): 
@@ -46,15 +50,20 @@ func _unhandled_input(event: InputEvent) -> void:
 					Transition.transition_to(exit_scene)
 				else:
 					_log("Coffee machine not fixed yet. Cannot exit.")
-			Area.DOOR1:
+					_start_dialogue(leave_early)
+			Area.JACOBS_ROOM:
+				player.show_interact_prompt(false)
+				_start_dialogue(jacobs_room)
 				pass
-			Area.DOOR2:
-				pass
-			Area.DOOR3:
-				pass	
 
 
 #region DIALOGUE MANAGEMENT
+
+func start_dialogue_jacobs_room() -> void:
+	_start_dialogue(jacobs_room)
+
+func start_dialogue_exit_early() -> void:
+	_start_dialogue(leave_early)
 
 # common function to start a dialogue and set camera to dialogue camera
 func _start_dialogue(dialogue: Dialogue) -> void:
@@ -84,7 +93,7 @@ func _on_dialogue_node_entered(node: DialogueNode) -> void:
 func _on_dialogue_node_exited(node: DialogueNode) -> void:
 	_log("Exit Node " + node.id)
 
-func _on_initial_dialogue_finished(dialogue_id: String) -> void:
+func _on_initial_dialogue_finished(__dialogue_id: String) -> void:
 	_finish_dialogue(initialDialogue)
 
 func _on_dialogue_speaker_changed(previous_speaker: String, new_speaker: String) -> void:
@@ -121,8 +130,9 @@ func _on_coffee_machine_body_exited(body: Node2D) -> void:
 		(body as Player).show_interact_prompt(false)
 		_current_area = Area.NONE
 
-func _on_fix_coffee_machine_dialogue_finished(dialogue_id: String) -> void:
+func _on_fix_coffee_machine_dialogue_finished(__dialogue_id: String) -> void:
 	_finish_dialogue(coffeeDialogue)
+	_coffee_machine_fixed = true
 
 #endregion
 
@@ -138,6 +148,29 @@ func _on_player_exited_exit_area(body: Node2D) -> void:
 		_log("Player exited exit area")
 		(body as Player).show_interact_prompt(false)
 		_current_area = Area.NONE
+
+func _on_exit_area_dialogue_finished(__dialogue_id: String) -> void:
+	_finish_dialogue(leave_early)
+
+#endregion
+
+
+#region Jacobs Room
+
+func _on_jacobs_room_body_entered(body: Node2D) -> void:
+	if body is Player:
+		_log("Player entered coffee machine area")
+		(body as Player).show_interact_prompt(true)
+		_current_area = Area.COFFEE_MACHINE
+
+func _on_jacobs_room_body_exited(body: Node2D) -> void:
+	if body is Player:
+		_log("Player exited coffee machine area")
+		(body as Player).show_interact_prompt(false)
+		_current_area = Area.NONE
+
+func _on_jacobs_room_dialogue_finished(__dialogue_id: String) -> void:
+	_finish_dialogue(jacobs_room)
 
 #endregion
 
