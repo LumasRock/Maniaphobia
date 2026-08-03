@@ -21,22 +21,22 @@ enum LevelStates {
 	AFTER_COFFEE_MACHINE_FIX,
 }
 
-@onready var initialDialogue : Dialogue = $Dialogues/InitialDialogue
-@onready var coffeeDialogue  : Dialogue = $Dialogues/FixCoffeeMachine
-@onready var jacobDialogue   : Dialogue = $Dialogues/JacobRoomDialogue
-@onready var leaveDialogue   : Dialogue = $Dialogues/LeaveEarlyDialogue
-@onready var player          : Player = $Entities/Player
-@onready var doors           : Array[Node] = [$Interactables/BedroomDoor, $Interactables/LoungeDoor, $Interactables/JacobRoomDoor]
-@onready var exit_door       : Node = $Interactables/ExitDoor
-
 @export_file("*.tscn", "*.scn") var exit_scene : String
+
+@onready var initialDialogue : Dialogue    = $Dialogues/InitialDialogue
+@onready var coffeeDialogue  : Dialogue    = $Dialogues/FixCoffeeMachine
+@onready var jacobDialogue   : Dialogue    = $Dialogues/JacobRoomDialogue
+@onready var leaveDialogue   : Dialogue    = $Dialogues/LeaveEarlyDialogue
+@onready var player          : Player      = $Entities/Player
+@onready var doors           : Array[Node] = [$Interactables/BedroomDoor, $Interactables/LoungeDoor, $Interactables/JacobRoomDoor]
+@onready var exit_door       : Node        = $Interactables/ExitDoor
 
 var _dialogue_id             : String           ## this variable is only for logging purposes
 var _current_area            : Area = Area.NONE ## FUTURE this could be an AreaOfInterest system that tracks the player's current area and triggers events based on their location.
 var _current_state           : LevelStates = LevelStates.INITIAL_DIALOGUE 
 var _coffee_machine_fixed    : bool             ## FUTURE this should be handled by a 'Checkpoint' system that can track progress within a scene or across multiple scenes.
 
-
+#region BUILT-IN
 func _ready() -> void:
 	if Transition.is_transitioning:
 		await Transition.fade_out_finished
@@ -70,6 +70,8 @@ func _unhandled_input(event: InputEvent) -> void:
 					return
 				player.show_interact_prompt(false)
 				_show_and_start_dialogue(jacobDialogue)
+#endregion
+
 
 #region DIALOGUE METHODS
 

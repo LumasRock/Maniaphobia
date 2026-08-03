@@ -1,15 +1,15 @@
 [gd_scene load_steps=47 format=4 uid="uid://cocskxsk6cvgf"]
 
 [ext_resource type="Script" uid="uid://cynkfgmreudyu" path="res://src/20_mansion/mansion.gd" id="1_5hv4c"]
-[ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/Maniaphobia_sheet (1).png" id="2_5hv4c"]
+[ext_resource type="Texture2D" uid="uid://bth65awvmrk65" path="res://Assets/sprites/Maniaphobia_sheet (1).png" id="2_5hv4c"]
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="3_3li1f"]
-[ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/stairs.png" id="4_2w5vh"]
+[ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/sprites/stairs.png" id="4_2w5vh"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_c48s0"]
-[ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/01_player/Player.tscn" id="6_kqqdl"]
-[ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
+[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="6_kqqdl"]
+[ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/sprites/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
 [ext_resource type="PackedScene" uid="uid://cxtir5qxo364k" path="res://src/02_common/interaction_tp_area.tscn" id="9_wa8yb"]
-[ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/03_dialogue/dialogue.tscn" id="10_3li1f"]
-[ext_resource type="PackedScene" uid="uid://bpibq7gjqujn7" path="res://src/02_common/Npc.tscn" id="11_rgm0c"]
+[ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="10_3li1f"]
+[ext_resource type="PackedScene" uid="uid://jpouub8e6cvc" path="res://src/02_common/Npc.tscn" id="11_rgm0c"]
 
 [sub_resource type="Animation" id="Animation_rgm0c"]
 resource_name = "Fade_in"

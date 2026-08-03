@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=4 uid="uid://b2s1onfvkno2s"]
+[gd_scene load_steps=19 format=4 uid="uid://b2s1onfvkno2s"]
 
 [ext_resource type="Script" uid="uid://cl3iky4pqlsf0" path="res://src/10_intro/apartment2.gd" id="1_i23dw"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="2_ebixs"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="5_b2xic"]
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="6_2706v"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_wqqge"]
+[ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/02_common/interaction_dialogue_area.gd" id="7_e3v04"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_akfgq"]
 texture = ExtResource("2_ebixs")
@@ -143,8 +144,11 @@ tile_set = SubResource("TileSet_wp45j")
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_tlb6p")
 
-[node name="JacobsRoom" type="Area2D" parent="Interactives"]
+[node name="JacobsRoom" type="Area2D" parent="Interactives" node_paths=PackedStringArray("dialogue")]
 position = Vector2(208, 96)
+script = ExtResource("7_e3v04")
+dialogue = NodePath("../../Dialogues/JacobsRoom")
+metadata/_custom_type_script = "uid://pueo6he1cir4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/JacobsRoom"]
 position = Vector2(0, -4)
@@ -157,8 +161,11 @@ position = Vector2(304, 72)
 position = Vector2(-4, 0)
 shape = SubResource("RectangleShape2D_oqof2")
 
-[node name="CoffeeMachine" type="Area2D" parent="Interactives"]
+[node name="CoffeeMachine" type="Area2D" parent="Interactives" node_paths=PackedStringArray("dialogue")]
 position = Vector2(64, 80)
+script = ExtResource("7_e3v04")
+dialogue = NodePath("../../Dialogues/FixCoffeeMachine")
+metadata/_custom_type_script = "uid://pueo6he1cir4"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/CoffeeMachine"]
 position = Vector2(1.75, 16)
@@ -176,15 +183,13 @@ limit_smoothed = true
 position_smoothing_speed = 2.0
 
 [node name="Dialogues" type="Node2D" parent="."]
-position = Vector2(11, 383)
 scale = Vector2(0.8, 0.8)
 
 [node name="InitialDialogue" parent="Dialogues" instance=ExtResource("2_i23dw")]
-z_index = 1
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_left = -352.5
+offset_top = 121.25
+offset_right = -112.5
+offset_bottom = 271.25
 dialogue_source = "res://src/03_dialogue/resources/dialogues/Apartment2.json"
 start_on_load = true
 portrait_character = Dictionary[String, String]({
@@ -193,10 +198,10 @@ portrait_character = Dictionary[String, String]({
 })
 
 [node name="FixCoffeeMachine" parent="Dialogues" instance=ExtResource("2_i23dw")]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_left = -358.75
+offset_top = -70.0
+offset_right = -118.75
+offset_bottom = 80.0
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_coffee_machine.json"
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
@@ -204,37 +209,21 @@ portrait_character = Dictionary[String, String]({
 })
 
 [node name="JacobsRoom" parent="Dialogues" instance=ExtResource("2_i23dw")]
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_jacob_room.json"
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
-})
 
 [node name="LeaveEarly" parent="Dialogues" instance=ExtResource("2_i23dw")]
+visible = false
 offset_left = 0.0
 offset_top = 0.0
-offset_right = 0.0
-offset_bottom = 0.0
+offset_right = 240.0
+offset_bottom = 200.0
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_leave_early.json"
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": "npc"
 })
 
-[connection signal="body_entered" from="Interactives/JacobsRoom" to="." method="_on_jacobs_room_body_entered"]
-[connection signal="body_exited" from="Interactives/JacobsRoom" to="." method="_on_jacobs_room_body_exited"]
 [connection signal="body_entered" from="Interactives/ExitArea" to="." method="_on_player_entered_exit_area"]
 [connection signal="body_exited" from="Interactives/ExitArea" to="." method="_on_player_exited_exit_area"]
-[connection signal="body_entered" from="Interactives/CoffeeMachine" to="." method="_on_coffee_machine_body_entered"]
-[connection signal="body_exited" from="Interactives/CoffeeMachine" to="." method="_on_coffee_machine_body_exited"]
-[connection signal="on_dialogue_finished" from="Dialogues/InitialDialogue" to="." method="_on_initial_dialogue_finished"]
 [connection signal="on_dialogue_finished" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_dialogue_finished"]
-[connection signal="on_dialogue_finished" from="Dialogues/JacobsRoom" to="." method="_on_jacobs_room_dialogue_finished"]
-[connection signal="on_dialogue_finished" from="Dialogues/LeaveEarly" to="." method="_on_exit_area_dialogue_finished"]
-
-[editable path="Dialogues/InitialDialogue"]
-[editable path="Dialogues/FixCoffeeMachine"]
+[connection signal="on_option_selected" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_option_selected"]

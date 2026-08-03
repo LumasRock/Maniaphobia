@@ -8,10 +8,12 @@
       "emotion": "neutral",
       "options": [
         {
+          "id": "1",
           "text": "Yes",
           "next_node_id": "17"
         },
         {
+          "id": "2",
           "text": "No",
           "next_node_id": "28"
         }

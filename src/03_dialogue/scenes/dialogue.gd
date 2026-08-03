@@ -86,7 +86,7 @@ enum DialogueState {
 }
 
 #region EXPORT VARS
-@export_file("*.json") var dialogue_source      : String = ""   # optional explicit override; see §6 for default resolutionon
+@export_file("*.json") var dialogue_source      : String = ""
 ## if true, the json file will be loaded on demand when [start()] is called. If false, it will be loaded in [_ready()].
 @export var lazy_load                                 : bool = true
 
@@ -95,10 +95,18 @@ enum DialogueState {
 @export var start_on_load                             : bool = false
 ## If true, the dialogue packed scene will hide as soon as the dialogue finishes. If false, it will remain visible.
 @export var hide_on_finish                            : bool = true
-## the time in seconds to wait before starting the dialogue after [start()] is called. This property is independeng of [start_on_load]
+## the time in seconds to wait before starting the dialogue after [start()] is called. This property is independent of [start_on_load]
 @export_range(0, 10) var start_delay_time  : float = 0.2
 ## If [hide_on_finish] is true, this property is the time in seconds before hiding the dialogue. 
 @export_range(0, 10) var hide_delay_time   : float = 0.2
+
+@export_category("Camera settings")
+## if true, when the [method start()] is called, this dialogue will attempt to center the camera on itself
+@export var center_camera_on_start                     : bool = true
+## if true, when the [method finish()] is called, this dialogue will attempt to reset the camera
+@export var reset_camera_on_finish                     : bool = true
+## if left empty, the dialogue will use the last known position of the camera before calling start
+@export var reset_camera_position                      : Vector2
 
 @export_category("Settings")
 @export var skippable                                 : bool = true
@@ -108,61 +116,59 @@ enum DialogueState {
 @export var auto_next                                 : bool = false
 
 @export_category("Characters")                   
-@export var characters                           : Array[CharacterDefinition] = []
+@export var characters                                : Array[CharacterDefinition] = []
 @export_category("Portraits")                    
 ## list of portraits names for speakers (eg. "left", "center", "right")
-@export var portrait_names                       : Array[String] = []
+@export var portrait_names                            : Array[String] = []
 
 @export_tool_button("Sync Slot Dictionaries", "PlaceholderTexture2D")
-var sync_slots_action                            : Callable = _sync_slot_dictionaries
+var sync_slots_action                                 : Callable = _sync_slot_dictionaries
 
 ## portrait_name -> TextureRect node             
-@export var portrait_sprites                     : Dictionary[String, NodePath] = {}
-## portrait_name -> RichTextLabel node           
-@export var portrait_labels                      : Dictionary[String, NodePath] = {}
-## portrait_name -> character_name               
-@export var portrait_character                   : Dictionary[String, String] = {}
+@export var portrait_sprites                          : Dictionary[String, NodePath] = {}
+## portrait_name -> RichTextLabel node                
+@export var portrait_labels                           : Dictionary[String, NodePath] = {}
+## portrait_name -> character_name                    
+@export var portrait_character                        : Dictionary[String, String] = {}
 
-@export_category("Config Overrides")
-@export var text_speed                           : float = -1.0       # -1 = "use DialogueConfig default"
-@export var text_size                            : int = -1
-@export var locale                               : String = ""
+@export_category("Config Overrides")                  
+@export var text_speed                                : float = -1.0       # -1 = "use DialogueConfig default"
+@export var text_size                                 : int = -1
+@export var locale                                    : String = ""
 
-@export_category("Debug")
-@export var debug_overlay                        : bool = false
-@export var warn_on_missing_character            : bool = true
-@export var warn_on_missing_portrait             : bool = true
-@export var warn_on_missing_node_dialogue        : bool = true
+@export_category("Debug")                             
+@export var debug_overlay                             : bool = false
+@export var warn_on_missing_character                 : bool = true
+@export var warn_on_missing_portrait                  : bool = true
+@export var warn_on_missing_node_dialogue             : bool = true
 
+#endregion
+
+#region ON-READY VARS
+@onready var dialogue_text                            : RichTextLabel = $DialogueText
+@onready var options_container                        : BoxContainer = $OptionsContainer
+@onready var debug_overlay_node                       : Control = $DebugOverlayContainer
 #endregion
 
 
 #region VARS
 
-var current_state                : DialogueState = DialogueState.Idle
+var current_state                                     : DialogueState = DialogueState.Idle
 
-var _graph                       : DialogueGraph
-var _current_node                : DialogueNode
-var _current_char                : CharacterDefinition
-var _current_portrait            : String
-var _current_portrait_sprite     : Sprite2D
-var _current_portrait_label      : RichTextLabel
+var _graph                                            : DialogueGraph
+var _current_node                                     : DialogueNode
+var _current_char                                     : CharacterDefinition
+var _current_portrait                                 : String
+var _current_portrait_sprite                          : Sprite2D
+var _current_portrait_label                           : RichTextLabel
 
 ## slot_name -> {Sprite2D, RichTextLabel}
-var _portraits                   : Dictionary               = {}
+var _portraits                                        : Dictionary               = {}
 ## if set, this will be used to override the next node id for the current node. This is used for branching and choice selection.
-var _pending_navigation_override : String = ""
-var _character_lookup            : Dictionary[String, CharacterDefinition] = {}  # character_name -> CharacterDefinition
-var _dialogue_loader             : DialogueLoader
+var _pending_navigation_override                      : String = ""
+var _character_lookup                                 : Dictionary[String, CharacterDefinition] = {}  # character_name -> CharacterDefinition
+var _dialogue_loader                                  : DialogueLoader
 
-#endregion
-
-#region ONREADY VARS
-@onready var dialogue_text       : RichTextLabel = $DialogueText
-@onready var options_container   : BoxContainer = $OptionsContainer
-@onready var dialogue_camera     : Camera2D = $Camera2D
-
-@onready var debug_overlay_node  : Control = $DebugOverlayContainer
 #endregion
 
 
@@ -174,7 +180,7 @@ func _ready() -> void:
 	dialogue_text.bbcode_enabled = true
 	_build_character_lookup()
 	_initialize_portraits()
-	_init_ui() # skip button
+	_update_ui() # skip button
 	# auto-start if configured to do so, but only in the game, not in the editor
 	if not Engine.is_editor_hint() and start_on_load:
 		if not lazy_load:
@@ -207,8 +213,8 @@ func _process(delta: float) -> void:
 	dialogue_text.text = _current_node.text
 	current_state = DialogueState.WaitingForInput
 	
-	# update the debug overlay if in editor
-	_update_debug_overlay()
+	# UI: skip button, debug overlay
+	_update_ui()
 
 func _get_configuration_warnings() -> PackedStringArray: 
 	var warnings : PackedStringArray = PackedStringArray()
@@ -271,6 +277,7 @@ func load_dialogue() -> void:
 ## If the graph is null, this method will attempt to load it from the [dialogue_source] path if [lazy_load] is true. 
 ## If the graph is still null after that, this method will log an error and return.
 func start() -> void:
+
 	if _graph == null :
 		if lazy_load: 
 			load_dialogue()
@@ -278,6 +285,14 @@ func start() -> void:
 			push_error("Dialogue: cannot start dialogue; graph is null. Did you call load_dialogue() first?")
 			return
 	await get_tree().create_timer(start_delay_time).timeout
+	
+	if reset_camera_on_finish and reset_camera_position == Vector2.ZERO:
+		reset_camera_position = EventBus.get_active_camera().position
+
+	if center_camera_on_start :
+		EventBus.center_on_active_camera(self, get_global_center())
+	show()
+
 	on_dialogue_started.emit(_graph.dialogue_id)
 	_enter_node(_graph.start_node_id)
 
@@ -287,17 +302,28 @@ func finish() -> void:
 		push_warning("Dialogue: attempt to finish a null Dialogue. Did you call load_dialogue() first?")
 		return
 	_exit_node() # safeguard to exit the last node before finishing the dialogue
-	var id : String = _graph.dialogue_id
 	current_state = DialogueState.Finished
 
 	if hide_on_finish:
 		await get_tree().create_timer(hide_delay_time).timeout
 		hide()
-
+	
+	var id : String = _graph.dialogue_id
 	on_dialogue_finished.emit(id)
 	_current_node = null
 	_current_char = null
-	_graph = null
+
+func reset() -> void :
+	current_state = DialogueState.Idle
+	_current_char = null
+	_current_node = null
+	_current_portrait = ""
+	_current_portrait_label = null
+	_current_portrait_sprite = null
+
+
+	if reset_camera_on_finish :
+		EventBus.get_active_camera().position = reset_camera_position
 
 ## Requests a navigation override for the next node to enter. 
 ## This is used to redirect the dialogue flow to a specific node, regardless of the current node's next_node_id or the selected option's next_node_id.
@@ -323,7 +349,6 @@ func toggle_pause() -> void:
 
 #endregion
 
-
 #region INITIALIZATION
 
 func _initialize_portraits() -> void:
@@ -348,11 +373,9 @@ func _build_character_lookup() -> void:
 			continue
 		_character_lookup[c.character_name.to_lower()] = c
 
-func _init_ui() -> void:
-	if skippable and skip_button != null:
-		if not skip_button.pressed.is_connected(_on_skip_button_pressed):
-			if skip_button.pressed.connect(_on_skip_button_pressed) != OK:
-				push_warning("Dialogue: failed to connect skip_button.pressed signal to _on_skip_button_pressed")
+func _update_ui() -> void:
+	if skip_button != null:
+		skip_button.visible = skippable
 	_update_debug_overlay()
 
 #endregion
@@ -578,6 +601,11 @@ func _clear_portrait(portrait_name: String) -> void:
 		name_label.text = ""
 #endregion
 
+#region UTILS
+func get_global_center() -> Vector2:
+	var rect: Rect2 = get_global_rect()
+	return rect.size * 0.5
+#endregion
 
 #region EDITOR/TOOLING
 
