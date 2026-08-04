@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://8yng7e0g6l1h"]
-
-[ext_resource type="Script" uid="uid://dg8uq2807j485" path="res://src/10_intro/coffee_door.gd" id="1_1y4mn"]
-
-[node name="CoffeeDoor" type="Area2D"]
-script = ExtResource("1_1y4mn")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
-[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -85,10 +85,9 @@ texture = ExtResource("3_xk1p1")
 sources/0 = SubResource("TileSetAtlasSource_4i2ym")
 sources/1 = SubResource("TileSetAtlasSource_b5q6x")
 
-[node name="OutsideLevel" type="Node2D" node_paths=PackedStringArray("default_dialogue")]
+[node name="OutsideLevel" type="Node2D"]
 script = ExtResource("1_a16nd")
 next_scene = "uid://cocskxsk6cvgf"
-default_dialogue = NodePath("")
 
 [node name="TileMapLayer" type="TileMapLayer" parent="."]
 position = Vector2(-104, -16)

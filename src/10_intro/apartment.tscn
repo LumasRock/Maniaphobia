@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://b2s1onfvkno2s"]
+[gd_scene load_steps=20 format=4 uid="uid://b2s1onfvkno2s"]
 
 [ext_resource type="Script" uid="uid://cl3iky4pqlsf0" path="res://src/10_intro/apartment.gd" id="1_qddux"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="2_qr3cq"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_he3uk"]
 [ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/02_common/interaction_dialogue_area.gd" id="7_803sp"]
 [ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="8_hyovl"]
+[ext_resource type="Script" uid="uid://bkdbt180vixgd" path="res://src/02_common/player_interaction_area.gd" id="8_qr3cq"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="9_mp78c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_akfgq"]
@@ -102,9 +103,11 @@ size = Vector2(8, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ffsn"]
 size = Vector2(44.5, 32)
 
-[node name="SceneRoot" type="Node2D"]
+[node name="SceneRoot" type="Node2D" node_paths=PackedStringArray("default_dialogue", "dialogues_parent")]
 script = ExtResource("1_qddux")
-exit_scene = "uid://bihtv5hq0wlcq"
+next_scene = "uid://bihtv5hq0wlcq"
+default_dialogue = NodePath("Dialogues/InitialDialogue")
+dialogues_parent = NodePath("Dialogues")
 
 [node name="world" type="Node2D" parent="."]
 
@@ -154,10 +157,19 @@ metadata/_custom_type_script = "uid://pueo6he1cir4"
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_tlb6p")
 
-[node name="ExitArea" type="Area2D" parent="Interactives"]
+[node name="ExitDoor" type="Area2D" parent="Interactives"]
 position = Vector2(304, 72)
+script = ExtResource("8_qr3cq")
+condition_target = NodePath("../..")
+condition_method = "is_coffee_machine_fixed"
+action_target = NodePath("../..")
+action_method = "move_to_next_scene"
+ignore_condition_failed = false
+failed_target = NodePath("../../Dialogues/LeaveEarly")
+failed_method = "start"
+metadata/_custom_type_script = "uid://bkdbt180vixgd"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/ExitArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/ExitDoor"]
 position = Vector2(-4, 0)
 shape = SubResource("RectangleShape2D_oqof2")
 
@@ -181,6 +193,10 @@ camera = NodePath("Camera2D")
 zoom = Vector2(6, 6)
 limit_smoothed = true
 position_smoothing_speed = 2.0
+
+[node name="PlayerSpawnMarker" type="Node2D" parent="Entities"]
+editor_description = "Player Spawning Position Marker. Used by the BaseLevel"
+position = Vector2(192, 56)
 
 [node name="Dialogues" type="Node2D" parent="."]
 scale = Vector2(0.8, 0.8)
@@ -223,7 +239,5 @@ portrait_character = Dictionary[String, String]({
 "right": "npc"
 })
 
-[connection signal="body_entered" from="Interactives/ExitArea" to="." method="_on_player_entered_exit_area"]
-[connection signal="body_exited" from="Interactives/ExitArea" to="." method="_on_player_exited_exit_area"]
 [connection signal="on_dialogue_finished" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_dialogue_finished"]
 [connection signal="on_option_selected" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_option_selected"]

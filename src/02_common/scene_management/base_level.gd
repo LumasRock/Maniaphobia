@@ -1,21 +1,25 @@
-class_name BaseLevel 
+class_name BaseLevel
 extends Node2D
-## This is a base class for levels. These scenes provide easy access to the camera, player, and transitioning to scenes.
-## Levels are expected to extend this class and override the methods [method get_default_spawn_point] , 
-## [method load_level] and [method unload_level]
-## [br]
-## Optionally, levels can also override the default signal handlers: [br]
-## - [signal before_scene_loaded] -> [method _on_before_scene_loaded] [br]
-## - [signal after_scene_loaded] -> [method _on_after_scene_loaded] [br]
-## - [signal before_scene_unloaded] -> [method _on_before_scene_unloaded] [br]
-## [br]
+## 
+## This is a base class for levels. Provides common access to the camera, player, and transitioning to scenes.
+##
+## This is a base class for levels. Provides common access to the camera, player, and transitioning to scenes.
+## Levels are expected to extend this class and override the methods:
+## - [method get_default_spawn_point] 
+## - [method load_level] 
+## - [method unload_level]
+## 
+## To add custom logic load and unload workflow, is recommended to use the signals:
+## - [signal before_level_loaded] 
+## - [signal after_level_loaded] 
+## - [signal before_level_unloaded] 
 ## BaseLevel can define a default dialogue to load as soon as the level is loaded. [br]
 ## Also, has methods to add and find Dialogue node instances in runtime. 
 
 
-signal before_scene_loaded(scene_name: String)
-signal after_scene_loaded(scene_name: String)
-signal before_scene_unloaded(scene_name: String)
+signal before_level_loaded(scene_name: String)
+signal after_level_loaded(scene_name: String)
+signal before_level_unloaded(scene_name: String)
 
 const DIALOGUE_SCENE: PackedScene = preload("res://src/03_dialogue/scenes/Dialogue.tscn")
 const DIALOGUE_GROUP: StringName  = &"level_dialogues"
@@ -46,13 +50,27 @@ var player           : Player
 var current_state    : LevelStates = LevelStates.INACTIVE
 
 func _ready() -> void:
-	_init_level()
+	if load_scene_after_transitioning :
+		if Transition.is_transitioning :
+			await Transition.fade_out_finished
+
+	current_state = LevelStates.STARTED
+	before_level_loaded.emit(get_scene_file_path())
+	
+	load_level()
+	
+	current_state = LevelStates.LOADED
+	after_level_loaded.emit(get_scene_file_path())
+	
+	_init_default_dialogue()
+	if default_dialogue.start_on_load :
+			default_dialogue.start()
 
 func _exit_tree() -> void :
 	if current_state == LevelStates.UNLOADING:
 		return
 	current_state = LevelStates.UNLOADING
-	before_scene_unloaded.emit(get_scene_file_path())
+	before_level_unloaded.emit(get_scene_file_path())
 	unload_level()
 
 #region VIRTUAL METHODS
@@ -92,15 +110,9 @@ func add_dialogue_to_level(json_path: String, start_on_load: bool = false, paren
 		push_error("BaseLevel: json_path is empty")
 		return null
 
-	var parent_node: Node = parent if parent != null else (dialogues_parent if dialogues_parent != null else self)
-	var dialogue_instance: Dialogue = DIALOGUE_SCENE.instantiate() as Dialogue
-	if dialogue_instance == null:
-		push_error("BaseLevel: failed to instantiate Dialogue scene")
-		return null
+	var parent_node       : Node = parent if parent != null else (dialogues_parent if dialogues_parent != null else self)
+	var dialogue_instance : Dialogue = _dialogue_instance(json_path, start_on_load)
 
-	dialogue_instance.dialogue_source = json_path
-	dialogue_instance.start_on_load = start_on_load
-	dialogue_instance.name = json_path.get_file().get_basename()
 	parent_node.add_child(dialogue_instance)
 	dialogue_instance.add_to_group(DIALOGUE_GROUP)
 	return dialogue_instance
@@ -136,27 +148,39 @@ func move_to_next_scene() -> void :
 
 #endregion 
 
-#region INITIALIZATION
+#region PRIVATE METHODS
 
-## emits [signal before_scene_loaded], calls [method load_level], loads default_dialogue (if present) and emits [signal after_scene_loaded]
-## If you want to override this method, make sure to call `super._ready()` or the Level will not work correctly
-func _init_level() -> void :
-
-	if load_scene_after_transitioning :
-		if Transition.is_transitioning :
-			await Transition.fade_out_finished
-
-	current_state = LevelStates.STARTED
-	before_scene_loaded.emit(get_scene_file_path())
-
-	load_level()
-
-	current_state = LevelStates.LOADED
-	after_scene_loaded.emit(get_scene_file_path())
-
+## Inner function to setup the default_dialogue, if any. 
+## This method is called after 'load_scene'. 
+## If the dialogue has `start_on_load = true`, `default_dialogue.start()` is called as soon as this method returns
+## 
+## You can override this method to customize the setup of the dialogue this way:
+## [codeblock]
+## 	func _init_default_dialogue() -> void :
+## 		super._init_default_dialogue() # this ensures the dialogue json is loaded
+## 		# do your custom setup here
+## 
+func _init_default_dialogue() -> void :
 	if default_dialogue != null :
 		default_dialogue.load_dialogue()
-		if default_dialogue.start_on_load :
-			default_dialogue.start()
-	
+
+
+## Inner function to create a Dialogue instance.
+## If you want to extend the dialogue setup, override this method this way:
+## [codeblock]
+## 	func _dialogue_instance(json_path: String, start_on_load : bool = false) -> Dialogue :
+## 		var dialogue_instance: Dialogue = super._dialogue_instance(json_path, start_on_load)
+## 		# do your custom setup here
+## 
+func _dialogue_instance(json_path: String, start_on_load : bool = false) -> Dialogue :
+	var dialogue_instance: Dialogue = DIALOGUE_SCENE.instantiate() as Dialogue
+	if dialogue_instance == null:
+		push_error("BaseLevel: failed to instantiate Dialogue scene")
+		return null
+	dialogue_instance.dialogue_source = json_path
+	dialogue_instance.start_on_load = start_on_load
+	dialogue_instance.name = json_path.get_file().get_basename()
+	default_dialogue.load_dialogue()
+	return dialogue_instance
+
 #endregion
