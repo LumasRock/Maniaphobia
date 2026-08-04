@@ -60,7 +60,6 @@ func transition_to(next_scene: String, minimum_transition_blackout_seconds: floa
 		await load_finished
 	_switch_scene()
 
-
 func _start_load() -> void:
 	var req_err: Error = ResourceLoader.load_threaded_request(_loading_path, "", USE_THREADED)
 	if req_err != OK:

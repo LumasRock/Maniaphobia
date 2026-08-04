@@ -1,18 +1,16 @@
 {
-
   "dialogue_id": "Outside2",
+  "start_node_id" : "1",
   "nodes": [
     {
 
       "id":"1",
-      "speaker": "narrator",
       "text":"You leave your apartment and ride your bicycle, still stressed from this morning's disaster.",
       "emotion": "blank",
       "next_node_id": "2"
     },
     {
       "id":"2",
-      "speaker": "narrator",
       "text": "It was eerie on the other side of town. And passing up a more vague sign..",
       "emotion": "blank",
       "next_node_id": "3"
@@ -28,7 +26,6 @@
 
     {
       "id": "4",
-      "speaker": "narrator",
       "text": "Suddenly, a figure of a little boy appears in front of you. Did you take your meds?",
       "emotion": "blank",
       "next_node_id": "5"
@@ -36,14 +33,12 @@
 
     {
       "id":"5",
-      "speaker": "Sebastian",
       "text": "Wait... Move!",
       "emotion": "scared",
       "next_node_id":"6"
     },
     {
       "id":"6",
-      "speaker": "narrator",
       "text": "[b] CRASH [/b]",
       "emotion": "blank"
     }
