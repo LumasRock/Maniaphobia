@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=4 uid="uid://cgwbrd16d3skx"]
+[gd_scene load_steps=18 format=4 uid="uid://cgwbrd16d3skx"]
 
 [ext_resource type="Script" uid="uid://c3pvt3tojwvnf" path="res://src/30_hide_and_seek/hide_and_seek.gd" id="1_mo55v"]
 [ext_resource type="PackedScene" uid="uid://xlyw1p0loole" path="res://src/30_hide_and_seek/Maw.tscn" id="3_pbatd"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bt3hmbo5wf4jw" path="res://src/30_hide_and_seek/ghost.tscn" id="6_vphy3"]
 [ext_resource type="PackedScene" uid="uid://c6h2ry3qrldmf" path="res://src/01_player/Player.tscn" id="7_x8cd0"]
 [ext_resource type="PackedScene" uid="uid://c8jqhbamoq5os" path="res://src/03_dialogue/dialogue.tscn" id="8_bojxd"]
+[ext_resource type="PackedScene" uid="uid://beanr7wacx8sm" path="res://src/00_autoloads/transition.tscn" id="9_pbatd"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_upc55"]
 vertices = PackedVector2Array(251.93, -206.703, 251.93, 79.0469, 178.977, 53.0703, 178.977, -116.297, 35.3516, -206.703, 35.3516, -174.227, 623.703, 247.898, 623.703, 273.883, 516.953, 267.383, 615.242, 247.898, 615.242, 182.438, 516.953, 104.508, 589.898, 143.992, 35.3516, -116.297, 35.3516, -142.281, -322.633, -142.281, -344.867, -174.227, -344.867, 59.5625, -322.633, 98.5313, 432.461, -37.8516, 598.344, -37.8516, 598.344, 13.5938, 488.508, 13.5938, 432.461, 79.0469, 488.508, 79.0469, 888.719, 143.992, 888.719, 20.5938, 1012.36, 20.5938, 1012.36, 182.438, 589.898, 79.0469, 508.508, 91.5234, 508.508, 104.508, 716.633, 273.883, 716.633, 338.297, -221.227, 338.297, -221.227, 267.383, -344.867, 273.883, -221.227, 436.227, 556.102, 436.227, 556.102, 468.188, -221.227, 468.188, -221.227, 500.656, -302.633, 500.656, -302.633, 403.773, -294.172, 403.773, -294.172, 370.773, -344.867, 370.773, -344.867, 312.328, -353.32, 312.328, -353.32, 273.883, -516.953, 273.883, -432.461, 273.883, -432.461, 312.328, -547.648, 312.328, -547.648, 59.5625, -516.953, 72.0313, -344.867, 72.0313, -226.578, 98.5313, -221.227, 91.5234, -226.578, 53.0703)
@@ -167,9 +168,11 @@ texture = ExtResource("3_xke3r")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_wy7n3")
 
-[node name="HideAndSeek" type="Node2D" node_paths=PackedStringArray("player")]
+[node name="HideAndSeek" type="Node2D" node_paths=PackedStringArray("player", "label", "timer")]
 script = ExtResource("1_mo55v")
-player = NodePath("Player")
+player = NodePath("CharacterBody2D")
+label = NodePath("CharacterBody2D/Label")
+timer = NodePath("CharacterBody2D/Timer")
 
 [node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
 position = Vector2(0, 153)
@@ -208,13 +211,8 @@ speed = 110.0
 path_follow = NodePath("../../..")
 ghost = NodePath("../../../../../Ghosts/Ghost/State Machine/GhostCall")
 
-[node name="Player" parent="." instance=ExtResource("7_x8cd0")]
-position = Vector2(0, 226)
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-zoom = Vector2(6, 6)
-limit_smoothed = true
-position_smoothing_speed = 2.0
+[node name="MawAttack" parent="Path2D/PathFollow2D/Maw/State Machine" index="2" node_paths=PackedStringArray("player")]
+player = NodePath("../../../../../CharacterBody2D")
 
 [node name="Ghosts" type="Node" parent="."]
 
@@ -274,6 +272,12 @@ position = Vector2(0, 0)
 
 [node name="GhostCall" parent="Ghosts/Ghost10/State Machine" index="2" node_paths=PackedStringArray("Maw")]
 Maw = NodePath("../../../../Path2D/PathFollow2D/Maw/State Machine")
+
+[node name="CharacterBody2D" parent="." instance=ExtResource("7_x8cd0")]
+position = Vector2(79, 225)
+
+[node name="HidingBreathing" parent="CharacterBody2D/HidingManager" index="0"]
+max_time = 1.1
 
 [node name="Interactables" type="Node" parent="."]
 
@@ -447,6 +451,9 @@ offset_right = -993.0
 offset_bottom = 319.0
 json_file = "res://Assets/dialogue_system/Hide_And_Seek.json"
 
+[node name="Transition" parent="." instance=ExtResource("9_pbatd")]
+
+[connection signal="timeout" from="CharacterBody2D/Timer" to="." method="_on_timer_timeout"]
 [connection signal="body_entered" from="Interactables/HideInteractable" to="Interactables/HideInteractable" method="_on_body_entered"]
 [connection signal="body_exited" from="Interactables/HideInteractable" to="Interactables/HideInteractable" method="_on_body_exited"]
 [connection signal="body_entered" from="Interactables/HideInteractable2" to="Interactables/HideInteractable2" method="_on_body_entered"]
@@ -483,3 +490,4 @@ json_file = "res://Assets/dialogue_system/Hide_And_Seek.json"
 [editable path="Ghosts/Ghost8"]
 [editable path="Ghosts/Ghost9"]
 [editable path="Ghosts/Ghost10"]
+[editable path="CharacterBody2D"]

@@ -53,7 +53,7 @@ func Physics_Update(delta: float):
  
 	var distance_to_target := player.global_position.distance_to(maw.global_position)
 	if distance_to_target < maw.start_chase_distance and not player.hiding_manager.is_hiding:
-		Transitioned.emit(self, "MawChase")
+		transitioned.emit(self, "MawChase")
 
 
 func snap_to_nearest_path_point():
@@ -70,7 +70,7 @@ func _on_detection_range_body_entered(body):
 	if body is Player:
 		detected_player = body
 		if not detected_player.hiding_manager.is_hiding:
-			Transitioned.emit(self, "MawChase")
+			transitioned.emit(self, "MawChase")
 
 
 func _on_detection_range_body_exited(body):
@@ -79,7 +79,7 @@ func _on_detection_range_body_exited(body):
 
 
 func Chase():
-	Transitioned.emit(self, "MawChase")
+	transitioned.emit(self, "MawChase")
 
 
 func _start_pause_timer_from_minmax(minmax: Vector2) -> void:

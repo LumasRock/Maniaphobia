@@ -16,4 +16,4 @@ func Enter():
 		player.take_damage(Maw.attack_damage)
 
 	await get_tree().create_timer(1.0).timeout
-	Transitioned.emit(self, "MawChase")
+	transitioned.emit(self, "MawChase")

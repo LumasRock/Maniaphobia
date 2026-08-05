@@ -40,4 +40,4 @@ func Physics_Update(delta: float):
 		move_direction = ghost.global_position.direction_to(home_position)
 	
 	if ghost.global_position.distance_to(player.global_position)<= 50:
-		Transitioned.emit(self, "GhostChase")
+		transitioned.emit(self, "GhostChase")

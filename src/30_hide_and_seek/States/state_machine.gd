@@ -4,7 +4,7 @@ var states : Dictionary = {}
 var current_state : State
 @export var initial_state: State
 
-signal Transitioned(state: State, new_state_name: StringName)
+signal transitioned(state: State, new_state_name: StringName)
 
 
 func _ready():
@@ -12,7 +12,7 @@ func _ready():
 	for child in get_children():
 		if child is State:
 			states[child.name.to_lower()] = child
-			child.Transitioned.connect(on_child_transition)
+			child.transitioned.connect(on_child_transition)
 	if initial_state:
 		initial_state.Enter()
 		current_state = initial_state
