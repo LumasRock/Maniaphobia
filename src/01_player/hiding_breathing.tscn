@@ -1,9 +1,33 @@
-[gd_scene load_steps=9 format=3 uid="uid://8jeuf0kklg7e"]
+[gd_scene load_steps=13 format=3 uid="uid://8jeuf0kklg7e"]
 
 [ext_resource type="Script" uid="uid://rajw6oj4oytp" path="res://src/01_player/hiding_breathing.gd" id="1_qpb5q"]
 [ext_resource type="FontFile" uid="uid://nq6jdhr2n0bp" path="res://Assets/HandymandiFree.ttf" id="4_3wh6b"]
 
-[sub_resource type="ViewportTexture" id="ViewportTexture_4uejk"]
+[sub_resource type="Gradient" id="Gradient_4uejk"]
+offsets = PackedFloat32Array(0, 0.673835, 0.681004, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_pdq6g"]
+gradient = SubResource("Gradient_4uejk")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_pdq6g"]
+offsets = PackedFloat32Array(0.587814, 0.594982, 0.698925, 0.706093, 1)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0.764706, 0.764706, 0.764706, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ts147"]
+gradient = SubResource("Gradient_pdq6g")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4uejk"]
+font = ExtResource("4_3wh6b")
+font_size = 250
 
 [sub_resource type="LabelSettings" id="LabelSettings_qpb5q"]
 font = ExtResource("4_3wh6b")
@@ -187,6 +211,8 @@ main_container = NodePath("MainContainer")
 ring_rect = NodePath("MainContainer/Control/Ring")
 text_label = NodePath("Label")
 text_label_animation = NodePath("Label/AnimationPlayer")
+initial_scale = 0.5
+position_randomize = Vector2(300, 100)
 
 [node name="MainContainer" type="CenterContainer" parent="."]
 z_index = 2
@@ -205,9 +231,10 @@ grow_vertical = 2
 pivot_offset = Vector2(640, 360)
 
 [node name="Fill" type="TextureRect" parent="MainContainer"]
+modulate = Color(0, 0, 0, 1)
 custom_minimum_size = Vector2(500, 500)
 layout_mode = 2
-texture = SubResource("ViewportTexture_4uejk")
+texture = SubResource("GradientTexture2D_pdq6g")
 expand_mode = 2
 
 [node name="Control" type="Control" parent="MainContainer"]
@@ -230,14 +257,18 @@ grow_horizontal = 2
 grow_vertical = 2
 scale = Vector2(0.45, 0.45)
 pivot_offset = Vector2(1000, 1000)
+texture = SubResource("GradientTexture2D_ts147")
+
+[node name="Q" type="Label" parent="MainContainer"]
+layout_mode = 2
+text = "Q"
+label_settings = SubResource("LabelSettings_4uejk")
 
 [node name="Label" type="Label" parent="."]
 z_index = 10
 layout_mode = 0
-offset_left = 500.0
-offset_top = 900.0
-offset_right = 1488.0
-offset_bottom = 1100.0
+offset_right = 988.0
+offset_bottom = 200.0
 text = "PERFECT!"
 label_settings = SubResource("LabelSettings_qpb5q")
 
@@ -245,3 +276,4 @@ label_settings = SubResource("LabelSettings_qpb5q")
 libraries = {
 &"": SubResource("AnimationLibrary_ahbgw")
 }
+autoplay = "hidden"

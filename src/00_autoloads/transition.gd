@@ -11,6 +11,7 @@ signal _load_finished
 const _USE_THREADED: bool = true
 #@export_file("*.tscn", "*.scn") var target_scene: String
 
+
 func _ready() -> void:
 	_anim_player.play_backwards("Fade")
 	await _anim_player.animation_finished

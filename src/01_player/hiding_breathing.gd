@@ -68,8 +68,8 @@ func execute() -> void:
 	
 	# Randomize position
 	position = Vector2(
-		randf_range(position.x - position_randomize.x, position.x + position_randomize.x),
-		randf_range(position.y - position_randomize.y, position.y + position_randomize.y)
+		randf_range(_initial_position.x - position_randomize.x, _initial_position.x + position_randomize.x),
+		randf_range(_initial_position.y - position_randomize.y, _initial_position.y + position_randomize.y)
 	)
 
 
@@ -97,7 +97,6 @@ func can_leave_hiding() -> bool:
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed(&"Q"):
 		var time_ratio = abs(_current_time / max_time)
-		print(time_ratio)
 	
 		if time_ratio < 0.3: # Within early limits
 			register_result(TimingResult.Miss)
@@ -122,6 +121,7 @@ func register_result(result: TimingResult) -> void:
 	is_playing = false
 	main_container.hide()
 	result_registered.emit(result)
+	_current_time = 0
 	
 	var result_text = TimingResult.find_key(result) + "!"
 	text_label.text = result_text
