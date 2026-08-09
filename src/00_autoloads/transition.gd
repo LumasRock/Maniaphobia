@@ -89,4 +89,3 @@ func _cleanup_load(do_finished: bool = false) -> void:
 		fade_out_finished.emit(tmp)
 	is_transitioning = false
 	set_process(false)
-

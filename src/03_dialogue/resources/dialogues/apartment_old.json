@@ -1,0 +1,214 @@
+[ 
+	{
+  "dialogue_id": "Apartment",
+  "npc_name": "Jacob",
+  "nodes": [
+	{
+	  "id": "1",
+	  "speaker": "Sebastian",
+	  "text": "...",
+	  "emotion": "Neutral",
+	"next_node": "2"
+	},
+	{
+	  "id": "2",
+	  "speaker": " ",
+	  "text": "[i]creeaakk[/i]",
+	"emotion": "blank",
+	  "next_node": "3"
+	},
+	{
+	  "id": "3",
+	   "speaker": "Sebastian",
+	   "text": "Yeesh, a knock would be nice...",
+	"emotion": "Neutral",
+	  "next_node": "4"
+	},
+	{
+	  "id": "4",
+	  "speaker": "Jacob",
+	  "text": "My bad, my bad. What're you even doing in here? It's like-- 2 PM.",
+	  "emotion": "NPC",
+	  "next_node": "5"
+	},
+	{
+	  "id": "5",
+	  "speaker": "Sebastian",
+	  "text": "Trying to write. It's not like you're being anymore productive than me.",
+	  "emotion": "Annoyed",
+	  "next_node": "6"
+	},
+	{
+	  "id": "6",
+	  "speaker": "Sebastian",
+	  "text": "You've literally been playing Halo since 4 PM [b]yesterday[/b].",
+	  "emotion": "Worry",
+	  "next_node": "7"
+	},
+	{
+	  "id": "7",
+	  "speaker": "Jacob",
+	  "text": "So? I thought you didn't care about that.",
+	  "emotion": "NPC",
+	  "next_node": "8"
+	},
+	{
+	  "id": "8",
+	  "speaker": "Sebastian",
+	  "text": "I said I don't care what you do [i]as long[/i] as it didn't involve me... you kept me up the entire night.",
+	  "emotion": "Annoyed",
+	  "next_node": "9"
+	},
+	{
+	  "id": "9",
+	  "speaker": "Jacob",
+	  "text": "well so-rry I didn't understand you.",
+	  "emotion": "NPC",
+	  "next_node": "10"
+	},
+	{
+	  "id": "10",
+	  "speaker": "Sebastian",
+	  "text": "Whatever, I'll just go make me a cup of coffee",
+	  "emotion": "Worry",
+	  "next_node": "11"
+	},
+	{
+	  "id": "11",
+	  "speaker": "Sebastian",
+	  "text": "That'll wake--what's with the face... [shake rate=3 level=10] Jacob. [/shake]",
+	"emotion": "Neutral",
+	  "next_node": "12"
+	},
+	{
+	  "id": "12",
+	  "speaker": "Jacob",
+	  "text": "Uh--funny. So about that.",
+	  "emotion": "NPC",
+	  "next_node": "13"
+	},
+	{
+	"id": "13",
+	  "speaker": "Sebastian",
+	  "text": "Are you kidding me?",
+	  "emotion": "Angry",
+	  "next_node": "14"
+	},
+	{
+	  "id": "14",
+	  "speaker": "Jacob",
+	  "text": "No. I broke the coffee machine.",
+	  "emotion": "NPC",
+	  "next_node": "15"
+	},
+	{
+	  "id": "15",
+	  "speaker": "Sebastian",
+	  "text": "[shake rate=5 level=10] UGHHHHH [/shake]",
+	  "emotion": "Angry",
+	  "next_node": "16"
+	},
+	{
+	  "id": "16",
+	  "speaker": "Jacob",
+	  "text": "WELL DON'T SOUND SO HAPPY ABOUT IT, DAMN.",
+	  "emotion": "NPC"
+	},
+	{
+	  "id": "17",
+	  "speaker": "Sebastian",
+	  "text": "There, please never do that again-- by the way, [i] how [/i] did you even break it?",
+	  "emotion": "Confused",
+	  "next_node": "18"
+	},
+	{
+	"id": "18",
+	"speaker": "Jacob",
+	"text": "I dunno, I guess if you try hard enough--",
+	"emotion": "NPC",
+	"next_node": "19"
+},
+	{
+	  "id": "19",
+	  "speaker": "Sebastian",
+	  "text": "You were [i]trying[/i] to break it?",
+	  "emotion": "Worry",
+	  "next_node": "20"
+	},
+	{
+	  "id": "20",
+	  "speaker": "Jacob",
+	  "text": "No! I--ugh, whatever...",
+	  "emotion": "NPC",
+	  "next_node": "21"
+	},
+	{
+	  "id": "21",
+	  "speaker": "Jacob",
+	  "text": "Aren't you supposed to be at a job interview right about now?",
+	  "emotion": "NPC",
+	  "next_node": "22"
+	},
+	{
+	  "id": "22",
+	  "speaker": "Sebastian",
+	  "text": "Don't change the subject.",
+	  "emotion": "Neutral",
+	  "next_node": "23"
+	},
+	{
+	  "id": "23",
+	  "speaker": "Jacob",
+	  "text": "[shake rate=3 level=10]IM TRYING TO HELP YOU GET A JOB.[/shake]",
+	  "emotion": "NPC",
+	  "next_node": "24"
+	},
+	{
+	  "id": "24",
+	  "speaker": "Sebastian",
+	  "text": "Alright, alright...I'll talk to you about the coffee. [b]Later[/b].",
+	  "emotion": "Annoyed",
+	  "next_node": "25"
+	},
+	{
+	  "id": "25",
+	  "speaker": "Sebastian",
+	  "text": "See ya.",
+	  "emotion": "Neutral",
+	  "next_node": "26"
+	},
+	{
+	  "id": "26",
+	  "speaker": "Jacob",
+	  "text": "I would wish you good luck, or something, but you kinda pissed me off.",
+	  "emotion": "NPC",
+	  "next_node": "27"
+	},
+	{
+	  "id": "27",
+	  "speaker": "Sebastian",
+	  "text": "Well, you better enjoy the thought of being homeless if i--",
+	  "emotion": "Happy",
+	  "next_node": "28"
+	},
+	{
+	  "id": "28",
+	  "speaker": "Jacob",
+	  "text": "Ughhh-- good luck. [font_size=11]Bastard...[/font_size]",
+	"emotion": "NPC"
+	},
+	{
+		"id": "29",
+		"speaker": "Sebastian",
+		"text": "That's Jacobs room. He'd probably value some privacy.",
+		"emotion": "worry"
+	},
+	{
+		"id": "30",
+		"speaker": "Sebastian",
+		"text": "Not yet...let me fix that machine first.",
+		"emotion": "annoyed"
+	}
+  ]
+}
+]

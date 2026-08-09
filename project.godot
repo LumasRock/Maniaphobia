@@ -82,7 +82,7 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/RiderLaunch/plugin.cfg", "res://addons/simple_save_tool/plugin.cfg")
+enabled=PackedStringArray("res://addons/simple_save_tool/plugin.cfg")
 
 [file_customization]
 

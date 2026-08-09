@@ -21,7 +21,6 @@ var last_input: String = "up"
 
 
 func _ready() -> void:
-	EventBus.set_camera(camera)
 	health = max_health
 	health_changed.emit(health)
 	show_interact_prompt(false)
@@ -29,6 +28,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	if label.visible == true:
 		var time_left : float = timer.time_left
+		@warning_ignore("integer_division")
 		var minutes   : int   = int(time_left) / 60
 		var seconds   : int   = int(time_left) % 60
 		label.text = "%02d:%02d" % [minutes, seconds]
@@ -46,6 +46,7 @@ func _physics_process(_delta: float) -> void:
 				break
 	
 	velocity = input_direction * move_speed
+	@warning_ignore("return_value_discarded")
 	move_and_slide()
 	
 	if input_direction == Vector2.ZERO:
@@ -53,6 +54,7 @@ func _physics_process(_delta: float) -> void:
 	
 	if not can_move:
 		velocity = Vector2.ZERO
+		@warning_ignore("return_value_discarded")
 		move_and_slide()
 		return
 

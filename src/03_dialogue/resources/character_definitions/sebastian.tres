@@ -27,7 +27,7 @@ portraits = Dictionary[String, Texture2D]({
 "tired": ExtResource("9_b23h8"),
 "worry": ExtResource("10_prqk5")
 })
-default_portrait = ExtResource("1_1crm3")
+default_portrait = "neutral"
 sounds = Dictionary[String, AudioStream]({})
 override_portraits_path = false
 portraits_path = "res://Assets/sprites/portraits/"

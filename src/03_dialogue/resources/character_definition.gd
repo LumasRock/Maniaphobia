@@ -1,4 +1,4 @@
-﻿class_name CharacterDefinition 
+class_name CharacterDefinition
 extends Resource
 ## This resource defines a character's name, emotions and sounds used in the dialogue system.[br]
 ## For each character in the game, there should be - at least - one [CharacterDefinition] resource.
@@ -10,7 +10,7 @@ extends Resource
 ## dictionary of portraits for this character, keyed by emotion or expression (e.g., "happy", "sad", "angry")
 @export var portraits : Dictionary[String, Texture2D] = {}
 ## default portrait to use if a specific emotion is not found
-@export var default_portrait : Texture2D = null
+@export var default_portrait : String = ""
 ## dictionary of sounds for this character, keyed by sound name (e.g., "greeting", "attack", "death")
 @export var sounds : Dictionary[String, AudioStream] = {}
 
@@ -24,6 +24,12 @@ extends Resource
 ## path to the sounds for this character, used if [member override_sounds_path] is true
 @export var sounds_path : String = "res://Assets/sfx/"
 
+## List of all created resources for automatic lookup
+static var ALL: Array[CharacterDefinition] = [
+	ResourceLoader.load("uid://c4up7fxs82n5f", "CharacterDefinition"), # sebastian.tres
+	ResourceLoader.load("uid://dl1j0en4ypoxa", "CharacterDefinition"), # npc.tres
+]
+
 ## Validates this resource has the necessary properties to prevent runtime errors: 
 ## [member character_name] is not empty, [member portraits] has at least one entry, and if [member override_portraits_path] or [member override_sounds_path] are true, their corresponding paths are not empty.
 func validate() -> bool:
@@ -34,6 +40,14 @@ func validate() -> bool:
 
 	if portraits.is_empty() :
 		push_error("CharacterDefinition must have at least one portrait defined.")
+		return false
+
+	if default_portrait.is_empty():
+		push_error("DefaultPortrait must be defined.")
+		return false
+
+	if not default_portrait in portraits.keys():
+		push_error("DefaultPortrait must match a defined portrait.")
 		return false
 
 #	if sounds.is_empty():
@@ -53,16 +67,9 @@ func validate() -> bool:
 ## Returns the portrait image for the given emotion. If the emotion is not found, returns the [member default_portrait].
 func get_portrait(emotion: String) -> Texture2D:
 	if emotion != "":
-		return portraits[emotion] if portraits.has(emotion) else default_portrait
+		return portraits[emotion] if portraits.has(emotion) else portraits[default_portrait]
 	else :
-		return default_portrait
+		return portraits[default_portrait]
 
 func get_sound(id: String) -> AudioStream:
 	return sounds.get(id, null)  # sounds are optional per node, no fallback needed
-
-# hides the portraits_path and sounds_path properties in the Inspector if their corresponding override flags are false
-func _validate_property(property: Dictionary) -> void:
-	if property.name == "portraits_path" and not override_portraits_path:
-		property.usage &= ~PROPERTY_USAGE_EDITOR
-	if property.name == "sounds_path" and not override_sounds_path:
-		property.usage &= ~PROPERTY_USAGE_EDITOR

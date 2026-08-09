@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://b2s1onfvkno2s"]
+[gd_scene load_steps=20 format=4 uid="uid://wxpyke3fnnw3"]
 
 [ext_resource type="Script" uid="uid://cl3iky4pqlsf0" path="res://src/10_intro/apartment.gd" id="1_qddux"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="2_qr3cq"]
@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="5_2lk7n"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_he3uk"]
 [ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/02_common/interaction_dialogue_area.gd" id="7_803sp"]
-[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="8_hyovl"]
+[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/player.tscn" id="8_hyovl"]
 [ext_resource type="Script" uid="uid://bkdbt180vixgd" path="res://src/02_common/player_interaction_area.gd" id="8_qr3cq"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="9_mp78c"]
 
@@ -103,11 +103,9 @@ size = Vector2(8, 32)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8ffsn"]
 size = Vector2(44.5, 32)
 
-[node name="SceneRoot" type="Node2D" node_paths=PackedStringArray("default_dialogue", "dialogues_parent")]
+[node name="SceneRoot" type="Node2D"]
 script = ExtResource("1_qddux")
 next_scene = "uid://bihtv5hq0wlcq"
-default_dialogue = NodePath("Dialogues/InitialDialogue")
-dialogues_parent = NodePath("Dialogues")
 
 [node name="world" type="Node2D" parent="."]
 
@@ -167,7 +165,6 @@ action_method = "move_to_next_scene"
 ignore_condition_failed = false
 failed_target = NodePath("../../Dialogues/LeaveEarly")
 failed_method = "start"
-metadata/_custom_type_script = "uid://bkdbt180vixgd"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactives/ExitDoor"]
 position = Vector2(-4, 0)
@@ -194,45 +191,83 @@ zoom = Vector2(6, 6)
 limit_smoothed = true
 position_smoothing_speed = 2.0
 
-[node name="PlayerSpawnMarker" type="Node2D" parent="Entities"]
+[node name="PlayerSpawnMarker" type="Marker2D" parent="Entities"]
 editor_description = "Player Spawning Position Marker. Used by the BaseLevel"
 position = Vector2(192, 56)
 
-[node name="Dialogues" type="Node2D" parent="."]
-scale = Vector2(0.8, 0.8)
+[node name="Dialogues" type="Camera2D" parent="."]
+position = Vector2(104, 311)
+zoom = Vector2(6, 6)
 
-[node name="InitialDialogue" parent="Dialogues" instance=ExtResource("9_mp78c")]
-offset_left = -352.5
-offset_top = 121.25
-offset_right = -112.5
-offset_bottom = 271.25
-dialogue_source = "res://src/03_dialogue/resources/dialogues/Apartment2.json"
+[node name="InitialDialogue" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 367.5
+offset_top = 23.75
+offset_right = 607.5
+offset_bottom = 173.75
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.8, 0.8)
+dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment.json"
 start_on_load = true
+camera = NodePath("..")
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": "npc"
 })
 
-[node name="FixCoffeeMachine" parent="Dialogues" instance=ExtResource("9_mp78c")]
-offset_left = -358.75
-offset_top = -70.0
-offset_right = -118.75
-offset_bottom = 80.0
+[node name="FixCoffeeMachine" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 367.5
+offset_top = 23.75
+offset_right = 607.5
+offset_bottom = 173.75
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_coffee_machine.json"
+camera = NodePath("..")
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": "npc"
 })
 
 [node name="JacobsRoom" parent="Dialogues" instance=ExtResource("9_mp78c")]
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 367.5
+offset_top = 23.75
+offset_right = 607.5
+offset_bottom = 173.75
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_jacob_room.json"
 
 [node name="LeaveEarly" parent="Dialogues" instance=ExtResource("9_mp78c")]
-visible = false
-offset_left = 0.0
-offset_top = 0.0
-offset_right = 240.0
-offset_bottom = 200.0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 367.5
+offset_top = 23.75
+offset_right = 607.5
+offset_bottom = 173.75
+grow_horizontal = 1
+grow_vertical = 1
+scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_leave_early.json"
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",

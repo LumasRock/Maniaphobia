@@ -68,6 +68,7 @@ signal on_dialogue_resumed(dialogue_id: String)
 # Per-node — the primary hook for game-mechanic integration
 signal on_node_entered(node: DialogueNode)
 signal on_node_exited(node: DialogueNode)
+@warning_ignore("unused_signal")
 signal on_text_fully_revealed(node: DialogueNode)
 
 # Branching (within one Dialogue)
@@ -88,7 +89,7 @@ enum DialogueState {
 #region EXPORT VARS
 @export_file("*.json") var dialogue_source      : String = ""
 ## if true, the json file will be loaded on demand when [start()] is called. If false, it will be loaded in [_ready()].
-@export var lazy_load                                 : bool = true
+@export var lazy_load: bool = false
 
 @export_category("Playback")
 ## If true, the dialogue will start on the _ready() method. Otherwise, the game must call [start()] to begin the dialogue.
@@ -101,22 +102,17 @@ enum DialogueState {
 @export_range(0, 10) var hide_delay_time   : float = 0.2
 
 @export_category("Camera settings")
-## if true, when the [method start()] is called, this dialogue will attempt to center the camera on itself
-@export var center_camera_on_start                     : bool = true
-## if true, when the [method finish()] is called, this dialogue will attempt to reset the camera
-@export var reset_camera_on_finish                     : bool = true
-## if left empty, the dialogue will use the last known position of the camera before calling start
-@export var reset_camera_position                      : Vector2
+## alternate camera to use, if not set, no camera changes will be made
+@export var camera: Camera2D
+## if true, will attempt to center on camera when started
+@export var center_on_camera: bool = true
 
 @export_category("Settings")
 @export var skippable                                 : bool = true
-@export var skip_button                               : Button
 @export var pausable                                  : bool = true
 ## If true, the dialogue will automatically advance to the next node after the current one finishes displaying. If false, the player must manually advance the dialogue.
 @export var auto_next                                 : bool = false
 
-@export_category("Characters")                   
-@export var characters                                : Array[CharacterDefinition] = []
 @export_category("Portraits")                    
 ## list of portraits names for speakers (eg. "left", "center", "right")
 @export var portrait_names                            : Array[String] = []
@@ -145,9 +141,10 @@ var sync_slots_action                                 : Callable = _sync_slot_di
 #endregion
 
 #region ON-READY VARS
-@onready var dialogue_text                            : RichTextLabel = $DialogueText
-@onready var options_container                        : BoxContainer = $OptionsContainer
-@onready var debug_overlay_node                       : Control = $DebugOverlayContainer
+@onready var dialogue_text: RichTextLabel = $DialogueText
+@onready var options_container: BoxContainer = $OptionsContainer
+@onready var debug_overlay_node: Control = $DebugOverlayContainer
+@onready var skip_button: Button = $GUI/SkipButton
 #endregion
 
 
@@ -161,6 +158,8 @@ var _current_char                                     : CharacterDefinition
 var _current_portrait                                 : String
 var _current_portrait_sprite                          : Sprite2D
 var _current_portrait_label                           : RichTextLabel
+
+var _previous_camera: Camera2D = null
 
 ## slot_name -> {Sprite2D, RichTextLabel}
 var _portraits                                        : Dictionary               = {}
@@ -182,10 +181,11 @@ func _ready() -> void:
 	_initialize_portraits()
 	_update_ui() # skip button
 	# auto-start if configured to do so, but only in the game, not in the editor
-	if not Engine.is_editor_hint() and start_on_load:
+	if not Engine.is_editor_hint():
 		if not lazy_load:
 			load_dialogue()
-		start()
+		if start_on_load:
+			start()
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _current_node == null : 
@@ -204,7 +204,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if not _move_next_node():
 				finish()
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if _graph == null or _current_node == null:
 		return
 
@@ -286,11 +286,19 @@ func start() -> void:
 			return
 	await get_tree().create_timer(start_delay_time).timeout
 	
-	if reset_camera_on_finish and reset_camera_position == Vector2.ZERO:
-		reset_camera_position = EventBus.get_active_camera().position
+	if camera != null:
+		_previous_camera = get_viewport().get_camera_2d()
+		camera.enabled = true
+		camera.make_current()
+	else:
+		_previous_camera = null
 
-	if center_camera_on_start :
-		EventBus.center_on_active_camera(self, get_global_center())
+	if center_on_camera:
+		if camera != null:
+			global_position = camera.get_screen_center_position() - get_rect().size / 2.0
+		else:
+			global_position = get_viewport().get_camera_2d().get_screen_center_position() - get_rect().size / 2.0
+
 	show()
 
 	on_dialogue_started.emit(_graph.dialogue_id)
@@ -303,6 +311,10 @@ func finish() -> void:
 		return
 	_exit_node() # safeguard to exit the last node before finishing the dialogue
 	current_state = DialogueState.Finished
+
+	if _previous_camera != null:
+		camera.enabled = false
+		_previous_camera.make_current()
 
 	if hide_on_finish:
 		await get_tree().create_timer(hide_delay_time).timeout
@@ -321,9 +333,9 @@ func reset() -> void :
 	_current_portrait_label = null
 	_current_portrait_sprite = null
 
-
-	if reset_camera_on_finish :
-		EventBus.get_active_camera().position = reset_camera_position
+	if _previous_camera != null:
+		camera.enabled = false
+		_previous_camera.make_current()
 
 ## Requests a navigation override for the next node to enter. 
 ## This is used to redirect the dialogue flow to a specific node, regardless of the current node's next_node_id or the selected option's next_node_id.
@@ -366,7 +378,7 @@ func _initialize_portraits() -> void:
 
 func _build_character_lookup() -> void:
 	_character_lookup.clear()
-	for c : CharacterDefinition in characters:
+	for c : CharacterDefinition in CharacterDefinition.ALL:
 		if c == null or not c.validate():
 			if warn_on_missing_character:
 				push_warning("Dialogue: invalid CharacterDefinition in %s" % get_scene_file_path())
@@ -448,7 +460,7 @@ func _exit_node() -> void:
 
 ## Applies the changes between the previous node and the new node, 
 ## including updating the portrait and emitting signals for speaker and portrait changes.
-func _apply_node_changes(previous_node: DialogueNode, new_node: DialogueNode, previous_char: CharacterDefinition, new_char: CharacterDefinition) -> void:
+func _apply_node_changes(_previous_node: DialogueNode, new_node: DialogueNode, _previous_char: CharacterDefinition, new_char: CharacterDefinition) -> void:
 	if new_node == null: 
 		return
 
@@ -575,6 +587,8 @@ func _update_portrait(portrait: String, node: DialogueNode, char_def: CharacterD
 	
 ## Returns the [Sprite2D] node for the given portrait slot name, or null if not found. Logs a warning if [warn_on_missing_portrait] is true.
 func _get_slot_sprite(slot: String) -> Sprite2D:
+	if slot.is_empty():
+		return null
 	if not portrait_sprites.has(slot):
 		if warn_on_missing_portrait:
 			push_warning("Dialogue: slot '%s' has no sprite path configured." % slot)
@@ -583,6 +597,8 @@ func _get_slot_sprite(slot: String) -> Sprite2D:
 
 ## Returns the [RichTextLabel] node for the given portrait slot name, or null if not found. Logs a warning if [warn_on_missing_portrait] is true.
 func _get_slot_name_label(slot: String) -> RichTextLabel:
+	if slot.is_empty():
+		return null
 	if not portrait_labels.has(slot):
 		if warn_on_missing_portrait:
 			push_warning("Dialogue: slot '%s' has no name label path configured." % slot)
@@ -599,12 +615,6 @@ func _clear_portrait(portrait_name: String) -> void:
 		sprite.texture = null
 	if name_label != null:
 		name_label.text = ""
-#endregion
-
-#region UTILS
-func get_global_center() -> Vector2:
-	var rect: Rect2 = get_global_rect()
-	return rect.size * 0.5
 #endregion
 
 #region EDITOR/TOOLING

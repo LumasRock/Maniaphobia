@@ -1,16 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://4jhvm4xuvxve"]
+[gd_scene load_steps=4 format=3 uid="uid://4jhvm4xuvxve"]
 
 [ext_resource type="Script" uid="uid://bdtygx1b2of2p" path="res://src/03_dialogue/scenes/dialogue.gd" id="1_ro8un"]
-[ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://src/03_dialogue/resources/character_definitions/sebastian.tres" id="2_80avi"]
-[ext_resource type="Script" uid="uid://b0vxypo0e7gu" path="res://src/03_dialogue/resources/character_definition.gd" id="2_b6pb6"]
-[ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://src/03_dialogue/resources/character_definitions/npc.tres" id="3_b6pb6"]
 [ext_resource type="Texture2D" uid="uid://c5otct6dmlble" path="res://Assets/sprites/dialogue_box1.png" id="3_oj6as"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_s5sbd"]
 line_spacing = 1.0
 font_color = Color(1.63645e-06, 0.808187, 1.54018e-06, 1)
 
-[node name="Dialogue" type="Control" node_paths=PackedStringArray("skip_button")]
+[node name="Dialogue" type="Control"]
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -24,8 +21,6 @@ offset_bottom = -360.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ro8un")
-skip_button = NodePath("GUI/SkipButton")
-characters = Array[ExtResource("2_b6pb6")]([ExtResource("2_80avi"), ExtResource("3_b6pb6")])
 portrait_names = Array[String](["left", "right"])
 portrait_sprites = Dictionary[String, NodePath]({
 "left": NodePath("Portrait1/Sprite2D"),
@@ -114,6 +109,7 @@ offset_top = 75.0
 offset_right = 102.0
 offset_bottom = 90.0
 bbcode_enabled = true
+scroll_active = false
 vertical_alignment = 1
 
 [node name="Portrait2" type="Control" parent="."]
@@ -136,6 +132,7 @@ offset_top = 75.0
 offset_right = 110.0
 offset_bottom = 90.0
 bbcode_enabled = true
+scroll_active = false
 horizontal_alignment = 2
 vertical_alignment = 1
 
