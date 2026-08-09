@@ -61,7 +61,7 @@ func _clean_file_path(path: String) -> String:
 		return ""
 
 	#1. Ensure path is relative to base_path
-	if not path.begins_with(base_path):
+	if not path.begins_with("res://"):
 		path = base_path + path
 
 		
@@ -182,4 +182,3 @@ func _create_option_from_dictionary(option_data: Dictionary) -> DialogueOption:
 	return option
 
 #endregion
-

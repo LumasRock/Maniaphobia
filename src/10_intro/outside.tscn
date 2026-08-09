@@ -107,7 +107,7 @@ offset_right = -399.0
 offset_bottom = -361.0
 grow_horizontal = 1
 grow_vertical = 1
-dialogue_source = "res://src/03_dialogue/resources/dialogues/outside2.json"
+dialogue_source = "res://src/10_intro/outside.json"
 start_on_load = true
 
 [connection signal="on_dialogue_finished" from="Dialogue" to="." method="_on_dialogue_finished"]

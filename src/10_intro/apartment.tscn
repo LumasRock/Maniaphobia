@@ -212,7 +212,7 @@ offset_bottom = 173.75
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment.json"
+dialogue_source = "res://src/10_intro/apartment.json"
 start_on_load = true
 camera = NodePath("..")
 portrait_character = Dictionary[String, String]({
@@ -233,7 +233,7 @@ offset_bottom = 173.75
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_coffee_machine.json"
+dialogue_source = "res://src/10_intro/apartment_coffee_machine.json"
 camera = NodePath("..")
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
@@ -253,7 +253,7 @@ offset_bottom = 173.75
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_jacob_room.json"
+dialogue_source = "res://src/10_intro/apartment_jacob_room.json"
 
 [node name="LeaveEarly" parent="Dialogues" instance=ExtResource("9_mp78c")]
 anchors_preset = 0
@@ -268,7 +268,7 @@ offset_bottom = 173.75
 grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_leave_early.json"
+dialogue_source = "res://src/10_intro/apartment_leave_early.json"
 portrait_character = Dictionary[String, String]({
 "left": "sebastian",
 "right": "npc"
