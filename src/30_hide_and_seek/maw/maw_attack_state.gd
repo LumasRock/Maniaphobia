@@ -4,7 +4,7 @@ class_name MawAttack
 @export var Maw: CharacterBody2D
 @export var player: Player
 
-func Enter():
+func state_enter():
 	Maw.velocity = Vector2.ZERO
 
 	if player == null:

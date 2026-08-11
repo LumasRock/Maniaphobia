@@ -76,8 +76,8 @@ func start_scene_dialogue(dialogue_id: String):
 		else:
 			print("No node with ID '1' in dialogue", dialogue_id)
 	else:
-		
 		print("No dialogue with ID:", dialogue_id)
+
 
 # typing animation for dialogue
 func start_typing(text):

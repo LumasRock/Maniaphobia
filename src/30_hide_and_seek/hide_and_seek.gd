@@ -13,8 +13,8 @@ func _ready():
 
 
 func _on_player_died() -> void:
-	Transition.transition_to("res://Scenes/GameOver.tscn")
+	Transition.transition_to("res://src/30_hide_and_seek/GameOver.tscn")
 
 
 func _on_timer_timeout() -> void:
-	Transition.transition_to("res://Scenes/Levels/Dinner.tscn")
+	Transition.transition_to("res://src/21_dinner/dinner.tscn")

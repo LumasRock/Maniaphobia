@@ -3,10 +3,10 @@ class_name GhostCall
 
 signal ChasePlayer
 
-@export var ghost := CharacterBody2D
-@export var Maw : Node
+@export var ghost: Ghost
 
-func Enter():
+
+func state_enter():
 	ghost.velocity = Vector2.ZERO
 	
 	await get_tree().create_timer(1.0).timeout

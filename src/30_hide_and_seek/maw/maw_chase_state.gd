@@ -9,12 +9,12 @@ class_name MawChase
 var target_to_chase: Player
 
 
-func Enter():
+func state_enter():
 	await get_tree().physics_frame
 	target_to_chase = get_tree().get_first_node_in_group("player")
 
 
-func Physics_Update(_delta: float):
+func state_physics_update(_delta: float):
 	if not target_to_chase:
 		return
 	

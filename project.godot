@@ -88,6 +88,7 @@ enabled=PackedStringArray("res://addons/simple_save_tool/plugin.cfg")
 shake=""
 player=""
 hide-interactable=""
+maw=""
 
 [gui]
 
