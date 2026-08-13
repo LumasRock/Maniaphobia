@@ -1,15 +1,20 @@
-# Represents a complete dialogue graph, which is a collection of interconnected DialogueNode objects.
-# 
-# Usage:
-#
-# var graph = DialogueLoader.load_graph("res://path/to/dialogue.json") 
-# var current_node_id = graph.start_node_id  # Start at the beginning of the dialogue.
-#
-# while current_node_id != "":
-#     var current_node = graph.get_node(current_node_id)  # Retrieve the current DialogueNode object.  
-#	  # Display current_node.text, current_node.speaker, etc. in the dialogue UI.
-#	  current_node_id = current_node.id  # Move to the next node in the dialogue sequence.
-class_name DialogueGraph extends RefCounted
+extends RefCounted
+class_name DialogueGraph 
+
+## Object representing a complete dialogue graph, which is a collection of interconnected DialogueNode objects.
+##
+## Usage:
+## [codeblocks]
+## [gdscript]
+## var graph = DialogueLoader.load_graph("res://path/to/dialogue.json") 
+## var current_node_id = graph.start_node_id  # Start at the beginning of the dialogue.
+##
+## while current_node_id != "":
+##     var current_node = graph.get_node(current_node_id)  # Retrieve the current DialogueNode object.  
+##     # Display current_node.text, current_node.speaker, etc. in the dialogue UI.
+##     current_node_id = current_node.id  # Move to the next node in the dialogue sequence.
+## [/gdscript]
+## [/codeblocks]
 
 var dialogue_id : String  # Unique identifier for this dialogue graph.
 var start_node_id : String  # The ID of the starting dialogue node in this graph.
@@ -50,3 +55,12 @@ func get_next_id(current_id: String) -> String:
 	if idx == -1 or idx >= _order.size() - 1:
 		return ""  # last node, or an id outside this graph
 	return _order[idx + 1]
+
+func collect_speakers() -> Array[String] :
+	if nodes.is_empty() :
+		return []
+	var speakers : Array[String] = []
+	for n : DialogueNode in nodes.values() :
+		if not speakers.has(n.speaker):
+			speakers.append(n.speaker)
+	return speakers

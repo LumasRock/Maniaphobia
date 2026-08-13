@@ -1,10 +1,13 @@
-# Loads dialogue graphs from JSON files and provides access to them.
-class_name DialogueLoader extends Node 
+class_name DialogueLoader 
+extends Node 
+## Reads, parses and loads JSON files as [DialogueGraph] objects.
 
 var _json : JSON = JSON.new()
 
-# Main func of this class: loads a dialogue graph from a JSON file at the given path 
-# and returns a DialogueGraph object, or null if loading fails.
+#region PUBLIC API
+
+## Main func of this class: loads a dialogue graph from a JSON file at the given path 
+## and returns a DialogueGraph object, or null if loading fails.
 func load_graph(path: String) -> DialogueGraph:
 
 	# Validate and clean the file path
@@ -13,7 +16,7 @@ func load_graph(path: String) -> DialogueGraph:
 		return null
 
 	# access and read the file
-	var file : FileAccess = _get_file(path)
+	var file : FileAccess = _get_file_access(path)
 	if file == null: 
 		return null
 
@@ -50,19 +53,19 @@ func load_graph(path: String) -> DialogueGraph:
 		graph.start_node_id = ordered_node_ids[0]
 	return graph
 
+#endregion
+
 #region File Access
 
-# Cleans a file path by removing the base path and any leading "res://" prefix, and returns the cleaned path
+## Checks the file name for compliance and ensures is an absolute path
 func _clean_file_path(path: String) -> String:
-	var base_path : String = DialogueConfig.json_base_path
-	
+
 	if StringUtils.is_null_or_empty(path):
 		push_error("_clean_file_path: path is null or empty")
 		return ""
 
-	#1. Ensure path is relative to base_path
-	if not path.begins_with("res://"):
-		path = base_path + path
+	# 1. ensure file has absolute path to json file
+	path = StringUtils.to_absolute_path(path)
 
 		
 	# 2. Validate filename format: alphanumeric, -, _ with .json extension
@@ -76,9 +79,8 @@ func _clean_file_path(path: String) -> String:
 	
 	return path
 
-
-# validates `path` and returns a FileAccess object if valid, or null if invalid
-func _get_file(path: String) -> FileAccess:
+## validates `path` and returns a FileAccess object if valid, or null if invalid
+func _get_file_access(path: String) -> FileAccess:
 
 	if path == null or path.is_empty(): 
 		push_error("DialogueLoader: path is null or empty")
@@ -99,7 +101,7 @@ func _get_file(path: String) -> FileAccess:
 
 #region JSON Parsing and Validation
 
-# Parses the JSON file and returns a Dictionary of the data, or an empty Dictionary if parsing fails
+## Parses the JSON file and returns a Dictionary of the data, or an empty Dictionary if parsing fails
 func _parse_file_as_dictionary(file: FileAccess) -> Dictionary:
 
 	if file == null: return {}
@@ -133,8 +135,8 @@ func _validate_option_data(option_data: Dictionary) -> bool:
 	return _common_schema_validator(option_data, DialogueSchemas.OPTION_FIELDS, 
 			"option '%s'" % option_data.get("id", "?"))
 
-# Ensures the graph's node order is valid by checking that all next_node_id references point to existing nodes. 
-# If validation is successful, return true. Otherwise, Logs errors and returns false.
+## Ensures the graph's node order is valid by checking that all next_node_id references point to existing nodes. 
+## If validation is successful, return true. Otherwise, Logs errors and returns false.
 func _validate_graph_order(graph: DialogueGraph) -> bool:
 	for node_id : String in graph.nodes.keys():
 		var node : DialogueNode = graph.nodes[node_id]

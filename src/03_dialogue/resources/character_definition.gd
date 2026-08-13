@@ -4,6 +4,7 @@ extends Resource
 ## For each character in the game, there should be - at least - one [CharacterDefinition] resource.
 ## [Dialogue] reads [CharacterDefinition] resources to display the names, images, and play the correct sounds during a dialogue.
 
+
 @export_category("Character Info")
 ## name shown in the dialogue UI for this character
 @export var character_name : String = ""
@@ -25,10 +26,34 @@ extends Resource
 @export var sounds_path : String = "res://Assets/sfx/"
 
 ## List of all created resources for automatic lookup
-static var ALL: Array[CharacterDefinition] = [
-	ResourceLoader.load("uid://c4up7fxs82n5f", "CharacterDefinition"), # sebastian.tres
-	ResourceLoader.load("uid://dl1j0en4ypoxa", "CharacterDefinition"), # npc.tres
-]
+static var ALL: Array[CharacterDefinition] = []
+# [
+# 	ResourceLoader.load("uid://c4up7fxs82n5f", "CharacterDefinition"), # sebastian.tres
+# 	ResourceLoader.load("uid://dl1j0en4ypoxa", "CharacterDefinition"), # npc.tres
+# ]
+
+static func _static_init() -> void:
+	_scan_dir("res://src/")
+
+## Recursively scans the given directory for .tres files that are CharacterDefinition resources, 
+## adding them to the [member ALL] array.
+static func _scan_dir(path: String) -> void:
+	var dir : DirAccess = DirAccess.open(path)
+	if not dir:
+		return
+	@warning_ignore("return_value_discarded")
+	dir.list_dir_begin()
+	var file_name : String = dir.get_next()
+	while file_name != "":
+		if dir.current_is_dir():
+			_scan_dir(path + file_name + "/")
+		elif file_name.ends_with(".tres"):
+			var res : Resource = ResourceLoader.load(path + file_name)
+			if res is CharacterDefinition:
+				ALL.append(res)
+		file_name = dir.get_next()
+	dir.list_dir_end()
+
 
 ## Validates this resource has the necessary properties to prevent runtime errors: 
 ## [member character_name] is not empty, [member portraits] has at least one entry, and if [member override_portraits_path] or [member override_sounds_path] are true, their corresponding paths are not empty.

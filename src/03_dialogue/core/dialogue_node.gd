@@ -1,6 +1,7 @@
-# DialgueNode.gd - Represents a single node in a dialogue tree. 
-# Each node is populated from the json files.
-class_name DialogueNode extends RefCounted
+class_name DialogueNode 
+extends RefCounted
+## Each node is populated from the json files.
+## Represents a single node in a dialogue tree. 
 
 var id : String  # Unique identifier for this dialogue node.
 var speaker : String  # The name of the character speaking in this node.

@@ -1,0 +1,103 @@
+{
+"dialogue_id": "Apartment2",
+"nodes": [
+  {
+  "id": "1",
+  "speaker": "Sebastian",
+  "text": "...",
+  "emotion": "neutral"
+  },
+  {
+  "id": "2",
+  "speaker": null,
+  "text": "[i]creeaakk[/i]",
+  "tags": [
+  "door_creak"
+  ]
+  },
+  {
+  "id": "3",
+  "speaker": "Sebastian",
+  "text": "Yeesh, a knock would be nice...",
+  "emotion": "neutral"
+  },
+  {
+  "id": "4",
+  "speaker": "npc",
+  "text": "My bad, my bad. What are you even doing in here? It's like-- 2 PM.",
+  "emotion": "npc"
+  },
+  {
+  "id": "5",
+  "speaker": "Sebastian",
+  "text": "Trying to write. It's not like you're being any more productive than me.",
+  "emotion": "annoyed"
+  },
+  {
+  "id": "6",
+  "speaker": "Sebastian",
+  "text": "You've literally been playing Halo since 4 PM [b]yesterday[/b].",
+  "emotion": "worry"
+  },
+  {
+  "id": "7",
+  "speaker": "npc",
+  "text": "So? I thought you didn't care about that.",
+  "emotion": "npc"
+  },
+  {
+  "id": "8",
+  "speaker": "Sebastian",
+  "text": "I said I don't care what you do [i]as long[/i] as it didn't involve me... you kept me up the entire night.",
+  "emotion": "annoyed"
+  },
+  {
+  "id": "9",
+  "speaker": "npc",
+  "text": "well so-rry I didn't understand you.",
+  "emotion": "npc"
+  },
+  {
+  "id": "10",
+  "speaker": "Sebastian",
+  "text": "Whatever, I'll just go make me a cup of coffee",
+  "emotion": "worry"
+  },
+  {
+  "id": "11",
+  "speaker": "Sebastian",
+  "text": "That'll wake--what's with the face... [shake rate=3 level=10] npc. [/shake]",
+  "emotion": "neutral"
+  },
+  {
+  "id": "12",
+  "speaker": "npc",
+  "text": "Uh--funny. So about that.",
+  "emotion": "npc"
+  },
+  {
+  "id": "13",
+  "speaker": "Sebastian",
+  "text": "Are you kidding me?",
+  "emotion": "angry"
+  },
+  {
+  "id": "14",
+  "speaker": "npc",
+  "text": "No. I broke the coffee machine.",
+  "emotion": "npc"
+  },
+  {
+  "id": "15",
+  "speaker": "Sebastian",
+  "text": "[shake rate=5 level=10] UGHHHHH [/shake]",
+  "emotion": "angry"
+  },
+  {
+  "id": "16",
+  "speaker": "npc",
+  "text": "WELL DON'T SOUND SO HAPPY ABOUT IT, DAMN.",
+  "emotion": "npc"
+  }
+]
+}

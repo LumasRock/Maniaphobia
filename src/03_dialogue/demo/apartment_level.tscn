@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=4 uid="uid://b6k278ypydhc2"]
+[gd_scene load_steps=21 format=4 uid="uid://b6k278ypydhc2"]
 
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="1_h7nyj"]
 [ext_resource type="Script" uid="uid://b52qm1o4825ng" path="res://src/03_dialogue/demo/apartment_level.gd" id="1_vsaj6"]
@@ -7,8 +7,10 @@
 [ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="4_mc4uj"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="5_fxe5b"]
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="6_6yqbc"]
+[ext_resource type="Script" uid="uid://b0vxypo0e7gu" path="res://src/03_dialogue/resources/character_definition.gd" id="7_1wq4l"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="7_4l1gq"]
-[ext_resource type="PackedScene" uid="uid://8yng7e0g6l1h" path="res://src/10_intro/coffee_door.tscn" id="9_s4bvc"]
+[ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://src/03_dialogue/resources/character_definitions/sebastian.tres" id="8_csigp"]
+[ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://src/03_dialogue/resources/character_definitions/npc.tres" id="9_7q1fk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3l5v7"]
 texture = ExtResource("1_h7nyj")
@@ -136,12 +138,18 @@ offset_top = 112.0
 offset_right = 102.0
 offset_bottom = 112.0
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/Apartment2.json"
+dialogue_source = "res://src/03_dialogue/demo/apartment.json"
 start_on_load = true
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
-})
+has_narrator = false
+
+[node name="LeftSpeaker" parent="Dialogues/InitialDialogue" index="0"]
+speaker_name = "Sebastian"
+character = ExtResource("8_csigp")
+
+[node name="RightSpeaker" parent="Dialogues/InitialDialogue" index="1"]
+speaker_type = 1
+speaker_name = "NPC"
+character = ExtResource("9_7q1fk")
 
 [node name="FixCoffeeMachine" parent="Dialogues" instance=ExtResource("5_fxe5b")]
 visible = false
@@ -150,19 +158,38 @@ offset_top = 114.0
 offset_right = 100.0
 offset_bottom = 114.0
 scale = Vector2(0.8, 0.8)
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_coffee_machine.json"
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
+dialogue_source = "res://src/03_dialogue/demo/apartment_coffee_machine.json"
+speakers_map = Dictionary[String, ExtResource("7_1wq4l")]({
+"": null,
+"Sebastian": ExtResource("8_csigp"),
+"npc": ExtResource("9_7q1fk")
 })
+has_narrator = false
+
+[node name="LeftSpeaker" parent="Dialogues/FixCoffeeMachine" index="0"]
+speaker_name = "Sebastian"
+character = ExtResource("8_csigp")
+
+[node name="RightSpeaker" parent="Dialogues/FixCoffeeMachine" index="1"]
+speaker_type = 1
+speaker_name = "NPC"
+character = ExtResource("9_7q1fk")
 
 [node name="JacobRoomDialogue" parent="Dialogues" instance=ExtResource("5_fxe5b")]
 visible = false
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_jacob_room.json"
+dialogue_source = "res://src/03_dialogue/demo/apartment_jacob_room.json"
+speakers_map = Dictionary[String, ExtResource("7_1wq4l")]({
+"Sebastian": ExtResource("8_csigp")
+})
+has_narrator = false
 
 [node name="LeaveEarlyDialogue" parent="Dialogues" instance=ExtResource("5_fxe5b")]
 visible = false
-dialogue_source = "res://src/03_dialogue/resources/dialogues/apartment_leave_early.json"
+dialogue_source = "res://src/03_dialogue/demo/apartment_leave_early.json"
+speakers_map = Dictionary[String, ExtResource("7_1wq4l")]({
+"Sebastian": ExtResource("8_csigp")
+})
+has_narrator = false
 
 [node name="Interactables" type="Node" parent="."]
 
@@ -198,9 +225,8 @@ position = Vector2(208, 96)
 position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_b2xic")
 
-[node name="ExitDoor" parent="Interactables" instance=ExtResource("9_s4bvc")]
+[node name="ExitDoor" type="Area2D" parent="Interactables"]
 position = Vector2(304, 72)
-script = null
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/ExitDoor"]
 position = Vector2(-4, 0)
@@ -218,8 +244,6 @@ shape = SubResource("RectangleShape2D_xox5p")
 [connection signal="on_dialogue_finished" from="Dialogues/JacobRoomDialogue" to="." method="_on_jacobroom_dialogue_finished"]
 [connection signal="body_entered" from="Interactables/JacobRoomDoor" to="." method="_on_player_enter_jacobroom_area"]
 [connection signal="body_exited" from="Interactables/JacobRoomDoor" to="." method="_on_player_exit_jacobroom_area"]
-[connection signal="body_entered" from="Interactables/ExitDoor" to="." method="_on_player_entered_exit_area"]
-[connection signal="body_exited" from="Interactables/ExitDoor" to="." method="_on_player_exited_exit_area"]
 [connection signal="body_entered" from="Interactables/CoffeeMachine" to="." method="_on_coffee_machine_body_entered"]
 [connection signal="body_exited" from="Interactables/CoffeeMachine" to="." method="_on_coffee_machine_body_exited"]
 

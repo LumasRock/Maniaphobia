@@ -1,19 +1,21 @@
 @tool
 extends EditorScript
 
+const SRC_PATH : String = "res://src/"
+
 func _run() -> void:
 
 	_log("[b]Dialogue Validation started...[/b]\n")
-	var dir : String = DialogueConfig.json_base_path 
+	#var dir : String = DialogueConfig.json_base_path 
 	var files_count : int = 0
 	var error_files_count : int = 0
 
-	for file_name : String in DirAccess.get_files_at(dir):
+	for file_name : String in DirAccess.get_files_at(SRC_PATH) :
 
 		if not file_name.ends_with(".json"):
 			continue
 		files_count += 1
-		var file_path : String = dir + file_name
+		var file_path : String = ProjectSettings.globalize_path(SRC_PATH + file_name)
 
 		_log("File: %s" % file_path)
 		if _validate_dialogue_load(file_path):
@@ -34,7 +36,7 @@ func _validate_dialogue_load(file_path: String) -> bool:
 	var loader : DialogueLoader = DialogueLoader.new()
 	
 	# access and read the file
-	var file : FileAccess = loader._get_file(file_path)
+	var file : FileAccess = loader._get_file_access(file_path)
 	if file == null: 
 		_log_error("Dialogue load failed to open file: %s" % file_path, 1)
 		return false

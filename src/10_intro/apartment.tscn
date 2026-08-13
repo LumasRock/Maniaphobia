@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://wxpyke3fnnw3"]
+[gd_scene load_steps=23 format=4 uid="uid://wxpyke3fnnw3"]
 
 [ext_resource type="Script" uid="uid://cl3iky4pqlsf0" path="res://src/10_intro/apartment.gd" id="1_qddux"]
 [ext_resource type="Texture2D" uid="uid://qpsx1l2m0hud" path="res://Assets/sprites/dasdasda.png" id="2_qr3cq"]
@@ -7,9 +7,12 @@
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="5_2lk7n"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_he3uk"]
 [ext_resource type="Script" uid="uid://pueo6he1cir4" path="res://src/02_common/interaction_dialogue_area.gd" id="7_803sp"]
-[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/player.tscn" id="8_hyovl"]
+[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="8_hyovl"]
 [ext_resource type="Script" uid="uid://bkdbt180vixgd" path="res://src/02_common/player_interaction_area.gd" id="8_qr3cq"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="9_mp78c"]
+[ext_resource type="Script" uid="uid://dtp7pryqfbm3x" path="res://src/03_dialogue/core/dialogue_speaker.gd" id="11_2lk7n"]
+[ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://src/03_dialogue/resources/character_definitions/sebastian.tres" id="12_he3uk"]
+[ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://src/03_dialogue/resources/character_definitions/npc.tres" id="13_803sp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_akfgq"]
 texture = ExtResource("2_qr3cq")
@@ -199,10 +202,8 @@ position = Vector2(192, 56)
 position = Vector2(104, 311)
 zoom = Vector2(6, 6)
 
-[node name="InitialDialogue" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+[node name="InitialDialogue" parent="Dialogues" node_paths=PackedStringArray("camera", "speakers") instance=ExtResource("9_mp78c")]
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 367.5
@@ -215,15 +216,10 @@ scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/10_intro/apartment.json"
 start_on_load = true
 camera = NodePath("..")
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
-})
+speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
 
-[node name="FixCoffeeMachine" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+[node name="FixCoffeeMachine" parent="Dialogues" node_paths=PackedStringArray("camera", "speakers") instance=ExtResource("9_mp78c")]
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 367.5
@@ -235,15 +231,10 @@ grow_vertical = 1
 scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/10_intro/apartment_coffee_machine.json"
 camera = NodePath("..")
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
-})
+speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
 
-[node name="JacobsRoom" parent="Dialogues" instance=ExtResource("9_mp78c")]
+[node name="JacobsRoom" parent="Dialogues" node_paths=PackedStringArray("speakers") instance=ExtResource("9_mp78c")]
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 367.5
@@ -254,11 +245,10 @@ grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/10_intro/apartment_jacob_room.json"
+speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
 
-[node name="LeaveEarly" parent="Dialogues" instance=ExtResource("9_mp78c")]
+[node name="LeaveEarly" parent="Dialogues" node_paths=PackedStringArray("speakers") instance=ExtResource("9_mp78c")]
 anchors_preset = 0
-anchor_left = 0.0
-anchor_top = 0.0
 anchor_right = 0.0
 anchor_bottom = 0.0
 offset_left = 367.5
@@ -269,10 +259,33 @@ grow_horizontal = 1
 grow_vertical = 1
 scale = Vector2(0.8, 0.8)
 dialogue_source = "res://src/10_intro/apartment_leave_early.json"
-portrait_character = Dictionary[String, String]({
-"left": "sebastian",
-"right": "npc"
-})
+speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
+
+[node name="Speakers" type="Control" parent="Dialogues"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Sebastian" type="Control" parent="Dialogues/Speakers" node_paths=PackedStringArray("portrait_sprite", "portrait_label")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_2lk7n")
+character = ExtResource("12_he3uk")
+portrait_sprite = NodePath("")
+portrait_label = NodePath("")
+metadata/_custom_type_script = "uid://dtp7pryqfbm3x"
+
+[node name="Npc" type="Control" parent="Dialogues/Speakers" node_paths=PackedStringArray("portrait_sprite", "portrait_label")]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("11_2lk7n")
+character = ExtResource("13_803sp")
+portrait_sprite = NodePath("")
+portrait_label = NodePath("")
+metadata/_custom_type_script = "uid://dtp7pryqfbm3x"
 
 [connection signal="on_dialogue_finished" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_dialogue_finished"]
 [connection signal="on_option_selected" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_option_selected"]

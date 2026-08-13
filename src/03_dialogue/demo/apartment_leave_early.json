@@ -1,0 +1,11 @@
+{
+"dialogue_id": "Apartment-leave-early",
+"nodes": [
+  {
+    "id": "1",
+    "speaker": "Sebastian",
+    "text": "Not yet...let me fix that machine first.",
+    "emotion": "worry"
+  }
+]
+}
