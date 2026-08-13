@@ -39,8 +39,8 @@ func _physics_process(_delta: float):
 				last_input = action
 				break
 	
-	velocity = input_direction * move_speed
-	move_and_slide()
+		velocity = input_direction * move_speed
+		move_and_slide()
 	
 	if input_direction == Vector2.ZERO:
 		animated_sprite.play(last_input + "_idle")

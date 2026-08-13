@@ -1,4 +1,4 @@
-extends TextureRect
+extends CanvasLayer
 
 signal fade_out_finished(scene_path: String)
 
@@ -7,10 +7,10 @@ var _loading_path: String
 var _loaded_resource: PackedScene
 
 signal _load_finished
-@onready var _anim_player: AnimationPlayer = $AnimationPlayer
+@export var _anim_player: AnimationPlayer
 const _USE_THREADED: bool = true
-
 #@export_file("*.tscn", "*.scn") var target_scene: String
+
 
 func _ready() -> void:
 	_anim_player.play_backwards("Fade")
@@ -26,6 +26,7 @@ func _start_load() -> void:
 		return
 	else:
 		set_process(true)
+
 
 func _process(_delta: float) -> void:
 	if not is_transitioning:
@@ -55,6 +56,7 @@ func _switch_scene() -> void:
 		return
 	_cleanup_load(true)
 
+
 func _cleanup_load(do_finished: bool = false) -> void:
 	var tmp: String = _loading_path
 	_loading_path = ""
@@ -65,6 +67,7 @@ func _cleanup_load(do_finished: bool = false) -> void:
 		fade_out_finished.emit(tmp)
 	is_transitioning = false
 	set_process(false)
+
 
 func transition_to(next_scene: String, minimum_transition_blackout_seconds: float = 1.0) -> void:
 	if is_transitioning:

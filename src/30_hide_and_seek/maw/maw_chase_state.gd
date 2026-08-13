@@ -9,12 +9,12 @@ class_name MawChase
 var target_to_chase: Player
 
 
-func Enter():
+func state_enter():
 	await get_tree().physics_frame
 	target_to_chase = get_tree().get_first_node_in_group("player")
 
 
-func Physics_Update(_delta: float):
+func state_physics_update(_delta: float):
 	if not target_to_chase:
 		return
 	
@@ -25,7 +25,7 @@ func Physics_Update(_delta: float):
 		return
 	
 	if target_to_chase.hiding_manager.is_hiding:
-		Transitioned.emit(self, "MawPatrol")
+		transitioned.emit(self, "MawPatrol")
 		maw.velocity = Vector2.ZERO
 		return
 
@@ -39,13 +39,13 @@ func Physics_Update(_delta: float):
 	var target_is_hiding := target_to_chase.hiding_manager.is_hiding
 	
 	if distance_to_target < maw.attack_range and not target_is_hiding:
-		Transitioned.emit(self, "MawAttack")
+		transitioned.emit(self, "MawAttack")
 		return
 	
 	if distance_to_target > maw.stop_chase_distance and not target_is_hiding:
-		Transitioned.emit(self, "MawPatrol")
+		transitioned.emit(self, "MawPatrol")
 
 
 func _on_detection_range_body_exited(body):
 	if body is Player:
-		Transitioned.emit(self, "MawPatrol")
+		transitioned.emit(self, "MawPatrol")
