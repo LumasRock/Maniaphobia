@@ -17,7 +17,7 @@ var _is_paused := false
 var _is_current_state := false
 
 
-func enter() -> void: 
+func state_enter(): 
 	ghost.ChasePlayer.connect(chase, CONNECT_ONE_SHOT)
 	player = get_tree().get_first_node_in_group(&"player")
 
@@ -30,7 +30,7 @@ func enter() -> void:
 	_start_pause_timer_from_minmax(pause_cooldown_minmax)
 
 
-func exit() -> void:
+func state_exit():
 	if ghost.ChasePlayer.is_connected(chase):
 		ghost.ChasePlayer.disconnect(chase)
 	
@@ -42,7 +42,7 @@ func exit() -> void:
 	pause_timer.stop()
 
 
-func physics_update(delta: float) -> void:
+func state_physics_update(delta: float):
 	if _is_paused:
 		return
 	
@@ -50,10 +50,10 @@ func physics_update(delta: float) -> void:
 		var move_amount = speed * delta
 		path_follow.progress += move_amount
 		maw.global_position = path_follow.global_position
-
+ 
 	var distance_to_target := player.global_position.distance_to(maw.global_position)
 	if distance_to_target < maw.start_chase_distance and not player.hiding_manager.is_hiding:
-		Transitioned.emit(self, "MawChase")
+		transitioned.emit(self, "MawChase")
 
 
 func snap_to_nearest_path_point():
@@ -70,7 +70,7 @@ func _on_detection_range_body_entered(body):
 	if body is Player:
 		detected_player = body
 		if not detected_player.hiding_manager.is_hiding:
-			Transitioned.emit(self, "MawChase")
+			transitioned.emit(self, "MawChase")
 
 
 func _on_detection_range_body_exited(body):
@@ -78,8 +78,8 @@ func _on_detection_range_body_exited(body):
 		detected_player = null
 
 
-func chase() -> void:
-	Transitioned.emit(self, "MawChase")
+func chase():
+	transitioned.emit(self, "MawChase")
 
 
 func _start_pause_timer_from_minmax(minmax: Vector2) -> void:

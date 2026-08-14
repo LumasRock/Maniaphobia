@@ -57,8 +57,9 @@ func _on_body_exited(body: Node2D):
 func play_occuppied_dialog() -> void:
 	if not _dialogue_node_id:
 		_dialogue_node_id = Set.pick_random()
-		
-	Dialogue.play("Hide_And_Seek", _dialogue_node_id)
+	
+	print("Closet occupied! Dialogues are temporarily disabled for refactoring.")
+	# Dialogue.play("Hide_And_Seek", _dialogue_node_id)
 
 
 func move_player_back_to_front() -> void:

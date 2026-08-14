@@ -45,8 +45,8 @@ func _physics_process(_delta: float) -> void:
 				last_input = action
 				break
 	
-	velocity = input_direction * move_speed
-	@warning_ignore("return_value_discarded")
+		velocity = input_direction * move_speed
+		@warning_ignore("return_value_discarded")
 	move_and_slide()
 	
 	if input_direction == Vector2.ZERO:

@@ -1,11 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://bt3hmbo5wf4jw"]
+[gd_scene load_steps=10 format=3 uid="uid://bt3hmbo5wf4jw"]
 
+[ext_resource type="Script" uid="uid://bmd4jvk7jyorn" path="res://src/30_hide_and_seek/ghost/ghost_controller.gd" id="1_fqxm3"]
 [ext_resource type="Shader" uid="uid://c3peaphjck3jc" path="res://Assets/ghost.gdshader" id="1_thbej"]
 [ext_resource type="Texture2D" uid="uid://bt6sr810r5lfj" path="res://Assets/ghost.png" id="2_uta0k"]
-[ext_resource type="Script" uid="uid://cb1ntfmq3dkeq" path="res://src/30_hide_and_seek/GhostWander.gd" id="3_108wt"]
-[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://src/30_hide_and_seek/States/state_machine.gd" id="3_uta0k"]
-[ext_resource type="Script" uid="uid://1kxcc38fdgl1" path="res://src/30_hide_and_seek/GhostChase.gd" id="4_3btnm"]
-[ext_resource type="Script" uid="uid://bqfc35hcyrktr" path="res://src/30_hide_and_seek/GhostCall.gd" id="5_taxxh"]
+[ext_resource type="Script" uid="uid://cb1ntfmq3dkeq" path="res://src/30_hide_and_seek/ghost/ghost_wander_state.gd" id="3_108wt"]
+[ext_resource type="Script" uid="uid://qor3sl46ks8w" path="res://src/30_hide_and_seek/state_machine/state_machine.gd" id="3_uta0k"]
+[ext_resource type="Script" uid="uid://bqfc35hcyrktr" path="res://src/30_hide_and_seek/ghost/ghost_call_state.gd" id="5_taxxh"]
+[ext_resource type="Script" uid="uid://6ue0yjejeay3" path="res://src/30_hide_and_seek/ghost/ghost_chase_state.gd" id="6_5vjqn"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_st3at"]
 shader = ExtResource("1_thbej")
@@ -15,7 +16,8 @@ shader_parameter/amplitude = 10.0
 [sub_resource type="CircleShape2D" id="CircleShape2D_6attn"]
 radius = 26.2847
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="Ghost" type="CharacterBody2D"]
+script = ExtResource("1_fqxm3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 material = SubResource("ShaderMaterial_st3at")
@@ -38,11 +40,9 @@ sprite = NodePath("../../Sprite2D")
 metadata/_custom_type_script = "uid://cn67v7h0mdsdd"
 
 [node name="GhostChase" type="Node" parent="State Machine" node_paths=PackedStringArray("ghost")]
-script = ExtResource("4_3btnm")
+script = ExtResource("6_5vjqn")
 ghost = NodePath("../..")
-metadata/_custom_type_script = "uid://1kxcc38fdgl1"
 
 [node name="GhostCall" type="Node" parent="State Machine" node_paths=PackedStringArray("ghost")]
 script = ExtResource("5_taxxh")
 ghost = NodePath("../..")
-metadata/_custom_type_script = "uid://bqfc35hcyrktr"

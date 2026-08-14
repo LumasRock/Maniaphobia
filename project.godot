@@ -96,6 +96,7 @@ folder_colors={
 shake=""
 player=""
 hide-interactable=""
+maw=""
 
 [gui]
 
