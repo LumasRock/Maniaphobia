@@ -38,8 +38,9 @@ func get_node(node_id: String) -> DialogueNode:
 func has_node(node_id: String) -> bool:
 	return nodes.has(node_id)
 
-# Lazily resolves "what comes after this node" — nothing is precomputed on DialogueNode itself.
-# Note: for nodes with options, if the next node wants to change the next node, must use the `request_navigation_override()`.
+## Lazily resolves "what comes after this node" — nothing is precomputed on DialogueNode itself.
+## Note: for nodes with options, if the next node wants to change the next node, must use the `request_navigation_override()`.
+## If no there is no next id, returns an empty string.
 func get_next_id(current_id: String) -> String:
 	if StringUtils.is_null_or_empty(current_id) :
 		current_id = start_node_id

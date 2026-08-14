@@ -53,7 +53,6 @@ func _try_start_dialogue() -> void :
 		return
 	if play_once and already_played: # played once
 		return
-	elif not dialogue.is_idle() and not dialogue.is_finished() : # currently playing
-		return
-	print("starting interactive dialogue " + dialogue.name)
-	dialogue.start()
+	elif dialogue.is_not_started() or dialogue.is_idle() or dialogue.is_finished() : # not started or finished
+		print("starting interactive dialogue " + dialogue.name)
+		dialogue.start()

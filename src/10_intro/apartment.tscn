@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="8_hyovl"]
 [ext_resource type="Script" uid="uid://bkdbt180vixgd" path="res://src/02_common/player_interaction_area.gd" id="8_qr3cq"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="9_mp78c"]
-[ext_resource type="Script" uid="uid://dtp7pryqfbm3x" path="res://src/03_dialogue/core/dialogue_speaker.gd" id="11_2lk7n"]
+[ext_resource type="Script" uid="uid://b0vxypo0e7gu" path="res://src/03_dialogue/resources/character_definition.gd" id="11_2lk7n"]
 [ext_resource type="Resource" uid="uid://c4up7fxs82n5f" path="res://src/03_dialogue/resources/character_definitions/sebastian.tres" id="12_he3uk"]
 [ext_resource type="Resource" uid="uid://dl1j0en4ypoxa" path="res://src/03_dialogue/resources/character_definitions/npc.tres" id="13_803sp"]
 
@@ -198,94 +198,100 @@ position_smoothing_speed = 2.0
 editor_description = "Player Spawning Position Marker. Used by the BaseLevel"
 position = Vector2(192, 56)
 
-[node name="Dialogues" type="Camera2D" parent="."]
-position = Vector2(104, 311)
-zoom = Vector2(6, 6)
+[node name="DialoguesCamera" type="Camera2D" parent="."]
+position = Vector2(1085, 550)
+zoom = Vector2(2, 2)
+limit_left = 548
+limit_top = 0
+limit_right = 1188
+limit_bottom = 360
 
-[node name="InitialDialogue" parent="Dialogues" node_paths=PackedStringArray("camera", "speakers") instance=ExtResource("9_mp78c")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 367.5
-offset_top = 23.75
-offset_right = 607.5
-offset_bottom = 173.75
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.8, 0.8)
+[node name="Dialogues" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 548.0
+offset_right = 1188.0
+offset_bottom = 360.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="InitialDialogue" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
 dialogue_source = "res://src/10_intro/apartment.json"
 start_on_load = true
-camera = NodePath("..")
-speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
+speakers_map = Dictionary[String, ExtResource("11_2lk7n")]({
+"Sebastian": ExtResource("12_he3uk"),
+"npc": ExtResource("13_803sp")
+})
+has_narrator = true
+camera = NodePath("../../DialoguesCamera")
 
-[node name="FixCoffeeMachine" parent="Dialogues" node_paths=PackedStringArray("camera", "speakers") instance=ExtResource("9_mp78c")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 367.5
-offset_top = 23.75
-offset_right = 607.5
-offset_bottom = 173.75
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.8, 0.8)
+[node name="FixCoffeeMachine" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
 dialogue_source = "res://src/10_intro/apartment_coffee_machine.json"
-camera = NodePath("..")
-speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
+speakers_map = Dictionary[String, ExtResource("11_2lk7n")]({
+"Sebastian": ExtResource("12_he3uk"),
+"npc": ExtResource("13_803sp")
+})
+has_narrator = true
+camera = NodePath("../../DialoguesCamera")
 
-[node name="JacobsRoom" parent="Dialogues" node_paths=PackedStringArray("speakers") instance=ExtResource("9_mp78c")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 367.5
-offset_top = 23.75
-offset_right = 607.5
-offset_bottom = 173.75
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.8, 0.8)
+[node name="JacobsRoom" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
 dialogue_source = "res://src/10_intro/apartment_jacob_room.json"
-speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
+speakers_map = Dictionary[String, ExtResource("11_2lk7n")]({
+"Sebastian": ExtResource("12_he3uk")
+})
+camera = NodePath("../../DialoguesCamera")
 
-[node name="LeaveEarly" parent="Dialogues" node_paths=PackedStringArray("speakers") instance=ExtResource("9_mp78c")]
-anchors_preset = 0
-anchor_right = 0.0
-anchor_bottom = 0.0
-offset_left = 367.5
-offset_top = 23.75
-offset_right = 607.5
-offset_bottom = 173.75
-grow_horizontal = 1
-grow_vertical = 1
-scale = Vector2(0.8, 0.8)
+[node name="LeaveEarly" parent="Dialogues" node_paths=PackedStringArray("camera") instance=ExtResource("9_mp78c")]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -320.0
+offset_top = -180.0
+offset_right = 320.0
+offset_bottom = 180.0
 dialogue_source = "res://src/10_intro/apartment_leave_early.json"
-speakers = [NodePath("../Speakers/Sebastian"), NodePath("../Speakers/Npc")]
-
-[node name="Speakers" type="Control" parent="Dialogues"]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Sebastian" type="Control" parent="Dialogues/Speakers" node_paths=PackedStringArray("portrait_sprite", "portrait_label")]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("11_2lk7n")
-character = ExtResource("12_he3uk")
-portrait_sprite = NodePath("")
-portrait_label = NodePath("")
-metadata/_custom_type_script = "uid://dtp7pryqfbm3x"
-
-[node name="Npc" type="Control" parent="Dialogues/Speakers" node_paths=PackedStringArray("portrait_sprite", "portrait_label")]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("11_2lk7n")
-character = ExtResource("13_803sp")
-portrait_sprite = NodePath("")
-portrait_label = NodePath("")
-metadata/_custom_type_script = "uid://dtp7pryqfbm3x"
+speakers_map = Dictionary[String, ExtResource("11_2lk7n")]({
+"Sebastian": ExtResource("12_he3uk")
+})
+camera = NodePath("../../DialoguesCamera")
 
 [connection signal="on_dialogue_finished" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_dialogue_finished"]
 [connection signal="on_option_selected" from="Dialogues/FixCoffeeMachine" to="." method="_on_fix_coffee_machine_option_selected"]

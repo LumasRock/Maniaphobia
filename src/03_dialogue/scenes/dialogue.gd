@@ -66,6 +66,8 @@ enum DialogueState {
 ## List of speakers for this dialogue
 @export var speakers_map                  : Dictionary[String, CharacterDefinition] = {} 
 @export var has_narrator                  : bool = false
+## If true, the dialogue only shows the current speaker's portrait and hides all other speakers. If false, all speakers are shown on screen.
+@export var show_only_current_speaker     : bool = true
 
 @export_category("Player Actions")
 @export var skippable                     : bool = true
@@ -98,7 +100,7 @@ enum DialogueState {
 
 #region ON-READY VARS
 @onready var dialogue_text      : RichTextLabel = $MainContainer/DialogueText
-@onready var options_container  : BoxContainer = $MainContainer/OptionsContainer
+@onready var options_container  : BoxContainer = $GUI/OptionsContainer
 @onready var debug_overlay_node : Control = $DebugOverlayContainer
 @onready var skip_button        : Button = $GUI/SkipButton
 
@@ -196,6 +198,8 @@ func get_dialogue_id() -> String:
 	return _graph.dialogue_id if _graph != null else ""
 
 ## sugar coating to check if current_state is [DialogueState.Idle]
+func is_not_started() -> bool:
+	return current_state == DialogueState.NotStarted
 func is_idle() -> bool:
 	return current_state == DialogueState.Idle
 ## sugar coating to check if current_state is [DialogueState.Typing]
@@ -231,6 +235,7 @@ func load_dialogue() -> void:
 ## If the graph is null, this method will attempt to load it from the [dialogue_source] path if [lazy_load] is true. 
 ## If the graph is still null after that, this method will log an error and return.
 func start() -> void:
+	print("%s: starting dialogue from '%s'" % [name, dialogue_source])
 	if _graph == null :
 		push_error("%s: cannot start dialogue; graph is null. Did you call load_dialogue() first?" % name)
 		return
@@ -264,7 +269,7 @@ func finish() -> void:
 	_current_speaker = null
 
 func reset() -> void :
-	current_state = DialogueState.Idle
+	current_state = DialogueState.NotStarted
 	_current_node = null
 	_current_speaker = null
 	_release_camera()
@@ -393,7 +398,7 @@ func _setup_camera() -> void :
 	if center_on_camera:
 		if camera != null:
 			global_position = camera.get_screen_center_position() - get_rect().size / 2.0
-	else:
+		else:
 			global_position = get_viewport().get_camera_2d().get_screen_center_position() - get_rect().size / 2.0
 
 func _release_camera() -> void :
@@ -449,6 +454,8 @@ func _move_next_node() -> bool:
 		return false
 	# we use the graph to resolve the next node id 
 	var next_id: String = _graph.get_next_id(_current_node.id)
+	if next_id.is_empty():
+		return false
 	return _enter_node(next_id)
 
 
@@ -468,6 +475,9 @@ func _exit_node() -> void:
 			push_warning("%s: attempt to exit a null node. Did you call _enter_node() first?" % name)
 		return
 	current_state = DialogueState.Idle
+	if show_only_current_speaker :
+		if _current_speaker != null:
+			_current_speaker.clear_portrait()
 	on_node_exited.emit(_current_node)
 
 ## Returns the [DialogueSpeaker] from [member _speakers_lookup] where 
@@ -491,7 +501,7 @@ func _get_narrator_speaker(character_name : String = "") -> DialogueSpeaker:
 func _apply_speaker_change(_speaker: DialogueSpeaker, _emotion : String = "neutral") -> void:
 	if _speaker == null:
 		if warn_on_missing_character:
-			push_warning("%s: speaker '%s' has no portrait assigned " % [name, _speaker.name])
+			push_warning("%s: dialogue speaker is null, can't apply changes " % name)
 	else :
 		_speaker.update_portrait(_emotion)
 
@@ -558,6 +568,7 @@ func _update_options_container(node: DialogueNode, options: Array[DialogueOption
 	for option : DialogueOption in options:
 		var button : Button = Button.new()
 		button.text = option.text
+		button.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		@warning_ignore("return_value_discarded")
 		button.pressed.connect(_on_option_button_pressed(node, option))
 		options_container.add_child(button)
