@@ -5,7 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://c32t88l6qtr6f" path="res://src/02_common/shadow_door.tscn" id="3_3li1f"]
 [ext_resource type="Texture2D" uid="uid://0ghteo5xs70k" path="res://Assets/sprites/stairs.png" id="4_2w5vh"]
 [ext_resource type="Texture2D" uid="uid://dr5fw60s0hi2s" path="res://Assets/shadows.png" id="6_c48s0"]
-[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/player.tscn" id="6_kqqdl"]
+[ext_resource type="PackedScene" uid="uid://bfbkbak0pkcfr" path="res://src/01_player/Player.tscn" id="6_kqqdl"]
 [ext_resource type="Texture2D" uid="uid://ejhfse0luxxc" path="res://Assets/sprites/Screenshot 2026-03-31 175014.png" id="8_j77mn"]
 [ext_resource type="PackedScene" uid="uid://cxtir5qxo364k" path="res://src/02_common/interaction_tp_area.tscn" id="9_wa8yb"]
 [ext_resource type="PackedScene" uid="uid://4jhvm4xuvxve" path="res://src/03_dialogue/scenes/Dialogue.tscn" id="10_3li1f"]
@@ -821,14 +821,16 @@ limit_smoothed = true
 position_smoothing_speed = 2.0
 
 [node name="Dialogue" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("10_3li1f")]
-offset_left = 350.0
-offset_top = 745.0
-offset_right = 350.0
-offset_bottom = 745.0
-scale = Vector2(2.0126, 1.01576)
+offset_left = 1049.0
+offset_top = 763.0
+offset_right = 1689.0
+offset_bottom = 1143.0
 camera = NodePath("Camera2D")
 
 [node name="Camera2D" type="Camera2D" parent="Dialogue"]
 position = Vector2(104.839, -25.5966)
-scale = Vector2(0.496869, 0.984482)
-zoom = Vector2(3, 3)
+zoom = Vector2(2, 2)
+limit_left = 1049
+limit_top = 763
+limit_right = 1689
+limit_bottom = 1123

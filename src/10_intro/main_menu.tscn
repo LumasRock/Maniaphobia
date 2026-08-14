@@ -14,8 +14,8 @@ apartment = "uid://wxpyke3fnnw3"
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_right = 1279.0
-offset_bottom = 711.0
+offset_right = 1280.0
+offset_bottom = 720.0
 mouse_filter = 2
 color = Color(0, 0, 0, 1)
 
@@ -32,22 +32,27 @@ grow_horizontal = 2
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 100
 text = "MANIAPHOBIA"
+vertical_alignment = 1
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
 layout_mode = 1
-anchors_preset = 5
+anchors_preset = 7
 anchor_left = 0.5
+anchor_top = 1.0
 anchor_right = 0.5
-offset_left = -236.0
-offset_top = 657.0
-offset_right = 456.0
-offset_bottom = 709.0
+anchor_bottom = 1.0
+offset_left = -345.0
+offset_top = -50.0
+offset_right = 345.0
 grow_horizontal = 2
+grow_vertical = 0
 mouse_filter = 2
 theme_override_font_sizes/normal_font_size = 36
 text = "Warning: lots of bugs :D yayy"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="play" type="Button" parent="."]
+[node name="PlayButton" type="Button" parent="."]
 modulate = Color(0.786013, 0.608674, 0.19164, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -55,15 +60,16 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -127.0
-offset_top = -136.0
-offset_right = 124.0
-offset_bottom = -72.0
+offset_left = -128.0
+offset_top = -104.0
+offset_right = 128.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 30
 text = "Play"
 
-[node name="quit" type="Button" parent="."]
+[node name="QuitGameButton" type="Button" parent="."]
 modulate = Color(0.786013, 0.608674, 0.19164, 1)
 layout_mode = 1
 anchors_preset = 8
@@ -71,13 +77,14 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -123.0
-offset_top = 73.0
+offset_left = -128.0
+offset_top = 24.0
 offset_right = 128.0
-offset_bottom = 137.0
+offset_bottom = 88.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 30
 text = "Quit"
 
-[connection signal="pressed" from="play" to="." method="_on_play_button_pressed"]
-[connection signal="pressed" from="quit" to="." method="_on_quit_button_pressed"]
+[connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="QuitGameButton" to="." method="_on_quit_button_pressed"]
